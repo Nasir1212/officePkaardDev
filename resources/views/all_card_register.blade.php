@@ -2,7 +2,32 @@
 @extends('master.master')
 
 @section('content')
+<style>
+  .pagination{
+    float: right;
+  }
+    .pagination ul{
+      display: flex;
+      float: right;
+    }
+    .pagination ul li {
+    list-style-type: none;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #00000030;
+    margin: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: #80808026;
+    font-weight: bold;
+}
 
+.pagination ul li:hover{
+  background:#8080804f;
+}
+</style>
 <div class="card">
 
 
@@ -13,12 +38,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">List Card Registation</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item active">List Card Registation</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -33,10 +58,17 @@
 
         
     <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
+        <h3 class="card-title">All Card Registation </h3>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
+        <div class="pagination">
+          <ul id="pagination_number">
+          
+            
+          </ul>
+         
+        </div>
         <table id="example1" class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -152,56 +184,24 @@
   <script src="{{ asset('assets/dist/js/adminlte.min.js')}}"></script> --}}
   <script>
 
-$(function () {
-    // $("#example1").DataTable({
-    //   "responsive": false, "lengthChange": true, "autoWidth": true,   order: [[1, 'desc' ]], "aLengthMenu": [[100, 250, 500,1000, -1], [100, 250, 500 ,1000, "All"]],
-    
-    //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    // $('#example2').DataTable({
-    //   "paging": true,
-    //   "lengthChange": false,
-    //   "searching": false,
-    //   "ordering": true,
-    //   "info": true,
-    //   "autoWidth": false,
-    //   "responsive": true,
-    // });
-  });
-  
-  
 
 window.onscroll=(evt)=>{
 const {scrollTop,clientHeight,scrollHeight} = document.documentElement;
+var total_page= Math.ceil(Number(sessionStorage.getItem("total_count"))/500)
+var current_page = Math.ceil((Number(sessionStorage.getItem("total_count"))-Number(sessionStorage.getItem("increment"))+500)/500);
+
 if ((scrollTop+clientHeight)>=scrollHeight) {
-  // var lastRow = sessionStorage.getItem('SellerLastRow');
-  // sessionStorage.setItem('lastRow',lastRow);
-  console.log((scrollTop+clientHeight))
-  // if(Number(sessionStorage.getItem("increment"))+5 > Number(sessionStorage.getItem("total_count"))){
-  sessionStorage.setItem("increment",Number(sessionStorage.getItem("increment"))+5)
+
+if(current_page >1){
+  sessionStorage.setItem("increment",Number(sessionStorage.getItem("increment"))+500)
   get_all_card_register()
-  window.scrollTo(0, 0);
-  // }
+  window.scrollTo(0, 150);
+}
+ 
+
 }
 
-console.log((scrollTop+clientHeight) -scrollHeight)
 }
-
-
-
-
-//   window.addEventListener('scroll', function(event) {
-  
-  
-    
-//     if ((window.innerHeight + window.scrollY) - document.body.offsetHeight-16 ==0) {
-//         // you're at the bottom of the page, load more content here.
-       
-//        console.log((window.innerHeight + window.scrollY) - document.body.offsetHeight-16)
-//     }
-
-//     // if(window.scrollY >= window.scrollY )
-// });
 
   function showModel(id){
 
@@ -211,7 +211,7 @@ let view=``;
     fetch(`get_one_data_card_register/${id}`)
     .then(response=>response.json())
     .then(data=>{
-      console.log(data)
+   
       let division_select = `<option value="">Select Division</option>`;
       let district_select = `<option value="">Select District</option>`;
       let cda_division_select = `<option value="">Select Division</option>`;
@@ -221,7 +221,7 @@ let view=``;
         District.forEach(d=>{
           if(e['name']==data[0]['division'] ){
             if(d['division_id']==e['id']){
-              console.log(d)
+          
               district_select +=`<option ${d['name']==data[0]['district']?'selected="true"':''} value="${d['name']}">${d['name']}</option>`;
 
             }
@@ -236,7 +236,7 @@ let view=``;
           if(e['name']== data[0]['cda_division']){
 
             if(d['division_id']==e['id']){
-              console.log(d)
+              
               cda_district_select +=`<option ${d['name']==data[0]['cda_district']?'selected="true"':''} value="${d['name']}">${d['name']}</option>`;
 
           }
@@ -475,9 +475,6 @@ let view=``;
 
 
 function delevery_stutus(e){
-  console.log(e)
- 
-
   swal({
   title: "Are you sure to Change",
   icon: "warning",
@@ -499,7 +496,7 @@ function delevery_stutus(e){
           })
   .then(response=>response.json())
   .then(data=>{
-    console.log(data);
+    
 
     if(data['condition']==true){
       swal ( "Success" ,  "Status Changed" ,  "success" )
@@ -518,18 +515,16 @@ get_all_card_register()
 }
 
 function get_all_card_register(){
-  let i =sessionStorage.getItem("increment")?sessionStorage.getItem("increment")-5:1
+  let i =sessionStorage.getItem("increment")?sessionStorage.getItem("increment")-500:1
 
   fetch(`get_all_card_register/${i}`)
   .then(response=>response.json())
   .then(data=>{
- console.log(data);
  sessionStorage.setItem('total_count',data['total_count'])
 let elem = ``;
 
 
 data['data'].forEach(fdata=>{
-  // console.log(fdata)
   elem +=/*html*/`
   <tr style=" ${fdata['mediam']=='BACKHAND'?'outline: 1px solid #0080009e;':''}">
           <td>${i++}</td>
@@ -591,15 +586,31 @@ data['data'].forEach(fdata=>{
   `;
 sessionStorage.setItem("increment",i)
 })
-document.getElementById("list_card_data").innerHTML=elem;
-// $("#example1").DataTable({
-//       "responsive": false, "lengthChange": true, "autoWidth": true,   order: [[1, 'desc' ]], "aLengthMenu": [[100, 250, 500,1000, -1], [100, 250, 500 ,1000, "All"]],
+
     
-//       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-//     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+var total_page= Math.ceil(Number(sessionStorage.getItem("total_count"))/500)
+var current_page = Math.ceil((Number(sessionStorage.getItem("total_count"))-Number(sessionStorage.getItem("increment"))+500)/500);
+let list = ``;
+for (let index = 1; index <= total_page; index++) {
+  
+  list+=`<li onclick="handle_list_pagination('${index}')" style='${index==current_page?'color:orange':''}'>${index}</li>`;
+  
+}
+document.getElementById("list_card_data").innerHTML=elem;
+document.getElementById("pagination_number").innerHTML=list;
+
+
   })
 }
 get_all_card_register()
+
+function handle_list_pagination(list){
+  total_page= Math.ceil(Number(sessionStorage.getItem("total_count"))/500)
+
+  sessionStorage.setItem("increment",(total_page-list)*500+501)
+  console.log(sessionStorage.getItem("increment"))
+  get_all_card_register()
+}
 
 function handle_division(e){
 
@@ -649,7 +660,6 @@ opData += `<option   value="${data['name']}">${data['name']}</option>`;
       
 
      let  update_card_data = Object.fromEntries(new FormData(document.forms['update_card_data']));
-     console.log(update_card_data)
      fetch('/update_card_data', {
     method: 'POST',
     body:JSON.stringify(update_card_data),
@@ -661,7 +671,6 @@ opData += `<option   value="${data['name']}">${data['name']}</option>`;
   .then(response => response.json())
   .then(data => {
 
-console.log(data)
 
 if(data['condition']==true){
       swal ( "Success" , `${data['message']}` ,  "success" )

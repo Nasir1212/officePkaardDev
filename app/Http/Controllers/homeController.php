@@ -25,7 +25,7 @@ class homeController extends Controller
 
     public function get_all_card_register($offset){
        $total_count = count(card_registation::all());
-      $data =  card_registation::orderBy('id', 'DESC')->offset($offset-1)->limit(5)->get();
+      $data =  card_registation::orderBy('id', 'DESC')->offset($offset-1)->limit(500)->get();
       return json_encode( array('data'=>$data,'total_count'=>$total_count)); 
     }
     public function dashboard(){
@@ -405,7 +405,7 @@ class homeController extends Controller
           }
           $rows[] = array_combine( $header_values, $r );
       }
-      // return $rows ;
+  
       foreach( $rows as $data){
        
          // return  $data;
@@ -417,7 +417,7 @@ class homeController extends Controller
             ]);
 
       }
-      return json_encode(array('condition'=>true,'message'=>'Uploaded Successfully'));
+     
 
       }else{
          return json_encode(array('condition'=>false,'message'=>'It is not suitable file'));
@@ -425,6 +425,7 @@ class homeController extends Controller
       }
 
    }
+   return json_encode(array('condition'=>true,'message'=>'Uploaded Successfully'));
       }
 
       public function handle_reperence_program_action($id,$action){
