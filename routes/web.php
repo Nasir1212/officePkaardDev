@@ -65,7 +65,9 @@ Route::post('/login_check','App\Http\Controllers\homeController@login_check');
 Route::post('/admin_otp_check','App\Http\Controllers\homeController@admin_otp_check');
 
 
+Route::get('/invoice/{card_id}','App\Http\Controllers\homeController@invoice')->middleware('login');
 
+Route::get('/print_invoice/{card_id}','App\Http\Controllers\homeController@print_invoice')->middleware('login');
 
 Route::get('/counting_by_reference','App\Http\Controllers\homeController@counting_by_reference')->middleware('login');
 Route::get('/handle_reperence_program_action/{id}/{action}','App\Http\Controllers\homeController@handle_reperence_program_action')->middleware('login');
@@ -74,7 +76,7 @@ Route::post('/update_reference_program','App\Http\Controllers\homeController@upd
 
 
 Route::get('/list_register','App\Http\Controllers\homeController@get_all_register')->middleware('login');
-Route::get('/get_all_card_register/{offset}','App\Http\Controllers\homeController@get_all_card_register')->middleware('login');
+Route::get('/get_all_card_register/{offset}/{search_value}','App\Http\Controllers\homeController@get_all_card_register')->middleware('login');
 Route::post('/excel_data','App\Http\Controllers\homeController@excel_data')->middleware('login');
 Route::post('/delevery_stutus','App\Http\Controllers\homeController@delevery_stutus')->middleware('login');
 

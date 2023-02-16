@@ -87,6 +87,7 @@ background: darkgrey;
               <th scope="col">Name</th>
               <th scope="col">Phone</th>
               <th scope="col">Reference Code </th>
+              <th scope="col">Total Registation </th>
               <th scope="col">Action</th>
              
             </tr>
@@ -359,14 +360,35 @@ function show_password(e){
     }
 }
 
-function get_branch_all_data(){
+async function get_branch_all_data(){
   let elem = ``;
-  fetch(`get_all_reference_rogram`)
-  .then(response =>response.json())
-  .then(data=>{
+
+  
+  const response1 = await fetch(`counting_by_reference`)
+   const counting_by_reference = await response1.json()
+
+   const response2 = await fetch(`get_all_reference_rogram`)
+   const get_all_reference_rogram = await response2.json()
+console.log(counting_by_reference)
+console.log(get_all_reference_rogram)
+
+
+  // fetch(`get_all_reference_rogram`)
+  // .then(response =>response.json())
+  // .then(data=>{
 
     let i = 1;
-    data.forEach(d=>{
+    get_all_reference_rogram.forEach(d=>{
+      let total_registation=0
+      counting_by_reference.forEach(r=>{
+        if(r['reference_code'] !=null){
+       if(r['reference_code'].toLowerCase()==d['reference_code'].toLowerCase()){
+        total_registation = r['ref_total']
+       
+       }
+      }
+      })
+
       elem += /*html*/`
     <tr>
       <td>${i++}</td>
@@ -374,18 +396,22 @@ function get_branch_all_data(){
        <td>${d['phone']}</td>  
      
        <td>${d['reference_code']}</td>
+       <td>${total_registation}</td>
        <td>
         <a class="btn btn-warning"  onclick="action_branch('${d['id']}','get_one')"><i class="nav-icon fas fa-edit"></i> </a>
         <b>|</b>
-       <a class="btn btn-danger"   onclick="action_branch('${d['id']}','delete')"><i class="far fa-trash-alt"></i></a></td>  
-    </tr>
+       <a class="btn btn-danger"   onclick="action_branch('${d['id']}','delete')"><i class="far fa-trash-alt"></i></a>
+       <a class="btn btn-danger" href="Franchiac_summary_details/${d['reference_code']}"  ><span id="icon_on" class="material-symbols-outlined   cursor-pointer" style="display: block; cursor: pointer !important;"> visibility  </span> </a>
+       </td>  
+   
+       </tr>
     `;
 
     })
 
     document.getElementById('get_branch_all_data').innerHTML = elem;
 
-  })
+  // })
 }
 
 function action_branch(id,action){
@@ -394,7 +420,15 @@ fetch(`handle_reperence_program_action/${id}/${action}`)
 .then(response=>response.json())
 .then(data=>{
   if(action=='delete'){
-
+    swal({
+  title: "Are you sure to Delete",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willChange) => {
+  if (willChange) {
+  
   if(data['condition']==true){
     get_branch_all_data();
     swal("successful", `${data['message']}`, "success"); 
@@ -402,6 +436,9 @@ fetch(`handle_reperence_program_action/${id}/${action}`)
     swal("Opps!", `${data['message']}`, "error"); 
   }
 }
+})
+
+  }
 
 if(action=='get_one'){
   let elem = '';

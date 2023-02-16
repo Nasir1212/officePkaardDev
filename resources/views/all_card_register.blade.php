@@ -1,6 +1,4 @@
-{{-- @dd($data); --}}
 @extends('master.master')
-
 @section('content')
 <style>
   .pagination{
@@ -57,8 +55,11 @@
       
 
         
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between" >
         <h3 class="card-title">All Card Registation </h3>
+      
+          <input style="width: 30% ;margin-right: -52%;" onkeyup="search_by_input(this)" id="search_value" class="form-control" type="text" placeholder="Search">
+    
       </div>
       <!-- /.card-header -->
       <div class="card-body">
@@ -184,6 +185,14 @@
   <script src="{{ asset('assets/dist/js/adminlte.min.js')}}"></script> --}}
   <script>
 
+function search_by_input(e){
+  if(e.value.length <=0){
+    sessionStorage.setItem("increment",501)
+ }
+  get_all_card_register()
+
+}
+
 
 window.onscroll=(evt)=>{
 const {scrollTop,clientHeight,scrollHeight} = document.documentElement;
@@ -204,8 +213,6 @@ if(current_page >1){
 }
 
   function showModel(id){
-
-    console.log(id)
    $('#exampleModalLong').modal('show')
 let view=``;
     fetch(`get_one_data_card_register/${id}`)
@@ -516,8 +523,17 @@ get_all_card_register()
 
 function get_all_card_register(){
   let i =sessionStorage.getItem("increment")?sessionStorage.getItem("increment")-500:1
+ let search_value = document.getElementById("search_value").value;
+ if(search_value.length <=0){
+  search_value=undefined;
+ }else{
+  i=1;
+ } 
+ if(i <=0){
+  i=1;
+ }
 
-  fetch(`get_all_card_register/${i}`)
+  fetch(`get_all_card_register/${i}/${search_value}`)
   .then(response=>response.json())
   .then(data=>{
  sessionStorage.setItem('total_count',data['total_count'])
@@ -561,7 +577,7 @@ data['data'].forEach(fdata=>{
           </td>
             <td style="width:20rem">
               <p>
-              <a class="btn btn-warning btn-outline-danger font-weight-bold">
+              <a class="btn btn-warning btn-outline-danger font-weight-bold" href="invoice/${fdata['card_id']}">
                 <span id="icon_on" class="material-symbols-outlined   cursor-pointer" style="display: block; cursor: pointer !important;"> visibility  </span>
               </a>
               <a class="btn btn-warning btn-outline-danger font-weight-bold">
@@ -608,7 +624,6 @@ function handle_list_pagination(list){
   total_page= Math.ceil(Number(sessionStorage.getItem("total_count"))/500)
 
   sessionStorage.setItem("increment",(total_page-list)*500+501)
-  console.log(sessionStorage.getItem("increment"))
   get_all_card_register()
 }
 

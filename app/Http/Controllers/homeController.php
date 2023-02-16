@@ -23,11 +23,88 @@ class homeController extends Controller
 
     }
 
-    public function get_all_card_register($offset){
+    public function get_all_card_register($offset,$search_value){
+      if($search_value =='undefined'){
        $total_count = count(card_registation::all());
       $data =  card_registation::orderBy('id', 'DESC')->offset($offset-1)->limit(500)->get();
       return json_encode( array('data'=>$data,'total_count'=>$total_count)); 
+      }else{
+      
+         $data =  card_registation::orderBy('id', 'DESC')
+         ->where('card_id','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_address_details','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_apartment_no','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_district','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_division','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_house_no','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_road_no','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_upzilla','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_Thana','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_village','LIKE','%'.$search_value.'%')
+         ->orWhere('date_of_birth','LIKE','%'.$search_value.'%')
+         ->orWhere('district','LIKE','%'.$search_value.'%')
+         ->orWhere('division','LIKE','%'.$search_value.'%')
+         ->orWhere('email','LIKE','%'.$search_value.'%')
+         ->orWhere('full_name','LIKE','%'.$search_value.'%')
+         ->orWhere('gender','LIKE','%'.$search_value.'%')
+         ->orWhere('nationality','LIKE','%'.$search_value.'%')
+         ->orWhere('phone_number','LIKE','%'.$search_value.'%')
+         ->orWhere('reference_code','LIKE','%'.$search_value.'%')
+         ->orWhere('mediam','LIKE','%'.$search_value.'%')
+         ->orWhere('profession','LIKE','%'.$search_value.'%')
+         ->orWhere('register_date','LIKE','%'.$search_value.'%')
+         ->orWhere('invoice_number','LIKE','%'.$search_value.'%')
+         ->offset($offset-1)
+         ->limit(500)
+         ->get();
+
+         $total_counting = card_registation::where('card_id','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_address_details','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_apartment_no','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_district','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_division','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_house_no','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_road_no','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_upzilla','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_Thana','LIKE','%'.$search_value.'%')
+         ->orWhere('cda_village','LIKE','%'.$search_value.'%')
+         ->orWhere('date_of_birth','LIKE','%'.$search_value.'%')
+         ->orWhere('district','LIKE','%'.$search_value.'%')
+         ->orWhere('division','LIKE','%'.$search_value.'%')
+         ->orWhere('email','LIKE','%'.$search_value.'%')
+         ->orWhere('full_name','LIKE','%'.$search_value.'%')
+         ->orWhere('gender','LIKE','%'.$search_value.'%')
+         ->orWhere('nationality','LIKE','%'.$search_value.'%')
+         ->orWhere('phone_number','LIKE','%'.$search_value.'%')
+         ->orWhere('reference_code','LIKE','%'.$search_value.'%')
+         ->orWhere('mediam','LIKE','%'.$search_value.'%')
+         ->orWhere('profession','LIKE','%'.$search_value.'%')
+         ->orWhere('register_date','LIKE','%'.$search_value.'%')
+         ->orWhere('invoice_number','LIKE','%'.$search_value.'%')
+         ->get();
+
+        
+         $total_count = count( $total_counting);
+         return json_encode( array('data'=>$data,'total_count'=>$total_count)); 
+
+      }
+    
     }
+
+    public function invoice($card_id){
+      $data =  card_registation::where(['card_id'=>$card_id])->get();
+      return view('invoice',['data'=>$data]);
+
+    }
+
+    
+    public function print_invoice($card_id){
+      $data =  card_registation::where(['card_id'=>$card_id])->get();
+      return view('print_invoice',['data'=>$data]);
+
+    }
+
+
     public function dashboard(){
 
    

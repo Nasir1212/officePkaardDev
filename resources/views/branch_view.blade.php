@@ -85,8 +85,8 @@ background: darkgrey;
             <tr>
               <th scope="col">#</th>
               <th scope="col">Name</th>
-              <th scope="col">District</th>
               <th scope="col">Mail</th>
+              <th scope="col">District</th>
               <th scope="col">Reference Code </th>
               <th scope="col">Action</th>
              
