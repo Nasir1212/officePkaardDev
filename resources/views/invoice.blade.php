@@ -263,7 +263,7 @@ margin-top:20px;
 <script>
  function print_invoice(card_id){
    
-let mywindow = window.open(`http://127.0.0.1:8000/print_invoice/${card_id}`,"_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=5,left=5,width=1200,height=1000");
+let mywindow = window.open(`${location.origin}/print_invoice/${card_id}`,"_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=5,left=5,width=1200,height=1000");
 mywindow.focus(); // necessary for IE >= 10*/
 
 mywindow.print();

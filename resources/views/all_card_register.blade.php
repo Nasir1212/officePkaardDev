@@ -185,6 +185,15 @@
   <script src="{{ asset('assets/dist/js/adminlte.min.js')}}"></script> --}}
   <script>
 
+function print_invoice(card_id){
+   
+   let mywindow = window.open(`${location.origin}/print_invoice/${card_id}`,"_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=5,left=5,width=1200,height=1000");
+   mywindow.focus(); // necessary for IE >= 10*/
+   
+   mywindow.print();
+   
+    }
+
 function search_by_input(e){
   if(e.value.length <=0){
     sessionStorage.setItem("increment",501)
@@ -192,7 +201,6 @@ function search_by_input(e){
   get_all_card_register()
 
 }
-
 
 window.onscroll=(evt)=>{
 const {scrollTop,clientHeight,scrollHeight} = document.documentElement;
@@ -580,11 +588,11 @@ data['data'].forEach(fdata=>{
               <a class="btn btn-warning btn-outline-danger font-weight-bold" href="invoice/${fdata['card_id']}">
                 <span id="icon_on" class="material-symbols-outlined   cursor-pointer" style="display: block; cursor: pointer !important;"> visibility  </span>
               </a>
-              <a class="btn btn-warning btn-outline-danger font-weight-bold">
-                <span class="material-symbols-outlined"  style="display: block; cursor: pointer !important;">
-                  picture_as_pdf
-                  </span>
+
+              <a class="btn btn-warning btn-outline-danger font-weight-bold" onclick="print_invoice('${fdata['card_id']}')">
+               <span class="material-symbols-outlined">print</span>
                 </a>
+
 
                 <a  class="btn btn-warning btn-outline-danger font-weight-bold" onclick="showModel('${fdata['id']}')">
                   <span class="material-symbols-outlined">

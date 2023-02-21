@@ -24,8 +24,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active">Franchiac summary </li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -40,7 +40,7 @@
 
         
     <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
+        <h3 class="card-title">Franchiac summary</h3>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
@@ -49,7 +49,10 @@
                
                 <ul id="show_district" class="row">
                   @if(Session::get('mode')=='branch')
-                  <div class='col-3'>
+                 
+
+                
+                  <div class='col-12'>
                     <div class="small-box  bg-success">
                         <div class="inner">
                           <h3>53<sup style="font-size: 20px"></sup></h3>
@@ -59,7 +62,12 @@
                         <div class="icon">
                           <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="{{url('Franchiac_summary_details')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        @foreach(Session::get('data') as $value)
+                      <?php $url = "Franchiac_summary_details/".$value['reference_code'] ?>
+
+                        <a href="{{url($url)}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+                        @endforeach
                       </div>
                 </div>
                  @endif
@@ -84,17 +92,9 @@
 
 
     // console.log(District)
-    @if(Session::get('mode')=='admin')
+@if(Session::get('mode')=='admin')
 window.onload= ()=>{
-
-  
-
-  showing_branch()
-
-   
-    
-//let branch = ['Chattogram','Dhaka','Comilla','Sherpur','Satkhira','Feni','Khulna','Mymensingh','Panchagarh','Gopalganj','Kushtia','Nilphamari','Dinajpur','Coxsbazar'];
-   
+showing_branch()   
 }
 
 async function showing_branch(){

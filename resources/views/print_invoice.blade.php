@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Invoice</title>
+    <title>Invoice {{$data[0]['card_id']}}</title>
     <link rel="stylesheet" href="https://pkaard.com/assets/css/bootstrap.min.css">
 </head>
 <body>
@@ -261,30 +261,6 @@ margin-top:20px;
        </div>
   </div>
 </div>
-
-
-<script>
- function print_invoice(){
-    let mywindow = window.open('', '','height=650,width=1200','titlebar=no');
-
-mywindow.document.write(`<html><head><style>${document.getElementById("invoice_style").innerHTML}</style><title>invoice</title>`);
-mywindow.document.write('</head><body >');
-mywindow.document.write(document.getElementsByClassName("main")[0].innerHTML);
-mywindow.document.write('</body></html>');
-
-mywindow.document.close(); // necessary for IE >= 10
-mywindow.focus(); // necessary for IE >= 10*/
-
-mywindow.print();
-mywindow.close();
-console.log(document.getElementsByClassName("main")[0].innerHTML)
-console.log(document.getElementById("invoice_style").innerHTML)
-return true;
-
- }
-</script>
-   
+  
 </body>
 </html>
-{{-- 
-@endsection --}}

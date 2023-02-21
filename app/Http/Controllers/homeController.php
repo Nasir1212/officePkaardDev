@@ -363,7 +363,21 @@ class homeController extends Controller
          // return $req->session()->get('is_login');
           return $req->session()->all();
       }else{
-         return json_encode(array('condition'=>false,'message'=>'Email or Passwrod not matched'));
+
+         $result =  Reference_rogram::where(['phone'=>$mail,'password'=>$password])->count();
+         if($result==1){
+            $data =  Reference_rogram::where(['phone'=>$mail,'password'=>$password])->get();
+            $req->session()->put(['data'=>$data]);
+            $req->session()->put(['mode'=>'reference_rogram']);
+            $req->session()->put(['is_login'=>true]);
+            // return redirect('/');
+            // return $req->session()->get('is_login');
+             return $req->session()->all();
+         }else{
+            return json_encode(array('condition'=>false,'message'=>'Email/Phone or Passwrod not matched'));
+
+         }
+
 
       }
       }

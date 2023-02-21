@@ -162,13 +162,8 @@
         </div>
       </li>
 
-      
-
-
-      {{-- <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li> --}}
-
+    
+      @if(Session::get('mode')=='branch'||Session::get('mode')=='reference_rogram')
       <li class="nav-item dropdown">
         <a class="nav-link"  href="{{url('profile')}}" title="porfile">
           {{-- <i class="far fa-comments"></i> --}}
@@ -178,7 +173,7 @@
         </a>
       
       </li>
-
+@endif
 
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -317,6 +312,9 @@
           
           @endif
 
+          
+          @if(Session::get('mode')=='admin')
+
           <li class="nav-item">
             <a href="{{url('Franchiac_summary')}}" class="nav-link">
               <i class="nav-icon fas fa-tree"></i>
@@ -326,7 +324,7 @@
               </p>
             </a>
           </li>
-          @if(Session::get('mode')=='admin')
+
           <li class="nav-item">
             <a href="{{url('communication_view')}}" class="nav-link">
               <i class="nav-icon fas fa-tree"></i>
@@ -383,7 +381,27 @@
 
           @endif
 
+          @if(Session::get('mode')=='branch'||Session::get('mode')=='reference_rogram')
+                 
+          <li class="nav-item">
+            @foreach(Session::get('data') as $value)
+            <?php $url = "Franchiac_summary_details/".$value['reference_code'] ?>
+
+              <a href="{{url($url)}}" class="nav-link">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                  Franchiac summary
+                  {{-- <span class="right badge badge-danger">New</span> --}}
+                </p>
+              </a>
+              @endforeach
           
+          </li>
+          
+               
+           
+      
+         @endif
 
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -454,7 +472,7 @@
 <!-- ./wrapper -->
 <script>
   function logout_auth(){
-    fetch(`logout_auth`)
+    fetch(`${location.origin}/logout_auth`)
     .then(response=>response.json())
     .then(data=>{
       console.log(data)

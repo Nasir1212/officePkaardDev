@@ -45,7 +45,7 @@
           <!-- /.col -->
           <div class="col-12">
             <button type="button"onclick="selecting('admin');" class="btn btn-primary btn-block">Admin User</button>
-            <button type="button"onclick="selecting('branch');" class="btn btn-primary btn-block">Branch User</button>
+            <button type="button"onclick="selecting('branch');" class="btn btn-primary btn-block">Branch/Reference Program User</button>
           </div>
           <!-- /.col -->
         </div>

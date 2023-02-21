@@ -31,7 +31,7 @@
 
       <form name="login_data">
         <div class="input-group mb-3">
-          <input type="email" name="mail" class="form-control" placeholder="Email">
+          <input type="email" name="mail" class="form-control" placeholder="Email/Phone">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>

@@ -68,7 +68,6 @@ Route::post('/admin_otp_check','App\Http\Controllers\homeController@admin_otp_ch
 Route::get('/invoice/{card_id}','App\Http\Controllers\homeController@invoice')->middleware('login');
 
 Route::get('/print_invoice/{card_id}','App\Http\Controllers\homeController@print_invoice')->middleware('login');
-
 Route::get('/counting_by_reference','App\Http\Controllers\homeController@counting_by_reference')->middleware('login');
 Route::get('/handle_reperence_program_action/{id}/{action}','App\Http\Controllers\homeController@handle_reperence_program_action')->middleware('login');
 Route::get('/get_one_data_card_register/{id}','App\Http\Controllers\homeController@get_one_data_card_register')->middleware('login');
