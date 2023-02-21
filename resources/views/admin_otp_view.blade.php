@@ -85,8 +85,8 @@ headers: new Headers({
 
 .then(response=>response.json())
 .then(data=>{
-  console.log(data);
-  SessionExport.setSession(data);
+  
+  SessionExport.setLocalStorage(data);
 if(data['is_login']==true){
   location.href = `${location.origin}/`;
 }else{
@@ -96,6 +96,7 @@ if(data['is_login']==true){
 })
     
     }
+   
 </script>
 
 </body>

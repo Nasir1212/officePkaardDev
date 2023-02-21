@@ -278,7 +278,7 @@
           @if(Session::get('mode')=='admin')
           <li class="nav-item">
             <a href="{{url('list_register')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon ion ion-clipboard mr-1"></i>
               <p>
                 List Card Register
                 {{-- <span class="right badge badge-danger">New</span> --}}
@@ -292,7 +292,7 @@
      
           <li class="nav-item">
             <a href="{{url('corporate_report')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-file"></i>
               <p>
              Corporate Report
                 {{-- <span class="right badge badge-danger">New</span> --}}
@@ -327,7 +327,7 @@
 
           <li class="nav-item">
             <a href="{{url('communication_view')}}" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class=" nav-icon far fa-circle nav-icon"></i>
               <p>
                 Communication 
                 {{-- <span class="right badge badge-danger">New</span> --}}
@@ -337,7 +337,7 @@
      
           <li class="nav-item">
             <a href="{{url('add_card_user')}}" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon fas fa-copy"></i>
               <p>
                 Add Card User 
 
@@ -349,7 +349,7 @@
         
           <li class="nav-item">
             <a href="{{url('excel')}}" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon far fa-plus-square"></i>
               <p>
                 Excel File upload
               
@@ -362,7 +362,7 @@
 
           <li class="nav-item">
             <a href="{{url('branch')}}" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon fas fa-book"></i>
               <p>
                 Branch 
                 {{-- <span class="right badge badge-danger">New</span> --}}
@@ -371,7 +371,7 @@
           </li>
           <li class="nav-item">
             <a href="{{url('reference_program_view')}}" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon far fa-circle text-warning"></i>
               <p>
                 Reference  Program 
                 {{-- <span class="right badge badge-danger">New</span> --}}
@@ -477,6 +477,7 @@
     .then(data=>{
       console.log(data)
       if(data['condition']==true){
+        localStorage.UserData ='';
         location.reload();
       }
     })

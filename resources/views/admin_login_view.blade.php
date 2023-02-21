@@ -48,7 +48,7 @@
           <!-- /.col -->
         </div>
       </form>
-
+      
      
       <!-- /.social-auth-links -->
 
@@ -67,8 +67,29 @@
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="{{ asset('assets/js/SessionExport.js')}}"></script>
 
 <script>
+ <?php session(['oneTime' => rand(100000,999999) ]); ?>;
+
+ let otp = {{ session()->get('oneTime') }};
+console.log(otp);
+
+  window.onload = async ()=>{
+   let local_data = SessionExport.localStorage() ;
+  
+   if(local_data['is_login']==true){
+    console.log('login_atumatic')
+    const response1 = await fetch(`${location.origin}/login_atumatic/${otp}`)
+   const result  = await response1.json()
+   console.log(result)
+   if(result['login_info']==true){
+    location.href = `${location.origin}/`;
+   }
+   }
+  }
     function login_check(){
         let login_info =  Object.fromEntries(new FormData(document.forms['login_data']));
     

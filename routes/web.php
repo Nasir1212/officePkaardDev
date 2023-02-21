@@ -18,6 +18,9 @@ Route::get('/login',function(){
     return view('login_view');
 });
 
+
+Route::get('/login_atumatic/{otp}','App\Http\Controllers\homeController@login_atumatic');
+
 Route::get('/selecting_login',function(){
     return view('selecting_login');
 });

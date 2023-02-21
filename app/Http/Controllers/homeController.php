@@ -740,4 +740,16 @@ if($result){
 }
    }
 
+   public function login_atumatic($otp){
+     if($otp == session()->get('oneTime')):
+           
+      session()->put(['mode'=>'admin']);
+      session()->put(['is_login'=>true]);
+      
+    return  json_encode(array('login_info'=> session()->get('is_login')));
+     else:
+      json_encode(array('login_info'=>false)); ;
+     endif;
+   }
+
 }
