@@ -285,9 +285,8 @@
               </p>
             </a>
           </li>
-          
-   
 
+          
       
      
           <li class="nav-item">
@@ -340,8 +339,6 @@
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Add Card User 
-
-                
                 {{-- <span class="right badge badge-danger">New</span> --}}
               </p>
             </a>
@@ -379,6 +376,20 @@
             </a>
           </li>
 
+                    
+          <li class="nav-item">
+            <a href="{{url('all_withdraw_requested_view')}}" class="nav-link">
+              <i class='nav-icon  fas fa-hand-holding-usd'></i>
+              <p>
+               List Withdraw Request
+                {{-- <span class="right badge badge-danger">New</span> --}}
+              </p>
+            </a>
+          </li>
+          
+   
+         
+
           @endif
 
           @if(Session::get('mode')=='branch'||Session::get('mode')=='reference_rogram')
@@ -402,6 +413,16 @@
            
       
          @endif
+
+         <li class="nav-item">
+          <a href="{{url('Campain_chart_view')}}" class="nav-link">
+            <i class="nav-icon fas fa-chess-knight"></i>
+            <p>
+              Campain Chart
+              {{-- <span class="right badge badge-danger">New</span> --}}
+            </p>
+          </a>
+        </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">

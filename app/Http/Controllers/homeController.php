@@ -794,4 +794,50 @@ if($result){
    
    }
 
+   public function all_withdraw_requested(){
+     $data  =  \DB::select("SELECT `withdraw_payment`.*,`all_reference`.`wallet` FROM `withdraw_payment` LEFT JOIN `all_reference` ON `withdraw_payment`.`requester_refe`=`all_reference`.`reference_code` WHERE  `withdraw_payment`.`status` = 1");
+      return view("all_withdraw_requested_view",['data'=>$data]);
+   }
+
+   public function pay_payment($id){
+      $withdraw_payment_data = Withdraw_payment::where(['id'=>$id])->get();
+      $total_wallet =  All_Reference::where(['reference_code'=>$withdraw_payment_data[0]['requester_refe']])->get()[0]['wallet'];
+      $sub_wallet = $total_wallet-$withdraw_payment_data[0]['amount'];
+     $result1 =  All_Reference::where(['reference_code'=>$withdraw_payment_data[0]['requester_refe']])->update([
+         'wallet'=>$sub_wallet
+      ]);
+      if( $result1):
+$result = Withdraw_payment::where(['id'=>$id])->update([
+   'status'=>2,
+   'paied_date'=>date('Y/m/d')
+]);
+
+if( $result){
+   return json_encode(array('condition'=>true,'message'=>'Successfully Paid'));
+}else{
+   return json_encode(array('condition'=>false ,'message'=>'Opps faild'));
+}
+
+endif;
+
+return json_encode(array('condition'=>false ,'message'=>'Amount Updated Failed'));
+   }
+
+   public function withdraw_request_client_view(){
+      return view('withdraw_request_client_view');
+   }
+
+
+   public function  withdraw_history_view(){
+      $reference_code= $req->session()->get('data')[0]['reference_code'];
+      $data = Withdraw_payment::where(['requester_refe'=>$reference_code,'status'=>2])->get();
+
+      return view('withdraw_history_view',['data'=>$data]);
+   }
+
+
+   public function Campain_chart_view(){
+     return view('Campain_chart_view');
+   }
+
 }

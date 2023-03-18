@@ -126,4 +126,17 @@ Route::get('add_card_user',function(){
     return view('add_card_user_view');
 })->middleware('login');
 
+
+Route::get('all_withdraw_requested_view','App\Http\Controllers\homeController@all_withdraw_requested')->middleware('login');
+
+
 Route::post('withdraw_request','App\Http\Controllers\homeController@withdraw_request')->middleware('login');
+Route::get('pay_payment/{id}','App\Http\Controllers\homeController@pay_payment')->middleware('login');
+Route::get('withdraw_history_view/','App\Http\Controllers\homeController@withdraw_history_view')->middleware('login');
+
+Route::get('withdraw_request_client_view/','App\Http\Controllers\homeController@withdraw_request_client_view')->middleware('login');
+
+
+Route::get('Campain_chart_view/','App\Http\Controllers\homeController@Campain_chart_view')->middleware('login');
+
+
