@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routes  
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -35,6 +35,10 @@ Route::get('/admin_otp',function(){
     return view('admin_otp_view');
 });
 
+
+Route::get('/withdraw_view',function(){
+    return view('withdraw_view');
+});
 
 Route::get('/excel',function(){
     return view('exce_upload_view');
@@ -121,3 +125,5 @@ Route::get('communication_view',function(){
 Route::get('add_card_user',function(){
     return view('add_card_user_view');
 })->middleware('login');
+
+Route::post('withdraw_request','App\Http\Controllers\homeController@withdraw_request')->middleware('login');

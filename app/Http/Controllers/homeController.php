@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Shuchkin\SimpleXLSX;
 
 use Illuminate\Http\Request;
+use App\Models\Withdraw_payment;
 use App\Models\card_registation;
 use App\Models\branch_user;
 use App\Models\OTP;
@@ -750,6 +751,47 @@ if($result){
      else:
       json_encode(array('login_info'=>false)); ;
      endif;
+   }
+
+   public function withdraw_request(Request $req){
+      $tranjection_type= $req->input('tranjection_type'); 
+      $tranjection_name= $req->input('tranjection_name'); 
+      $tranjection_number= $req->input('tranjection_number'); 
+      $amount= $req->input('amount'); 
+      $mfs_type= $req->input('mfs_type'); 
+
+      $reference_code= $req->session()->get('data')[0]['reference_code'];
+     $sum =   Withdraw_payment::where(['requester_refe'=>$reference_code,'status'=>1])->sum('amount')+$amount;
+    $wallet =   All_Reference::where(['reference_code'=>$reference_code])->get()[0]['wallet'];
+   //  return json_encode(array('sum'=>$sum));  
+    
+    if($sum > $wallet){
+      return json_encode(array('condition'=>false,'message'=>"Your requested amount is more than your wallet"));  
+
+    }else{
+      $result =  Withdraw_payment::insert([
+
+         'tranjection_type'=>$tranjection_type,
+         'tranjection_name'=>$tranjection_name,
+         'tranjection_number'=>$tranjection_number,
+         'mfs_type'=>$mfs_type,
+         'amount'=>$amount,
+         'requester_refe'=>$reference_code,
+         'requested_date'=>date('Y/m/d'),
+               
+         
+      ]);
+
+      if( $result){
+         return json_encode(array('condition'=>true,'message'=>'Submitted Data Successfully'));
+      }else{
+         return json_encode(array('condition'=>false ,'message'=>'Submitted Data Failed'));
+      }
+
+
+    }
+   
+   
    }
 
 }

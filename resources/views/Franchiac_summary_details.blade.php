@@ -47,7 +47,10 @@
         
     <div class="card-header">
         <h3 class="card-title">Franchiac summary Details</h3>
-        <button class="btn btn-warning float-right ml-1 mr-1">Affiliation Point </button>
+        <button class="btn btn-warning float-right ml-1 mr-1"><i class='fas fa-poll-h'></i>  Affiliation Point </button>
+        @if(Session::get('mode')=='branch'||Session::get('mode')=='reference_rogram')
+        <a href="/withdraw_view" class="btn btn-info  float-right ml-1 mr-1"> <i class='fas fa-money-bill-wave' ></i>  withdraw</a>
+      @endif
         <div class="float-right balance_btn">
 
             <div class="d-flex" style="height: 2.5rem;
@@ -72,8 +75,11 @@
                     Your Balance
                 </div>
             </div>
+
+           
            
         </div>
+
       </div>
       <!-- /.card-header -->
       <div class="card-body">
