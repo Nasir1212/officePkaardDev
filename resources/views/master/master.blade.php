@@ -387,7 +387,16 @@
             </a>
           </li>
           
-   
+          <li class="nav-item">
+            <a href="{{url('Campain_chart_view')}}" class="nav-link">
+              <i class="nav-icon fas fa-chess-knight"></i>
+              <p>
+                Campain Chart
+                {{-- <span class="right badge badge-danger">New</span> --}}
+              </p>
+            </a>
+          </li>
+  
          
 
           @endif
@@ -410,20 +419,22 @@
           </li>
           
                
-           
+          
+
+          <li class="nav-item">
+            <a href="{{url('Campain_chart_Franchiac_view')}}" class="nav-link">
+              <i class="nav-icon fas fa-chess-knight"></i>
+              <p>
+                My Campain Chart
+                {{-- <span class="right badge badge-danger">New</span> --}}
+              </p>
+            </a>
+          </li>
+  
       
          @endif
 
-         <li class="nav-item">
-          <a href="{{url('Campain_chart_view')}}" class="nav-link">
-            <i class="nav-icon fas fa-chess-knight"></i>
-            <p>
-              Campain Chart
-              {{-- <span class="right badge badge-danger">New</span> --}}
-            </p>
-          </a>
-        </li>
-
+     
           <li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="fas fa-inbox"></i>

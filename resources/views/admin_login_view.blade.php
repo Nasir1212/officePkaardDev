@@ -22,7 +22,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-warning">
     <div class="card-header text-center">
-      <a class="h1"><b>Pkaard</b></a>
+      <a class="h1"><b><img style="width:200px ;height:100px" src="https://pkaard.com/assets/images/pkaard_logo.jpeg" alt="Pkaard"></b></a>
     </div>
     <div class="card-body">
       <p class="login-box-msg h3">Admin</p>

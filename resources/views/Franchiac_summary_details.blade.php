@@ -185,6 +185,11 @@
                     
                 </div>
 
+                <div class="float-left ml-2">
+                  <a href="" class="btn btn-danger">Current Revinue <b>10%</b></a>
+                  
+              </div>
+
                 <div class="float-right">
                     <a href="{{url('overall_report')}}" class="btn btn-info">Overall Report</a>
                     <a href="" class="btn btn-warning">Revenue Summary</a>

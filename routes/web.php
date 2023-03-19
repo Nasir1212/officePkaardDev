@@ -138,5 +138,7 @@ Route::get('withdraw_request_client_view/','App\Http\Controllers\homeController@
 
 
 Route::get('Campain_chart_view/','App\Http\Controllers\homeController@Campain_chart_view')->middleware('login');
+Route::get('Campain_chart_Franchiac_view/','App\Http\Controllers\homeController@Campain_chart_Franchiac_view')->middleware('login');
+Route::get('change_percentage_campin/{id}/{value}','App\Http\Controllers\homeController@change_percentage_campin')->middleware('login');
 
 

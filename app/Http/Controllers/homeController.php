@@ -5,6 +5,7 @@ use Shuchkin\SimpleXLSX;
 
 use Illuminate\Http\Request;
 use App\Models\Withdraw_payment;
+use App\Models\Campain_chart;
 use App\Models\card_registation;
 use App\Models\branch_user;
 use App\Models\OTP;
@@ -837,7 +838,24 @@ return json_encode(array('condition'=>false ,'message'=>'Amount Updated Failed')
 
 
    public function Campain_chart_view(){
-     return view('Campain_chart_view');
+      $campain = Campain_chart::all();
+     return view('Campain_chart_view',['campain'=>$campain]);
    }
 
+   public function Campain_chart_Franchiac_view(){
+      $campain = Campain_chart::all();
+      return view("Campain_chart_Franchiac_view",['campain'=>$campain]);
+   }
+
+   public function change_percentage_campin($id,$value){
+    $result =   Campain_chart::where(['id'=>$id])->update([
+         'percentage'=>$value
+      ]);
+
+      if( $result){
+         return json_encode(array('condition'=>true,'message'=>'Changed Successfully'));
+      }else{
+         return json_encode(array('condition'=>false ,'message'=>'Changed  Failed'));
+      }
+   }
 }

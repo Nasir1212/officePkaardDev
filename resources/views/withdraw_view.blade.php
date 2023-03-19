@@ -175,9 +175,25 @@ let real_bank = /*html*/`
           </div>
           
           <div class="form-group col-sm-12 col-md-12 col-lg-12">
-            <label for="tranjection_number">Bank Number</label>
+            <label for="tranjection_number">Account Holder Name</label>
               <input  class="form-control" type="text" name="tranjection_number" id="tranjection_number" placeholder="Enter Bank Number">
           </div>
+
+          <div class="form-group col-sm-12 col-md-12 col-lg-12">
+            <label for="tranjection_number">Account  Number</label>
+              <input  class="form-control" type="text" name="tranjection_number" id="tranjection_number" placeholder="Enter Bank Number">
+          </div>
+
+          <div class="form-group col-sm-12 col-md-12 col-lg-12">
+            <label for="tranjection_number">Branch Name</label>
+              <input  class="form-control" type="text" name="tranjection_number" id="tranjection_number" placeholder="Enter Bank Number">
+          </div>
+
+          <div class="form-group col-sm-12 col-md-12 col-lg-12">
+            <label for="tranjection_number">Routing  Number</label>
+              <input  class="form-control" type="text" name="tranjection_number" id="tranjection_number" placeholder="Enter Bank Number">
+          </div>
+
 
          
               <input  class="form-control" type="hidden" name="mfs_type" id="mfs_type" value="1" placeholder="Enter Bank Number">
