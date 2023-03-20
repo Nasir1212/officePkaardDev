@@ -141,4 +141,8 @@ Route::get('Campain_chart_view/','App\Http\Controllers\homeController@Campain_ch
 Route::get('Campain_chart_Franchiac_view/','App\Http\Controllers\homeController@Campain_chart_Franchiac_view')->middleware('login');
 Route::get('change_percentage_campin/{id}/{value}','App\Http\Controllers\homeController@change_percentage_campin')->middleware('login');
 
+Route::get('franchise_profile_form_view',function(){
+    return view('franchise_profile_form_view');
+})->middleware('login');
+
 

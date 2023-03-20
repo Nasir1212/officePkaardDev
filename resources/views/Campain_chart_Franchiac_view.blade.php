@@ -75,7 +75,7 @@
             <tbody>
                 {{-- {{dd($campain)}} --}}
                 <?php $id = 1 ?>
-                <?php $Card  = 237 ?>
+                <?php $Card  = 340 ?>
               
                               
 @foreach($campain as $cam)
@@ -96,10 +96,10 @@
                 <td> <b>{{ $cam->percentage}}%</b> </td>
                 @if($Card >= $kpi_ex[0] && $Card <= $kpi_ex[1])
                 <td>{{$Card}}</td>
-                <td>{{$Card * $cam->percentage/100}} TK</td>
+                <td>{{$Card *(200*$cam->percentage/100)}} TK</td>
                 @elseif($Card >  $kpi_ex[0] )
                 <td>Won</td>
-                <td>Jump</td>
+                <td>Jump <b class=" text-muted">{{$kpi_ex[1] *(200*$cam->percentage/100)}} TK</b> </td>
                 @else 
                 <td>Try To Win</td>
                 <td>0.00 TK</td>

@@ -30,10 +30,34 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
 
+          <label for="">Campain Start</label>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+            </div>
+            <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric">
+          </div>
+          </div>
+
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+          <label for="">Campain Deadline</label>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+            </div>
+            <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric">
+          </div>
+        </div>
+
+      </div>
         <table class="table table-bordered table-striped table-hover">
-            <thead>
+            <thead >
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">KPI</th>
@@ -41,24 +65,120 @@
                 <th scope="col">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="campain_table">
               <?php $i = 1; ?>
               @foreach($campain as $cam)
               <tr>
                 <td>{{$i++}}</td>
               
-                <td>{{$cam->kpi}}</td>
-                <td><input class="form-control" type="text" value="{{$cam->percentage}}%"></td>
+                <td><input id="kpi" class="form-control" style="width:7.5rem" type="text" value="{{$cam->kpi}}"> </td>
+                <td><input id="percentage" class="form-control" style="width:7.5rem" type="text" value="{{$cam->percentage}}%"></td>
                 
-                <td> <button onclick="change_percentage_campin('{{$cam->id}}',this)" class="btn btn-info">Change</button> </td>
+                <td>
+                   <button onclick="change_percentage_campin('{{$cam->id}}',this)" class="btn btn-sm btn-info"><i class='far fa-edit'></i> Change</button>
+                  ||
+
+                  <button onclick="change_percentage_campin('{{$cam->id}}',this)" class="btn btn-sm btn-danger"> <i class="fa fa-trash"></i> Delete</button>
+
+                  </td>
 
               </tr>
 @endforeach
+
+             
              
 
             <tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3">
+                   
+                  </td>
+                  <td>
+                    <button onclick="new_campain()" class="btn btn-sm btn-outline-warning d-flex justify-center">New Campain</button>
+                   
+
+
+                  </td>
+                </tr>
+              </tfoot>
 
             </table>
+            <div class="row">
+              <div class="w-100 d-flex justify-content-around">
+                <button class="btn btn-lg btn-info"><i class="fa fa-bullseye"></i> Campain Start</button>
+                <button  class="btn btn-lg btn-secondary" ><i class="fa fa-calculator" > </i> Campain Calculate</button>
+
+              </div>
+
+            
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <table class="table table-bordered table-striped table-hover">
+                  <thead >
+                    <tr>
+                  
+                      <th scope="col">Title </th>
+                      <th scope="col">Info</th>
+                    </tr>
+                  </thead>
+                    <tbody>
+                    <tr>
+                      <td>Total Card Registation</td>
+                      <td>3000</td>
+                    </tr>
+
+                    <tr>
+                      <td>Total  Income</td>
+                      <td>600,000 TK</td>
+                    </tr>
+
+                    <tr>
+                      <td>Company Income</td>
+                      <td>500,000 TK</td>
+                    </tr>
+
+                    <tr>
+                      <td>Franchiac  Income</td>
+                      <td>100,000 TK</td>
+                    </tr>
+
+                    <tr>
+                      <td>1-100 KPI</td>
+                      <td>card 1000  Person 10</td>
+                    </tr>
+
+                    <tr>
+                      <td>101-200 KPI</td>
+                      <td>card 800  Person 7</td>
+                    </tr>
+
+                    <tr>
+                      <td>201-300 KPI</td>
+                      <td>card 300  Person 10</td>
+                    </tr>
+
+                    <tr>
+                      <td>301-400 KPI</td>
+                      <td>card 600  Person 15</td>
+                    </tr>
+
+                    <tr>
+                      <td>401-500 KPI</td>
+                      <td>card 1000  Person 2</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+              </div>
+            </div>
+<div>
+  <button class="btn btn-info float-right"><i class="fa fa-download" aria-hidden="true"></i> Download </button>
+</div>
+            <br>
+            <br>
 
       </div><!-- /.container-fluid -->
     </section>
@@ -72,6 +192,9 @@ function change_percentage_campin(id,evt){
 let ele = evt.parentElement.previousElementSibling.children[0].value;
 console.log(ele)
 
+
+
+return true;
 fetch(`change_percentage_campin/${id}/${ele.replace('%','')}`)
 .then(response=>response.json())
 .then(data=>{
@@ -89,6 +212,37 @@ fetch(`change_percentage_campin/${id}/${ele.replace('%','')}`)
 })
 console.log(ele.replace('%',''))
 }
+
+function new_campain(){
+ 
+  console.log(campain_table.children[campain_table.children.length-1].children[0].innerText);
+let td = `
+  <td>${Number(campain_table.children[campain_table.children.length-1].children[0].innerText)+1}</td>
+  <td><input class="form-control" style="width:7.5rem" type="text" value=""></td>
+  <td><input class="form-control" style="width:7.5rem" type="text" value=""></td>
+  <td>
+    
+    <button onclick="" class="btn btn-sm btn-outline-success"><i class='fas fa-clone'></i> Submit</button>
+    ||
+
+    <button onclick="" class="btn btn-sm btn-outline-danger"> <i class='fas fa-cut'></i> Remove</button>
+
+    </td>
+`;
+
+let tr = document.createElement('tr');
+tr.innerHTML = td;
+
+campain_table.append(tr);
+}
+
+
+//Datemask dd/mm/yyyy
+$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
 </script>
 
 
