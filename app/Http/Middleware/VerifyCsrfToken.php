@@ -26,6 +26,8 @@ class VerifyCsrfToken extends Middleware
         'excel_file_refere',
         'add_reference_rogram',
         'update_reference_program',
-        'withdraw_request'
+        'withdraw_request',
+        'franchise_profile_form_insert',
+        'genereting_report'
     ];
 }

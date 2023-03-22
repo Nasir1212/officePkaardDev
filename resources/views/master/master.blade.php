@@ -33,7 +33,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Galada&family=Mina&family=Roboto:ital,wght@0,500;1,300&display=swap" rel="stylesheet">
   <link href="https://fonts.maateen.me/bangla/font.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<!-- jQuery -->
+  <script>
+   
+  function is_franchise_profil_submitted_data(){
+      fetch(`${location.origin}/is_franchise_profil_submitted_data`)
+
+      .then(response => response.json())
+      .then(data => {
+console.log(data)
+
+if(data['condition']==false){
+  location.href = `${location.origin}/franchise_profile_form_view`;
+}
+
+
+      })
+
+    }
+
+    is_franchise_profil_submitted_data();
+  </script>
+  <!-- jQuery -->
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
@@ -55,6 +75,8 @@
     font-family: 'Bangla', Arial, sans-serif !important;
   }
 </style>
+
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

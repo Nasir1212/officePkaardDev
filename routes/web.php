@@ -108,7 +108,7 @@ Route::get('/Franchiac_summary',function(){
 
 Route::get('Franchiac_summary_details/{reference_code}','App\Http\Controllers\homeController@Franchiac_summary_details')->middleware('login');
 
-Route::get('overall_report',function(){
+Route::get('overall_report/{reference_code}',function(){
     return view('overall_report_view');
 })->middleware('login');
 Route::get('corporate_report',function(){
@@ -132,17 +132,20 @@ Route::get('all_withdraw_requested_view','App\Http\Controllers\homeController@al
 
 Route::post('withdraw_request','App\Http\Controllers\homeController@withdraw_request')->middleware('login');
 Route::get('pay_payment/{id}','App\Http\Controllers\homeController@pay_payment')->middleware('login');
-Route::get('withdraw_history_view/','App\Http\Controllers\homeController@withdraw_history_view')->middleware('login');
+Route::get('withdraw_history_view','App\Http\Controllers\homeController@withdraw_history_view')->middleware('login');
 
-Route::get('withdraw_request_client_view/','App\Http\Controllers\homeController@withdraw_request_client_view')->middleware('login');
+Route::get('withdraw_request_client_view','App\Http\Controllers\homeController@withdraw_request_client_view')->middleware('login');
 
 
-Route::get('Campain_chart_view/','App\Http\Controllers\homeController@Campain_chart_view')->middleware('login');
-Route::get('Campain_chart_Franchiac_view/','App\Http\Controllers\homeController@Campain_chart_Franchiac_view')->middleware('login');
+Route::get('Campain_chart_view','App\Http\Controllers\homeController@Campain_chart_view')->middleware('login');
+Route::get('Campain_chart_Franchiac_view','App\Http\Controllers\homeController@Campain_chart_Franchiac_view')->middleware('login');
 Route::get('change_percentage_campin/{id}/{value}','App\Http\Controllers\homeController@change_percentage_campin')->middleware('login');
 
 Route::get('franchise_profile_form_view',function(){
     return view('franchise_profile_form_view');
 })->middleware('login');
 
+Route::post('franchise_profile_form_insert','App\Http\Controllers\homeController@franchise_profile_form_insert')->middleware('login');
+Route::get('is_franchise_profil_submitted_data','App\Http\Controllers\homeController@is_franchise_profil_submitted_data')->middleware('login');
+Route::post('genereting_report','App\Http\Controllers\homeController@genereting_report')->middleware('login');
 

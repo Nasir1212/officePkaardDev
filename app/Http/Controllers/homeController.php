@@ -5,6 +5,7 @@ use Shuchkin\SimpleXLSX;
 
 use Illuminate\Http\Request;
 use App\Models\Withdraw_payment;
+use App\Models\franchise_profile;
 use App\Models\Campain_chart;
 use App\Models\card_registation;
 use App\Models\branch_user;
@@ -851,11 +852,128 @@ return json_encode(array('condition'=>false ,'message'=>'Amount Updated Failed')
     $result =   Campain_chart::where(['id'=>$id])->update([
          'percentage'=>$value
       ]);
+      
 
       if( $result){
          return json_encode(array('condition'=>true,'message'=>'Changed Successfully'));
       }else{
          return json_encode(array('condition'=>false ,'message'=>'Changed  Failed'));
       }
+   }
+
+   public function franchise_profile_form_insert(Request $req){
+
+            $account_holder_name=$req->input('account_holder_name');
+            $account_number=$req->input('account_number');
+            $bank_name=$req->input('bank_name');
+            $branch_name=$req->input('branch_name');
+            $date_of_birth=$req->input('date_of_birth');
+            $emergency_name=$req->input('emergency_name');
+            $emergency_phone=$req->input('emergency_phone');
+            $general_mail=$req->input('general_mail');
+            $mfs_name=$req->input('mfs_name');
+            $mfs_number=$req->input('mfs_number');
+            $mfs_type=$req->input('mfs_type');
+            $mobile_phone=$req->input('mobile_phone');
+            $name=$req->input('name');
+            $nid_no=$req->input('nid_no');
+            $office_address=$req->input('office_address');
+            $pkaard_mail=$req->input('pkaard_mail');
+            $routing_number=$req->input('routing_number');
+            $reference_code =$req->session()->get('data')[0]['reference_code']; ;
+            $insert_date = date('Y/m/d');
+            
+          $result =   franchise_profile::insert([
+               'account_holder_name'=>$account_holder_name,
+               'account_number'=>$account_number,
+               'bank_name'=>$bank_name,
+               'branch_name'=>$branch_name,
+               'date_of_birth'=>$date_of_birth,
+               'emergency_name'=>$emergency_name,
+               'emergency_phone'=>$emergency_phone,
+               'general_mail'=>$general_mail,
+               'mfs_name'=>$mfs_name,
+               'mfs_number'=>$mfs_number,
+               'mfs_type'=>$mfs_type,
+               'mobile_phone'=>$mobile_phone,
+               'name'=>$name,
+               'nid_no'=>$nid_no,
+               'office_address'=>$office_address,
+               'pkaard_mail'=>$pkaard_mail,
+               'routing_number'=>$routing_number,
+               'reference_code'=>$reference_code,
+               'insert_date'=>$insert_date
+            ]);
+
+            if($result){
+               return json_encode(array('condition'=>true,'message'=>'Submitted Successfully'));
+            }else{
+               return json_encode(array('condition'=>false ,'message'=>'Submitted  Failed'));
+            }
+
+   }
+
+   public function is_franchise_profil_submitted_data(){
+      if(session()->get('data')){
+         $reference_code =session()->get('data')[0]['reference_code'];
+         $is_find =  franchise_profile::where(['reference_code'=>$reference_code])->count();
+         if( $is_find==1){
+            return json_encode(array('condition'=>true));
+
+         }
+         return json_encode(array('condition'=>false));
+
+      }
+
+      return json_encode(array('condition'=>true));
+
+   }
+
+   public function genereting_report(Request $req){
+      // $reference_code =$req->session()->get('data')[0]['reference_code']; ;
+     
+      $reference_code = $req->input('reference_code');
+      
+        
+      if($req->has('per_year')){
+        
+       $per_year = $req->input('per_year');
+       $per_year_regis=  card_registation::where('register_date','LIKE',''.$per_year.'%')->where(['reference_code'=>$reference_code])->count();
+       $per_year_deliv =card_registation::where('register_date','LIKE',''.$per_year.'%')->where(['reference_code'=>$reference_code,'status'=>2])->count();
+      $per_year_return=  card_registation::where('register_date','LIKE',''.$per_year.'%')->where(['reference_code'=>$reference_code,'status'=>3])->count();
+      $per_year_revenue =  Withdraw_payment::where('paied_date','LIKE',''.$per_year.'%')->where(['requester_refe'=>$reference_code])->get();
+    
+    
+      return \json_encode(array('registation'=>$per_year_regis,'deliv'=>$per_year_deliv,'return'=>$per_year_return,'revenue'=>$per_year_revenue));
+      }
+
+      if($req->has('per_month')){
+          $per_month = $req->input('per_month');
+          $monthly_regis=  card_registation::where('register_date','LIKE',''.date('Y').'_'. $per_month.'___')->where(['reference_code'=>$reference_code])->count();
+          $per_month_deliv =card_registation::where('register_date','LIKE',''.date('Y').'_'. $per_month.'___')->where(['reference_code'=>$reference_code,'status'=>2])->count();
+         $per_month_return=  card_registation::where('register_date','LIKE',''.date('Y').'_'. $per_month.'___')->where(['reference_code'=>$reference_code,'status'=>3])->count();
+         $revenue =  Withdraw_payment::where('paied_date','LIKE',''.date('Y').'_'. $per_month.'___')->where(['requester_refe'=>$reference_code])->get();
+       
+       
+         return \json_encode(array('registation'=>$monthly_regis,'deliv'=>$per_month_deliv,'return'=>$per_month_return,'revenue'=>$revenue));
+      }
+
+          if($req->has('form_date')){
+      
+          $to_date= date_format(date_create($req->input('to_date')),"Y/m/d");
+          $form_date= date_format(date_create($req->input('form_date')),"Y/m/d");
+                 //return \DB::select("SELECT * FROM `card_registation` WHERE `register_date` >= '".date_format($form_date,'Y/m/d')." AND `register_date` <= '".date_format( $to_date,'Y/m/d')."'");
+               //   SELECT * FROM task
+               //   WHERE STR_TO_DATE(sdate, '%d-%m-%Y') < STR_TO_DATE('07-09-2017', '%d-%m-%Y');
+
+               $per_daily_regis = count(\DB::select("SELECT * FROM `card_registation` WHERE  DATE(register_date) >= '$form_date' AND  DATE(register_date) <= '$to_date' AND `reference_code`='$reference_code'"));
+               $per_daily_deliv = count(\DB::select("SELECT * FROM `card_registation` WHERE  DATE(register_date) >= '$form_date' AND  DATE(register_date) <= '$to_date' AND `reference_code`='$reference_code' AND `status`= 2"));
+               $per_daily_return = count(\DB::select("SELECT * FROM `card_registation` WHERE  DATE(register_date) >= '$form_date' AND  DATE(register_date) <= '$to_date' AND `reference_code`='$reference_code'  AND `status`= 3"));
+               $revenue = \DB::select("SELECT * FROM `withdraw_payment` WHERE  DATE(paied_date) >= '$form_date' AND  DATE(paied_date) <= '$to_date' AND `requester_refe`='$reference_code'");
+               return \json_encode(array('registation'=>$per_daily_regis,'deliv'=>$per_daily_deliv,'return'=>$per_daily_return,'revenue'=>$revenue));
+
+        }
+        
+      
    }
 }

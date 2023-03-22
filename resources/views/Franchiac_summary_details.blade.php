@@ -191,7 +191,15 @@
               </div>
 
                 <div class="float-right">
-                    <a href="{{url('overall_report')}}" class="btn btn-info">Overall Report</a>
+                  <?php 
+                  
+                  $url_para =  $_SERVER['REQUEST_URI'];
+
+                  $explode_param =  explode("/",$url_para);
+                  $reference_code  =  $explode_param[count($explode_param)-1];
+                  $url =  "overall_report/".$reference_code;
+                   ?>
+                    <a href="{{url($url)}}" class="btn btn-info">Overall Report</a>
                     <a href="" class="btn btn-warning">Revenue Summary</a>
                     
                 </div>
