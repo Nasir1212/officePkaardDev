@@ -344,7 +344,7 @@ data['revenue'].forEach((d=>{
 
 let RevenueTable = `
 <table class="table table-bordered table-striped table-hover">
-        <caption style="caption-side:top;text-align:center">Yearly Revenue Report</caption>
+        <caption style="caption-side:top;text-align:center">Generating Revenue Report</caption>
 
         <thead>
            <tr>
@@ -362,7 +362,7 @@ let RevenueTable = `
 
 let reg_ret_del_table = `
 <table class="table table-bordered table-striped table-hover">
-          <caption style="caption-side:top;text-align:center">Yearly Report</caption>
+          <caption style="caption-side:top;text-align:center">Generating Report</caption>
           <thead>
             <tr>
               <th>Title</th>

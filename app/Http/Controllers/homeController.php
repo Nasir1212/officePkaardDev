@@ -109,8 +109,18 @@ class homeController extends Controller
 
 
     public function dashboard(){
+     
+   if(session()->get('mode') =='branch' || session()->get('mode')== 'reference_rogram'){
+      $reference_code =session()->get('data')[0]['reference_code'];
 
-   
+      $total_reg = card_registation::where(['reference_code'=>$reference_code])->count();
+      $daily=  card_registation::where(['reference_code'=>$reference_code])->where(['register_date'=>date('Y/m/d')])->count();
+      $monthly= card_registation::where(['reference_code'=>$reference_code])->where('register_date','LIKE','_____'.date('m').'___')->count();
+
+      return view('dashboard',['total_reg'=>$total_reg,'daily'=>$daily,'monthly'=>$monthly]);
+
+
+   }
       $visitor = count( IP::where(['date'=>date('Y/m/d')])->get());
       $total_reg = count( card_registation::all());
       $daily=  count(card_registation::where(['register_date'=>date('Y/m/d')])->get());
@@ -754,6 +764,11 @@ if($result){
       json_encode(array('login_info'=>false)); ;
      endif;
    }
+   public function withdraw_view(){
+      $reference_code = session()->get('data')[0]['reference_code'];
+      $data =   franchise_profile::where(['reference_code'=>$reference_code])->get();
+      return view("withdraw_view",['data'=>$data]);
+   }
 
    public function withdraw_request(Request $req){
       $tranjection_type= $req->input('tranjection_type'); 
@@ -913,6 +928,11 @@ return json_encode(array('condition'=>false ,'message'=>'Amount Updated Failed')
 
    }
 
+   public function profile(){
+      $reference_code =session()->get('data')[0]['reference_code'];
+      $data = franchise_profile::where(['reference_code'=>$reference_code])->get();
+      return view('profile',['data'=>$data]);
+   }
    public function is_franchise_profil_submitted_data(){
       if(session()->get('data')){
          $reference_code =session()->get('data')[0]['reference_code'];
@@ -933,7 +953,7 @@ return json_encode(array('condition'=>false ,'message'=>'Amount Updated Failed')
       // $reference_code =$req->session()->get('data')[0]['reference_code']; ;
      
       $reference_code = $req->input('reference_code');
-      
+      //return json_encode(array('ref_code'=>$reference_code));
         
       if($req->has('per_year')){
         
@@ -962,10 +982,7 @@ return json_encode(array('condition'=>false ,'message'=>'Amount Updated Failed')
       
           $to_date= date_format(date_create($req->input('to_date')),"Y/m/d");
           $form_date= date_format(date_create($req->input('form_date')),"Y/m/d");
-                 //return \DB::select("SELECT * FROM `card_registation` WHERE `register_date` >= '".date_format($form_date,'Y/m/d')." AND `register_date` <= '".date_format( $to_date,'Y/m/d')."'");
-               //   SELECT * FROM task
-               //   WHERE STR_TO_DATE(sdate, '%d-%m-%Y') < STR_TO_DATE('07-09-2017', '%d-%m-%Y');
-
+               
                $per_daily_regis = count(\DB::select("SELECT * FROM `card_registation` WHERE  DATE(register_date) >= '$form_date' AND  DATE(register_date) <= '$to_date' AND `reference_code`='$reference_code'"));
                $per_daily_deliv = count(\DB::select("SELECT * FROM `card_registation` WHERE  DATE(register_date) >= '$form_date' AND  DATE(register_date) <= '$to_date' AND `reference_code`='$reference_code' AND `status`= 2"));
                $per_daily_return = count(\DB::select("SELECT * FROM `card_registation` WHERE  DATE(register_date) >= '$form_date' AND  DATE(register_date) <= '$to_date' AND `reference_code`='$reference_code'  AND `status`= 3"));

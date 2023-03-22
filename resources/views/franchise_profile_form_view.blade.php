@@ -289,6 +289,7 @@
                                           <option value="">Select MFS Type</option>
                                           <option>Agent Number</option>
                                           <option>Personal Number</option>
+                                          <option>Personal Retail Account(PRA)</option>
                                        
                                         </select>    
                                       </div> 

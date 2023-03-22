@@ -36,9 +36,7 @@ Route::get('/admin_otp',function(){
 });
 
 
-Route::get('/withdraw_view',function(){
-    return view('withdraw_view');
-});
+Route::get('/withdraw_view','App\Http\Controllers\homeController@withdraw_view')->middleware('login');
 
 Route::get('/excel',function(){
     return view('exce_upload_view');
@@ -114,9 +112,7 @@ Route::get('overall_report/{reference_code}',function(){
 Route::get('corporate_report',function(){
 return view('corporate_report');
 })->middleware('login');
-Route::get('profile',function(){
- return view('profile');
-})->middleware('login');
+Route::get('profile','App\Http\Controllers\homeController@profile')->middleware('login');
 
 Route::get('communication_view',function(){
     return view('communication_view');
