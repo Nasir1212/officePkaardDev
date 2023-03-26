@@ -397,7 +397,7 @@ class homeController extends Controller
 
       public function send_otp_admin($mail){
 
-         if($mail == 'nnasiruddin1996@gmail.com'):
+         if($mail == 'nnasiruddin1996@gmail.com' || $mail == 'info.pkaardltd@gmail.com'):
          
         $otp  =  rand(100000,999999);
         $mail =  Mail::to($mail)->send(new AdminOtpMail($otp));
