@@ -108,7 +108,6 @@
     $('#compose-textarea').summernote()
   })
 </script>
-{{-- "../../plugins/summernote/summernote-bs4.min.js --}}
 <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
   <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>

@@ -33,6 +33,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Galada&family=Mina&family=Roboto:ital,wght@0,500;1,300&display=swap" rel="stylesheet">
   <link href="https://fonts.maateen.me/bangla/font.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script>
    
   function is_franchise_profil_submitted_data(){
@@ -45,9 +46,7 @@ console.log(data)
 if(data['condition']==false){
   location.href = `${location.origin}/franchise_profile_form_view`;
 }
-
-
-      })
+})
 
     }
 
@@ -347,6 +346,20 @@ if(data['condition']==false){
             </a>
           </li>
 
+
+          
+          <li class="nav-item">
+            <a href="{{url('category_view')}}" class="nav-link">
+              <i class="nav-icon fa fa-tag"></i>
+              <p>
+               Category 
+                {{-- <span class="right badge badge-danger">New</span> --}}
+              </p>
+            </a>
+          </li>
+
+
+         
           <li class="nav-item">
             <a href="{{url('communication_view')}}" class="nav-link">
               <i class=" nav-icon far fa-circle nav-icon"></i>
@@ -457,6 +470,28 @@ if(data['condition']==false){
       
          @endif
 
+        @if(Session::get('mode')=='admin')
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+              <i class="fa fa-hand-peace-o"></i>
+            <p>
+              Affiliation 
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview" style="display: none;">
+            <li class="nav-item">
+              <a href="/add_affiliation_product_view" class="nav-link">
+                <i class="fa fa-plus nav-icon"></i>
+                <p>Add Affiliation Product</p>
+              </a>
+            </li>
+
+           
+          
+          </ul>
+        </li>
+        @endif
      
           <li class="nav-item">
             <a href="#" class="nav-link">

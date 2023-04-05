@@ -144,4 +144,16 @@ Route::get('franchise_profile_form_view',function(){
 Route::post('franchise_profile_form_insert','App\Http\Controllers\homeController@franchise_profile_form_insert')->middleware('login');
 Route::get('is_franchise_profil_submitted_data','App\Http\Controllers\homeController@is_franchise_profil_submitted_data')->middleware('login');
 Route::post('genereting_report','App\Http\Controllers\homeController@genereting_report')->middleware('login');
+Route::get('category_view','App\Http\Controllers\homeController@category_view')->middleware('login');
+
+Route::post('category_action','App\Http\Controllers\homeController@category_action')->middleware('login');
+
+Route::get('all_category','App\Http\Controllers\homeController@all_category')->middleware('login');
+
+
+/* Affiliation */
+
+Route::get('add_affiliation_product_view','App\Http\Controllers\homeController@add_affiliation_product_view')->middleware('login');
+
+
 

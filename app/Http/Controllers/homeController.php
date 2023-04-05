@@ -14,6 +14,7 @@ use App\Models\IP;
 use App\Models\All_Reference;
 use App\Models\Reference_rogram;
 use Illuminate\Http\Response;
+use App\Models\Category;
 use App\Mail\AdminOtpMail;
 use Illuminate\Support\Facades\Mail;
 class homeController extends Controller
@@ -992,5 +993,43 @@ return json_encode(array('condition'=>false ,'message'=>'Amount Updated Failed')
         }
         
       
+   }
+
+   public function category_view(){
+      return view("category_view");
+   }
+
+   public function category_action(Request $req){
+      $type=$req->input('type');
+
+      $category_name=$req->input('category_name');
+
+if($type=='add'):
+     $result =  Category::insert([
+         'category_name'=>$category_name
+      ]);
+   else: 
+      $result =  Category::where(['id'=>$type])->update([
+         'category_name'=>$category_name
+      ]);
+
+   endif;
+
+   if($result){
+      return json_encode(array('condition'=>true));
+   }else{
+      return json_encode(array('condition'=>false ));
+   }
+
+
+   }
+
+   public function all_category(){
+      return Category::all();
+      
+   }
+
+   public function add_affiliation_product_view(){
+      return view("add_affiliation_product_view");
    }
 }
