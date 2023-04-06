@@ -154,6 +154,7 @@ Route::get('all_category','App\Http\Controllers\homeController@all_category')->m
 /* Affiliation */
 
 Route::get('add_affiliation_product_view','App\Http\Controllers\homeController@add_affiliation_product_view')->middleware('login');
+Route::get('add_affiliation_product_img_view','App\Http\Controllers\homeController@add_affiliation_product_img_view')->middleware('login');
 
 
 

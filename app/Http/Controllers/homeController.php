@@ -16,6 +16,9 @@ use App\Models\Reference_rogram;
 use Illuminate\Http\Response;
 use App\Models\Category;
 use App\Mail\AdminOtpMail;
+use App\Models\District;
+
+
 use Illuminate\Support\Facades\Mail;
 class homeController extends Controller
 {
@@ -1030,6 +1033,12 @@ if($type=='add'):
    }
 
    public function add_affiliation_product_view(){
-      return view("add_affiliation_product_view");
+      $category = Category::all();
+      $district = District::all();
+      return view("add_affiliation_product_view",['category'=>$category,'district'=>$district]);
+   }
+
+   public function add_affiliation_product_img_view(){
+      return view('add_affiliation_product_img_view');
    }
 }

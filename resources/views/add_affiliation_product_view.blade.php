@@ -2,7 +2,7 @@
 @extends('master.master')
 
 @section('content')
-
+{{-- @dd($category) --}}
 <style>
     /* The container */
     .checkmark_container {
@@ -71,6 +71,34 @@
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);
     }
+
+    .child_drop_down {
+    position: absolute;
+    top: 4rem;
+    width: 97%;
+    height: 13rem;
+    z-index: 1;
+    overflow: hidden;
+}
+.child_drop_down ul {
+    padding: 0;
+    margin-top: 1rem;
+    overflow: scroll;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+    .child_drop_down ul li {
+    list-style-type: none;
+    background-color: white;
+    border-bottom: 0.5px solid #ddd;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.child_drop_down ul li:hover{
+  background-color: #ddd;
+}
     </style>
 
 <div class="card">
@@ -117,15 +145,32 @@
              
           
               
-              <div class="form-group col-sm-12 col-md-6 col-lg-6">
+              <div class="form-group col-sm-12 col-md-6 col-lg-6 position-relative">
                 <label for="">Category</label>
-                <input type="text" id="" class="form-control"placeholder="Enter Category">
+                <input type="hidden" name="category_id">
+                <input onfocus="focusin(this)" onkeypress="search_input(this)" onfocusout="focusout(this)" type="text" id="" class="form-control"placeholder="Enter Category">
+                <div class="child_drop_down d-none">
+                  <ul>
+                    @foreach($category as $cate)
+                    <li id="{{$cate->id}}">{{$cate->category_name}}</li>
+                    @endforeach
+                  </ul>
+                </div>
               </div>
              
           
-              <div class="form-group col-sm-12 col-md-6 col-lg-6">
+              <div class="form-group col-sm-12 col-md-6 col-lg-6 position-relative">
                 <label for="">District</label>
-                <input type="text" id="" class="form-control"placeholder="Enter District">
+                <input type="hidden" name="district_id">
+
+                <input onfocus="focusin(this)" onchange="search_input(this)" onfocusout="focusout(this)"  type="text" id="" class="form-control"placeholder="Enter District">
+                <div class="child_drop_down d-none">
+                  <ul>
+                    @foreach($district  as $dis)
+                    <li id="{{$dis->id}}">{{$dis->name}}</li>
+                    @endforeach
+                  </ul>
+                </div>
               </div>
              
               <div class="form-group col-sm-12 col-md-6 col-lg-6">
@@ -137,17 +182,17 @@
                 <label for="">Privilege </label>
                 <div class="row">
                     <div class="col-4 input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
+                        <div id="discount_container" class="input-group-prepend">
                           <div class="input-group-text ">
                             <label class="checkmark_container ">Discount
-                                <input type="checkbox">
+                                <input id="discount"  type="checkbox">
                                 <span class="checkmark"></span>
                               </label>
 
                           </div>
                         </div>
                         
-                        <input type="text" name="" class="form-control d-none" placeholder="Enter Discount" id="">
+                        <input type="text" id="input_discount" name="" class="form-control d-none" placeholder="Enter Discount" id="">
 
                       </div>
 
@@ -155,7 +200,7 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text">
                             <label class="checkmark_container">BOGO
-                                <input type="checkbox" >
+                                <input id="bogo" type="checkbox" >
                                 <span class="checkmark"></span>
                               </label>
                           </div>
@@ -167,7 +212,7 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text">
                             <label class="checkmark_container">FREE
-                                <input type="checkbox">
+                                <input id="free" type="checkbox">
                                 <span class="checkmark"></span>
                               </label>
                           </div>
@@ -191,7 +236,8 @@
                 </textarea>
             </div>
            <div>
-            <button class="btn btn-info">Submit </button>
+            {{-- <button class="btn btn-info">Submit </button> --}}
+            <a  class="btn btn-info" href="/add_affiliation_product_img_view">Submit</a>
            </div>
           </form>
      
@@ -209,6 +255,59 @@
 
 </div>
   
+<script>
+  function focusin (evt){
+    evt.nextElementSibling.classList.remove("d-none");
+   }
+
+   function focusout(evt){
+    let li =   evt.nextElementSibling.children[0].children
+  for (let i = 0; i < li.length; i++) {
+  li[i].onclick=function(){
+    if(this.tagName=='LI'){
+        evt.value = this.innerText
+        evt.previousElementSibling.value = this.id
+     evt.nextElementSibling.classList.add("d-none");
+    }
+  }
+ }
+   }
+
+   function search_input(evt){
+    
+    let input_value =   evt.value.toUpperCase();
+    let li =   evt.nextElementSibling.children[0].children
+    for (let i = 0; i < li.length; i++) {
+   
+    if (li[i].innerText.toUpperCase().indexOf(input_value) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+   }
+  }
+
+
+  for (const check_box of document.querySelectorAll("input[type='checkbox']")) {
+    check_box.onclick=function(){
+
+      for (const check of document.querySelectorAll("input[type='checkbox']")) {
+        check.checked=false;
+    discount_container.classList.remove('d-none')
+    input_discount.classList.add('d-none')
+    
+      }
+
+      this.checked = true;
+     if(this.id=='discount' && this.checked ==true){
+    let input_div = this.parentElement.parentElement.parentElement;
+    discount_container.classList.add('d-none')
+    input_discount.classList.remove('d-none')
+     }
+    
+    }
+  }
+</script>
 <script src="{{asset('assets/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('assets/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
 <!-- date-range-picker -->
