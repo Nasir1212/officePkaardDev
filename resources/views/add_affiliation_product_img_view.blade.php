@@ -3,6 +3,11 @@
 
 @section('content')
 
+<style>
+  .margin_top{
+    margin-top:2rem !important;
+  }
+</style>
 <div class="card">
 
 
@@ -44,18 +49,28 @@
 
               </tr>
             </thead>
-            <tbody>
+            <tbody id="table_body">
               <tr>
-                <th scope="row">1</th>
-                <td><img style="width:200px;height:100px" src="./assets/images/preview_img_upload.jpg" alt="Preview" ></td>
-                <td><input class=" bg-secondary d-flex " type="file" name="" id=""></td>
-                <td><button class="btn btn-info">Upload File</button></td>
-                <td><button class="btn btn-danger">Remove File</button></td>
+                <td>1</td>
+                <td><img style="width:150px;height:100px" src="./assets/images/preview_img_upload.jpg" alt="Preview" ></td>
+                <td><input class=" bg-secondary margin_top" onchange="handle_img(this)" type="file" name="" id=""></td>
+                <td><button class="btn btn-info margin_top  btn-sm " onclick="upload_file(this)">Upload File</button></td>
+                <td><button class="btn btn-danger margin_top  btn-sm " onclick="this_remove_element(this)">Remove File</button></td>
 
               </tr>
             
             </tbody>
+            <tfoot>
+              <tr>
+                <td  colspan="4"></td>
+                <td><button class="btn btn-warning btn-sm" onclick="new_img_filed()">New Image</button></td>
+              </tr>
+            </tfoot>
           </table>
+<hr>
+          <div class="float-right " style="width: 9rem;">
+            <a href="/add_affiliation_product_view" class="btn btn-danger btn-sm  btn-block">Next</a>
+          </div>
       
       <!-- /.card-body -->
     </div>
@@ -86,6 +101,73 @@
 <script src="{{asset('assets/plugins/dropzone/min/dropzone.min.js')}}"></script>
 <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
   
+<script>
+  function new_img_filed(){
 
+    let table_body_tr =  document.getElementById("table_body").children;
+   let increment_number = table_body_tr[table_body_tr.length-1].children[0].innerText;
+    let create_tr = document.createElement('tr');
+    create_tr.innerHTML = `  <td>${Number(increment_number)+1}</td>
+                <td><img style="width:150px;height:100px" src="./assets/images/preview_img_upload.jpg" alt="Preview" ></td>
+                <td><input  class=" bg-secondary margin_top" onchange="handle_img(this)" type="file" name="" id=""></td>
+                <td><button class="btn btn-info margin_top  btn-sm " onclick="upload_file(this)">Upload File</button></td>
+                <td><button class="btn btn-danger margin_top  btn-sm " onclick="this_remove_element(this)">Remove File</button></td>`;
+    table_body.appendChild(create_tr);
+  }
+
+  function this_remove_element(event){
+    event.parentElement.parentElement.remove()
+  }
+
+  function handle_img(event){
+
+    event.parentElement.parentElement.children[1].children[0].src = URL.createObjectURL(event.files[0]);
+
+  }
+
+  async function  upload_file(event){
+       let img =  event.parentElement.parentElement.children[2].children[0].files[0];
+
+  event.innerHTML =`Uploading`;
+    const formData = new FormData();
+    formData.append('pkaard_img',img);    
+    try{
+        const response = await fetch(`http://localhost:9000/upload_img.php`,{
+            method:'POST',
+            // mode: 'no-cors',
+            body:formData
+            
+           
+            
+        } );
+       
+        const result = await response.json();
+        console.log(result);
+        if(response.status==200){
+          if(result.status == true){
+            event.innerHTML =`uploaded`;
+            event.classList.remove('btn-info')
+            event.classList.add('btn-success')
+            event.classList.remove('btn-danger')
+            event.disabled = true;
+          }else{
+            event.innerHTML =`${result['message']}`;
+            event.classList.remove('btn-info')
+            event.classList.add('btn-danger')
+            
+          }
+        
+        }
+    }catch(e){
+        console.log(e);
+        event.innerHTML =`Something Went Wrong`;
+        event.classList.remove('btn-info')
+        event.classList.add('btn-danger')
+
+    }
+
+
+  }
+</script>
 
 @endsection

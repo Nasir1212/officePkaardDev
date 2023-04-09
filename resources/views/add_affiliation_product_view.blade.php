@@ -131,16 +131,16 @@
       <!-- /.card-header -->
       <div class="card-body">
 
-        <form class="row">
+        <form class="row" name="affiliation_product">
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
               <label for="">Company Name</label>
-              <input type="text" id="" class="form-control"placeholder="Enter Company Name">
+              <input type="text" id="" name="company_id" class="form-control"placeholder="Enter Company Name">
             </div>
            
           
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="">Title </label>
-                <input type="text" id="" class="form-control"placeholder="Enter Title">
+                <input type="text" id="" name="title" class="form-control"placeholder="Enter Title">
               </div>
              
           
@@ -175,7 +175,7 @@
              
               <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="">Phone</label>
-                <input type="text" id="" class="form-control" placeholder="Enter Phone">
+                <input type="text" id="" name="phone" class="form-control" placeholder="Enter Phone">
               </div>
              
               <div class="form-group col-sm-12 col-md-6 col-lg-6">
@@ -185,14 +185,14 @@
                         <div id="discount_container" class="input-group-prepend">
                           <div class="input-group-text ">
                             <label class="checkmark_container ">Discount
-                                <input id="discount"  type="checkbox">
+                                <input id="discount" name="discount_mark"  type="checkbox">
                                 <span class="checkmark"></span>
                               </label>
 
                           </div>
                         </div>
                         
-                        <input type="text" id="input_discount" name="" class="form-control d-none" placeholder="Enter Discount" id="">
+                        <input type="text" id="input_discount" name="discount" class="form-control d-none" placeholder="Enter Discount" id="">
 
                       </div>
 
@@ -200,7 +200,7 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text">
                             <label class="checkmark_container">BOGO
-                                <input id="bogo" type="checkbox" >
+                                <input id="bogo" name="bogo" type="checkbox" >
                                 <span class="checkmark"></span>
                               </label>
                           </div>
@@ -212,7 +212,7 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text">
                             <label class="checkmark_container">FREE
-                                <input id="free" type="checkbox">
+                                <input id="free" name="free" type="checkbox">
                                 <span class="checkmark"></span>
                               </label>
                           </div>
@@ -225,19 +225,19 @@
             
               <div class="form-group col-sm-12 col-md-12 col-lg-12">
                 <label for="">Address </label>
-               <textarea class="form-control"  placeholder="Enter Address" name="" id="" cols="5" rows="5"></textarea>
+               <textarea class="form-control" name="address"  placeholder="Enter Address" cols="5" rows="5"></textarea>
               </div>
              
             
               <div class="form-group col-sm-12 col-md-12 col-lg-12">
                 <label for="">Product Details </label>
-                <textarea id="compose-textarea" class="form-control">
+                <textarea id="compose-textarea"  class="form-control">
                <h4>Describe Your Product</h4>
                 </textarea>
             </div>
            <div>
-            {{-- <button class="btn btn-info">Submit </button> --}}
-            <a  class="btn btn-info" href="/add_affiliation_product_img_view">Submit</a>
+            <button type="button" class="btn btn-info" onclick="submit_data(this)">Submit </button>
+            {{-- <a  class="btn btn-info" href="/add_affiliation_product_img_view">Submit</a> --}}
            </div>
           </form>
      
@@ -335,5 +335,24 @@
 
     })
   })
+
+  function submit_data(event){
+    form_data = Object.fromEntries(new FormData(document.forms['affiliation_product']));
+    console.log(form_data)
+
+    var textareaValue = $("#compose-textarea").summernote('code');
+    console.log(textareaValue)
+
+    let data = {
+      ...form_data,
+      details:textareaValue
+
+    }
+
+    console.log(data)
+
+  }
+
+
   </script>
 @endsection
