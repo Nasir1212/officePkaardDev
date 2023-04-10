@@ -236,7 +236,7 @@
                 </textarea>
             </div>
            <div>
-            <button type="button" class="btn btn-info" onclick="submit_data(this)">Submit </button>
+            <button type="button" class="btn btn-info" onclick="submit_data()">Submit </button>
             {{-- <a  class="btn btn-info" href="/add_affiliation_product_img_view">Submit</a> --}}
            </div>
           </form>
@@ -336,23 +336,69 @@
     })
   })
 
-  function submit_data(event){
+  async function submit_data(){
     form_data = Object.fromEntries(new FormData(document.forms['affiliation_product']));
-    console.log(form_data)
-
     var textareaValue = $("#compose-textarea").summernote('code');
-    console.log(textareaValue)
+    let privilege = '' ;
+    if(form_data['discount_mark']=='on'){
+      privilege = form_data['discount'].replace(/%/i,"");
+      
+    }else if(form_data['bogo']=='on'){
+      privilege ="bogo";
+    }else if(form_data['free']== "on"){
+      privilege ="free";
+    }
 
-    let data = {
+    let server_data = {
       ...form_data,
-      details:textareaValue
+      details:textareaValue,
+      privilege:privilege
 
     }
 
-    console.log(data)
+    console.log(server_data)
+
+
+
+    try{
+        const response = await fetch(`/affiliation_product_insert`,{
+            method:'POST',
+            body:JSON.stringify(server_data),
+            headers: new Headers({
+            'Content-Type': 'application/json',
+          
+        })
+            
+           
+            
+        } );
+       
+        const result = await response.json();
+        console.log(result);
+        if(response.status==200){
+          if(result['condition'] == true)
+
+      swal({
+      title: "Successfully Inserted Data",
+      timer: 1300
+      });
+
+      sessionStorage.product_id = result['id'];
+
+      location.href = `${location.origin}/add_affiliation_product_img_view`;
+
+        
+        }
+    }catch(e){
+        console.log(e);
+      
+
+    }
 
   }
 
+
+  
 
   </script>
 @endsection

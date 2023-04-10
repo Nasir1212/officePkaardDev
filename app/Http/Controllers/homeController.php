@@ -17,6 +17,8 @@ use Illuminate\Http\Response;
 use App\Models\Category;
 use App\Mail\AdminOtpMail;
 use App\Models\District;
+use App\Models\Affiliation_product;
+
 
 
 use Illuminate\Support\Facades\Mail;
@@ -1040,5 +1042,82 @@ if($type=='add'):
 
    public function add_affiliation_product_img_view(){
       return view('add_affiliation_product_img_view');
+   }
+
+   public function affiliation_product_insert(Request $req){
+
+            $address = $req->input('address');
+            $category_id = $req->input('category_id');
+            $company_id = $req->input('company_id');
+            $details = $req->input('details');
+            $discount = $req->input('discount');
+            $district_id = $req->input('district_id');
+            $phone = $req->input('phone');
+            $title = $req->input('title');
+            $privilege = $req->input('privilege');
+            $create_at= date("Y/m/d");
+
+
+          $result =   Affiliation_product::insert([
+               "address"=>$address,
+               "category_id"=>$category_id,
+               "company_id"=>$company_id,
+               "details"=>$details,
+               "discount"=>$discount,
+               "district_id"=>$district_id,
+               "phone"=>$phone,
+               "title"=>$title,
+               "privilege"=>$privilege,
+               "create_at"=>$create_at,
+            ]);
+
+            if($result){
+               $id = Affiliation_product::latest('id')->first();
+               return json_encode(array('condition'=>true,'id'=>$id['id']));
+            }else{
+               return json_encode(array('condition'=>false ));
+            }
+         
+            
+
+
+          
+
+   }
+
+   public function affiliation_product_img_path_insert(Request $req){
+
+      $img_path = $req->input('img_path');
+      $product_id = $req->input('product_id');
+
+   $all_img_path =  Affiliation_product::where(['id' => $product_id])->get(["img_path"]);
+
+
+   if(is_null($all_img_path[0]['img_path'])){
+      
+       $result = Affiliation_product::where(['id'=>$product_id])->update([
+         'img_path'=> $img_path.","
+        ]);
+   }else{
+    
+         $result = Affiliation_product::where(['id'=>$product_id])->update([
+            'img_path'=>$all_img_path[0]['img_path']. $img_path.","
+         ]);
+   }
+
+   $data =   Affiliation_product::where(['id' => $product_id])->get(["img_path"]);
+   $data[0]['img_path'];
+   if(count(explode(",",$data[0]['img_path'])) > 21){
+
+   }
+      
+
+      // if($result){
+         
+      //    return json_encode(array('condition'=>true));
+      // }else{
+      //    return json_encode(array('condition'=>false ));
+      // }
+
    }
 }

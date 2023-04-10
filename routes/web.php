@@ -155,6 +155,10 @@ Route::get('all_category','App\Http\Controllers\homeController@all_category')->m
 
 Route::get('add_affiliation_product_view','App\Http\Controllers\homeController@add_affiliation_product_view')->middleware('login');
 Route::get('add_affiliation_product_img_view','App\Http\Controllers\homeController@add_affiliation_product_img_view')->middleware('login');
+Route::post('affiliation_product_insert','App\Http\Controllers\homeController@affiliation_product_insert')->middleware('login');
+
+Route::post('affiliation_product_img_path_insert','App\Http\Controllers\homeController@affiliation_product_img_path_insert')->middleware('login');
+
 
 
 

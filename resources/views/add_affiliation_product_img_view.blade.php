@@ -132,7 +132,7 @@
     const formData = new FormData();
     formData.append('pkaard_img',img);    
     try{
-        const response = await fetch(`http://localhost:9000/upload_img.php`,{
+        const response = await fetch(`https://img.pkaard.com/upload_img.php`,{
             method:'POST',
             // mode: 'no-cors',
             body:formData
@@ -150,6 +150,7 @@
             event.classList.add('btn-success')
             event.classList.remove('btn-danger')
             event.disabled = true;
+            img_path_upload(result['img_path']);
           }else{
             event.innerHTML =`${result['message']}`;
             event.classList.remove('btn-info')
@@ -168,6 +169,40 @@
 
 
   }
+
+
+  async function img_path_upload(img_path){
+  
+    let product_id =  sessionStorage.product_id
+
+    let server_data = {
+      product_id:product_id,
+      img_path :img_path
+    }
+
+    try{
+        const response = await fetch(`/affiliation_product_img_path_insert`,{
+            method:'POST',
+            body:JSON.stringify(server_data),
+            headers: new Headers({
+            'Content-Type': 'application/json',
+          
+        })
+            
+           
+            
+        } );
+       
+        const result = await response.json();
+        console.log(result);
+       
+    }catch(e){
+        console.log(e);
+      
+
+    }
+
+   }
 </script>
 
 @endsection

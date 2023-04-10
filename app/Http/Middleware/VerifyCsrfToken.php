@@ -29,6 +29,8 @@ class VerifyCsrfToken extends Middleware
         'withdraw_request',
         'franchise_profile_form_insert',
         'genereting_report',
-        'category_action'
+        'category_action',
+        'affiliation_product_insert',
+        'affiliation_product_img_path_insert'
     ];
 }
