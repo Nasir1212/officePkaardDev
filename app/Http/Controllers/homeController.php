@@ -1096,12 +1096,12 @@ if($type=='add'):
    if(is_null($all_img_path[0]['img_path'])){
       
        $result = Affiliation_product::where(['id'=>$product_id])->update([
-         'img_path'=> $img_path.","
+         'img_path'=> $img_path
         ]);
    }else{
     
          $result = Affiliation_product::where(['id'=>$product_id])->update([
-            'img_path'=>$all_img_path[0]['img_path']. $img_path.","
+            'img_path'=>$all_img_path[0]['img_path'].",".$img_path
          ]);
    }
 
@@ -1110,6 +1110,8 @@ if($type=='add'):
    if(count(explode(",",$data[0]['img_path'])) > 21){
 
    }
+
+   return  $data[0]['img_path'];
       
 
       // if($result){
