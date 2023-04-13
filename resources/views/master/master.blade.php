@@ -487,6 +487,13 @@ if(data['condition']==false){
               </a>
             </li>
 
+            <li class="nav-item">
+              <a href="/add_affiliation_partner_view" class="nav-link">
+                <i class='fas fa-swimmer'></i>
+                <p>Add Affiliation Partner </p>
+              </a>
+            </li>
+
            
           
           </ul>

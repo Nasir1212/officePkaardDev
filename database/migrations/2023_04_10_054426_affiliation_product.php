@@ -26,8 +26,10 @@ return new class extends Migration
             $table->string('img_path')->nullable();
             $table->string('privilege')->nullable();
             $table->date('create_at')->nullable();
+            $table->string('regular_price')->nullable();
+            $table->string('product_uploader')->default('1');
             $table->string('status')->default('1');
-              
+            
         });  
     }
    

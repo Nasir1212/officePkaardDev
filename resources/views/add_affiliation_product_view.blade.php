@@ -134,7 +134,17 @@
         <form class="row" name="affiliation_product">
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
               <label for="">Company Name</label>
-              <input type="text" id="" name="company_id" class="form-control"placeholder="Enter Company Name">
+              <input type="hidden" name="company_id">
+              <input type="text" onfocus="focusin(this)" onkeypress="search_input(this)" onfocusout="focusout(this)"   class="form-control"placeholder="Enter Company Name">
+                
+              <div class="child_drop_down d-none">
+                <ul>
+                  @foreach($affiliation_partner as $partner)
+                  <li id="{{$partner->id}}">{{$partner->company_name}}</li>
+                  @endforeach
+                </ul>
+              </div>
+           
             </div>
            
           
@@ -145,7 +155,7 @@
              
           
               
-              <div class="form-group col-sm-12 col-md-6 col-lg-6 position-relative">
+              <div class="form-group col-sm-12 col-md-4 col-lg-4  position-relative">
                 <label for="">Category</label>
                 <input type="hidden" name="category_id">
                 <input onfocus="focusin(this)" onkeypress="search_input(this)" onfocusout="focusout(this)" type="text" id="" class="form-control"placeholder="Enter Category">
@@ -159,7 +169,7 @@
               </div>
              
           
-              <div class="form-group col-sm-12 col-md-6 col-lg-6 position-relative">
+              <div class="form-group col-sm-12 col-md-4 col-lg-4  position-relative">
                 <label for="">District</label>
                 <input type="hidden" name="district_id">
 
@@ -171,6 +181,14 @@
                     @endforeach
                   </ul>
                 </div>
+              </div>
+
+              <div class="form-group col-sm-12 col-md-4 col-lg-4 position-relative">
+                <label for="">Regular price</label>
+                
+
+                <input name="regular_price"  class="form-control" placeholder="Regular price">
+                
               </div>
              
               <div class="form-group col-sm-12 col-md-6 col-lg-6">

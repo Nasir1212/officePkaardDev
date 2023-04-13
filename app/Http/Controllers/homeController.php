@@ -18,6 +18,7 @@ use App\Models\Category;
 use App\Mail\AdminOtpMail;
 use App\Models\District;
 use App\Models\Affiliation_product;
+use App\Models\Affiliation_partner;
 
 
 
@@ -1037,7 +1038,8 @@ if($type=='add'):
    public function add_affiliation_product_view(){
       $category = Category::all();
       $district = District::all();
-      return view("add_affiliation_product_view",['category'=>$category,'district'=>$district]);
+      $affiliation_partner = Affiliation_partner::all();
+      return view("add_affiliation_product_view",['category'=>$category,'district'=>$district,'affiliation_partner'=>$affiliation_partner]);
    }
 
    public function add_affiliation_product_img_view(){
@@ -1055,9 +1057,11 @@ if($type=='add'):
             $phone = $req->input('phone');
             $title = $req->input('title');
             $privilege = $req->input('privilege');
+            $regular_price = $req->input('regular_price');
+
             $create_at= date("Y/m/d");
 
-
+            
           $result =   Affiliation_product::insert([
                "address"=>$address,
                "category_id"=>$category_id,
@@ -1068,6 +1072,7 @@ if($type=='add'):
                "phone"=>$phone,
                "title"=>$title,
                "privilege"=>$privilege,
+               'regular_price'=>$regular_price,
                "create_at"=>$create_at,
             ]);
 
@@ -1122,4 +1127,52 @@ if($type=='add'):
       // }
 
    }
+
+   public function add_affiliation_partner_view(){
+      return view("add_affiliation_partner_view");
+   }
+
+
+   public function add_affiliation_partner (Request $req){
+
+   $back_nid = $req->input("back_nid");
+   $company_address = $req->input("company_address");
+   $company_name = $req->input("company_name");
+   $company_owner_name = $req->input("company_owner_name");
+   $company_tin = $req->input("company_tin");
+   $contact_full_name = $req->input("contact_full_name");
+   $contact_number = $req->input("contact_number");
+   $contact_role = $req->input("contact_role");
+   $email_address = $req->input("email_address");
+   $front_nid = $req->input("front_nid");
+   $password = \Hash::make($req->input("password"));
+   $create_at = date("Y:m:d");
+
+   $result = Affiliation_partner::insert([
+      'back_nid'=>$back_nid,
+      'company_address'=>$company_address,
+      'company_name'=>$company_name,
+      'company_owner_name'=>$company_owner_name,
+      'company_tin'=>$company_tin,
+      'contact_full_name'=>$contact_full_name,
+      'contact_number'=>$contact_number,
+      'contact_role'=>$contact_role,
+      'email_address'=>$email_address,
+      'front_nid'=>$front_nid,
+      'password'=>$password,
+      'create_at'=>$create_at,
+
+   ]);
+
+   if($result){
+      
+      return json_encode(array('condition'=>true,'company_address'=>$company_address));
+   }else{
+       return json_encode(array('condition'=>false ));
+   }
+
+   }
+
 }
+
+
