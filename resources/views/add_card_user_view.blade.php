@@ -153,7 +153,7 @@
             <div class="form-group  col-lg-6 col-md-6 col-sm-12">
                 <label for="" class="text-capitalize"> Date of Birth (জন্ম তারিখ)<i class="text-danger">*</i> </label>
                
-                <input type="text" id="datemask"  name="date_of_birth" class="form-control" placeholder="dd/mm/yyyy" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/dd/yyyy" data-mask="" inputmode="numeric">
+                <input type="text" id="datemask"  name="date_of_birth" class="form-control" placeholder="dd/mm/yyyy" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric">
                 {{-- <input type='text' name="date_of_birth"  placeholder="dd/mm/yyyy" class="form-control"id="datetimepicker4"/> --}}
                 <small id="" class="form-text text-muted"> </small>
                

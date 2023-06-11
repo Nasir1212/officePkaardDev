@@ -3,7 +3,7 @@
 class SessionExport{
 
  static Session=()=>{
-    let ciphertext  = sessionStorage.getItem("UserData");
+    let ciphertext  = sessionStorage.getItem("officeAdmin");
     if(ciphertext){
       let bytes = CryptoJS.AES.decrypt(ciphertext.toString(), 'pkaard');
     var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
@@ -13,13 +13,13 @@ class SessionExport{
 
  static setSession = (data)=>{
     var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'pkaard');
-    sessionStorage.setItem('UserData',ciphertext);
+    sessionStorage.setItem('officeAdmin',ciphertext);
     return true;
  }
 
 
  static localStorage=()=>{
-   let ciphertext  = localStorage.getItem("UserData");
+   let ciphertext  = localStorage.getItem("officeAdmin");
    if(ciphertext){
      let bytes = CryptoJS.AES.decrypt(ciphertext.toString(), 'pkaard');
    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
@@ -29,7 +29,7 @@ class SessionExport{
 
 static setLocalStorage = (data)=>{
    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'pkaard');
-   localStorage.setItem('UserData',ciphertext);
+   localStorage.setItem('officeAdmin',ciphertext);
    return true;
 }
 
