@@ -36,6 +36,8 @@ Route::get('/admin_otp',function(){
 });
 
 
+
+
 Route::get('/withdraw_view','App\Http\Controllers\homeController@withdraw_view')->middleware('login');
 
 Route::get('/excel',function(){
@@ -159,8 +161,22 @@ Route::post('affiliation_product_insert','App\Http\Controllers\homeController@af
 Route::post('affiliation_product_img_path_insert','App\Http\Controllers\homeController@affiliation_product_img_path_insert')->middleware('login');
 
 Route::get('add_affiliation_partner_view','App\Http\Controllers\homeController@add_affiliation_partner_view')->middleware('login');
+Route::get('all_affiliation_partner_view','App\Http\Controllers\homeController@all_affiliation_partner_view')->middleware('login');
+Route::get('add_multiple_affiliation_product','App\Http\Controllers\homeController@add_multiple_affiliation_product')->middleware('login');
+Route::post('add_store_room_data','App\Http\Controllers\homeController@add_store_room_data')->middleware('login');
+Route::get('get_by_company_id_room_data/{id}','App\Http\Controllers\homeController@get_by_company_id_room_data')->middleware('login');
+
+
 Route::post('add_affiliation_partner','App\Http\Controllers\homeController@add_affiliation_partner')->middleware('login');
 
-// add_affiliation_partner_view
+Route::post('add_aff_sub_discount_product','App\Http\Controllers\homeController@add_aff_sub_discount_product')->middleware('login');
 
+Route::get('get_one_aff_sub_discount_product/{id}','App\Http\Controllers\homeController@get_one_aff_sub_discount_product')->middleware('login');
 
+Route::get('get_one_edit_product_details/{id}','App\Http\Controllers\homeController@get_one_edit_product_details')->middleware('login');
+
+Route::post('update_aff_sub_discount_product','App\Http\Controllers\homeController@update_aff_sub_discount_product')->middleware('login');
+
+Route::post('upload_img_path_sub_product','App\Http\Controllers\homeController@upload_img_path_sub_product')->middleware('login');
+
+Route::get('get_img_path_aff_sub_discount_product/{id}','App\Http\Controllers\homeController@get_img_path_aff_sub_discount_product')->middleware('login');

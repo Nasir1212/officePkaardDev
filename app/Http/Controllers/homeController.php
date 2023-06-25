@@ -19,6 +19,8 @@ use App\Mail\AdminOtpMail;
 use App\Models\District;
 use App\Models\Affiliation_product;
 use App\Models\Affiliation_partner;
+use App\Models\aff_sub_discount_product;
+
 
 
 
@@ -1030,17 +1032,61 @@ if($type=='add'):
 
    }
 
-   public function all_category(){
+   static public function all_category(){
       return Category::all();
       
    }
 
+   static public function all_district(){
+      return District::all();
+   }
    public function add_affiliation_product_view(){
       $category = Category::all();
       $district = District::all();
       $affiliation_partner = Affiliation_partner::all();
       return view("add_affiliation_product_view",['category'=>$category,'district'=>$district,'affiliation_partner'=>$affiliation_partner]);
    }
+
+   public function add_store_room_data(Request $req){
+
+      $address = $req->input('address');
+      $category_id = $req->input('category_id');
+      $company_id = $req->input('company_id');
+      $discount = $req->input('discount');
+      $district_id = $req->input('district_id');
+      $title = $req->input('title');
+      $create_at= date("Y/m/d");
+
+      
+    $result =   Affiliation_product::insert([
+         "address"=>$address,
+         "category_id"=>$category_id,
+         "company_id"=>$company_id,
+         "discount"=>$discount,
+         "district_id"=>$district_id,
+         "title"=>$title,
+         "create_at"=>$create_at,
+         'is_room'=>1
+      ]);
+
+      if($result){
+        
+         return json_encode(array('condition'=>true));
+      }else{
+         return json_encode(array('condition'=>false ));
+      }
+   
+     
+   }
+
+   public function get_by_company_id_room_data($id){
+   //  return  Affiliation_product::where(['company_id'=>$id])->get();
+
+   return $result = \DB::select("SELECT affiliation_product.*, category.category_name,districts.name FROM affiliation_product LEFT JOIN category ON affiliation_product.category_id = category.id LEFT JOIN districts ON affiliation_product.district_id =districts.id WHERE company_id =$id  AND is_room=1");
+
+
+   }
+   
 
    public function add_affiliation_product_img_view(){
       return view('add_affiliation_product_img_view');
@@ -1067,7 +1113,6 @@ if($type=='add'):
                "category_id"=>$category_id,
                "company_id"=>$company_id,
                "details"=>$details,
-               "discount"=>$discount,
                "district_id"=>$district_id,
                "phone"=>$phone,
                "title"=>$title,
@@ -1082,12 +1127,7 @@ if($type=='add'):
             }else{
                return json_encode(array('condition'=>false ));
             }
-         
-            
-
-
-          
-
+   
    }
 
    public function affiliation_product_img_path_insert(Request $req){
@@ -1132,6 +1172,15 @@ if($type=='add'):
       return view("add_affiliation_partner_view");
    }
 
+  public function  all_affiliation_partner_view(){
+    $all_affiliation = Affiliation_partner::all();
+    return view("all_affiliation_partner_view",['all_affiliation'=>$all_affiliation]);
+   }
+
+   public function add_multiple_affiliation_product(){
+      return view("add_multiple_affiliation_product");
+   }
+
 
    public function add_affiliation_partner (Request $req){
 
@@ -1172,6 +1221,102 @@ if($type=='add'):
    }
 
    }
+
+   
+
+
+  public function  add_aff_sub_discount_product(Request $req){
+
+
+ $result = aff_sub_discount_product::insert([
+      'affiliation_product_id'=>$req->input("affiliation_product_id"),
+      'details'=>$req->input("details"),
+      'privilege'=>$req->input("privilege"),
+      'title'=>$req->input("title"),
+      'regular_price'=>$req->input("regular_price"),
+      'create_at'=>date('Y/m/d'),
+   ]);
+
+   if($result){
+     
+      return json_encode(array('condition'=>true));
+   }else{
+      return json_encode(array('condition'=>false ));
+   }
+  }
+
+  public function get_one_aff_sub_discount_product($id){
+
+  //return aff_sub_discount_product::where(['affiliation_product_id'=>$id])->get();
+
+  return \DB::select("SELECT aff_sub_discount_product.*, affiliation_product.title as room_name  FROM aff_sub_discount_product LEFT JOIN affiliation_product ON aff_sub_discount_product.affiliation_product_id = affiliation_product.id WHERE aff_sub_discount_product.affiliation_product_id = $id");
+
+  }
+
+  public function get_one_edit_product_details($id){
+
+   return aff_sub_discount_product::where(['id'=>$id])->get();
+
+  }
+
+  public function update_aff_sub_discount_product(Request $req){
+
+   $result = aff_sub_discount_product::where(['id'=>$req->input("id")])->update([
+      'details'=>$req->input("details"),
+      'privilege'=>$req->input("privilege"),
+      'title'=>$req->input("title"),
+      'regular_price'=>$req->input("regular_price"),
+   
+   ]);
+
+
+   if($result){
+     
+      return json_encode(array('condition'=>true));
+   }else{
+      return json_encode(array('condition'=>false ));
+   }
+
+
+  }
+
+  public function upload_img_path_sub_product(Request $req){
+
+
+   $img_path = $req->input('img_path');
+ $product_id = $req->input('product_id');
+
+$all_img_path =  aff_sub_discount_product::where(['id'=>$product_id])->get(["img_path"]);
+if(is_null($all_img_path[0]['img_path'])){
+   
+    $result = aff_sub_discount_product::where(['id'=>$product_id])->update([
+      'img_path'=> $img_path
+     ]);
+}else{
+ 
+      $result = aff_sub_discount_product::where(['id'=>$product_id])->update([
+         'img_path'=>$all_img_path[0]['img_path'].",".$img_path
+      ]);
+}
+
+
+
+      if($result){
+         
+         return json_encode(array('condition'=>true));
+      }else{
+         return json_encode(array('condition'=>false ));
+      }
+
+  }
+
+
+  public function get_img_path_aff_sub_discount_product($id){
+
+  return $all_img_path =  aff_sub_discount_product::where(['id'=>$id])->get(["img_path"]);
+
+
+  }
 
 }
 
