@@ -180,3 +180,8 @@ Route::post('update_aff_sub_discount_product','App\Http\Controllers\homeControll
 Route::post('upload_img_path_sub_product','App\Http\Controllers\homeController@upload_img_path_sub_product')->middleware('login');
 
 Route::get('get_img_path_aff_sub_discount_product/{id}','App\Http\Controllers\homeController@get_img_path_aff_sub_discount_product')->middleware('login');
+
+Route::post('upload_store_room_img_path/','App\Http\Controllers\homeController@upload_store_room_img_path')->middleware('login');
+
+
+

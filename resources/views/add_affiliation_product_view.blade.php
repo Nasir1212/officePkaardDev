@@ -173,7 +173,7 @@
                 <label for="">District</label>
                 <input type="hidden" name="district_id">
 
-                <input onfocus="focusin(this)" onchange="search_input(this)" onfocusout="focusout(this)"  type="text" id="" class="form-control"placeholder="Enter District">
+                <input onfocus="focusin(this)" onkeypress="search_input(this)" onfocusout="focusout(this)"  type="text" id="" class="form-control"placeholder="Enter District">
                 <div class="child_drop_down d-none">
                   <ul>
                     @foreach($district  as $dis)

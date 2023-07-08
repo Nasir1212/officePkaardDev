@@ -36,6 +36,7 @@ class VerifyCsrfToken extends Middleware
         'add_store_room_data',
         'add_aff_sub_discount_product',
         'update_aff_sub_discount_product',
-        'upload_img_path_sub_product'
+        'upload_img_path_sub_product',
+        'upload_store_room_img_path'
     ];
 }

@@ -147,9 +147,7 @@ caption {
       </table>
 
   </div>
-
-          
-      
+    
       <!-- /.card-body -->
     </div>
   
@@ -222,10 +220,7 @@ caption {
                 <input type="text"  name="discount" class="form-control" placeholder="Enter Upto Percent">
               </div>
              
-              <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="">Upload Image</label>
-                <input type="file"  id="image" class="form-control" placeholder="Enter Upto Percent">
-              </div>
+             
              
             
               <div class="form-group col-sm-12 col-md-12 col-lg-12">
@@ -239,7 +234,7 @@ caption {
            
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-info" onclick="submit_data()">Submit </button>
+              <button type="button" class="btn btn-info" onclick="add_store_room_data()">Submit </button>
               <button type="reset" class="btn btn-warning" >Reset </button>
 
             </div>
@@ -460,6 +455,33 @@ caption {
   </div>
 </div>
 
+
+<!-- Room Image Modal --->
+<div class="modal fade " id="upload_room_image" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Upload Room Image </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-body">
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+        <label for="modal_Img_room"><img style="width: 4rem;height: 4rem;cursor: pointer;" src="{{ asset('assets/images/2997933.png')}}" alt=""></label>
+        <input type="file" style="display: none"  id="modal_Img_room" onchange="upload_store_room_img(this)" class="form-control" placeholder="Enter Upto Percent">
+        </div> 
+        <input type="hidden" id="img_path_id">
+     
+      
+      <!-- /.card-body -->
+    </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- Image model --->
 <div class="modal fade " id="img_upload_modal" tabindex="-1" role="dialog"  aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -549,9 +571,10 @@ result.forEach((d,i)=>{
     <td>${d['category_name']}</td>
     <td>${d['name']}</td>
     <td><button class='btn btn-sm btn-warning' onclick='edit_store_room(${d['id']})'>Edit</button>
-  <button class='btn btn-sm btn-warning' onclick='add_product(${d['id']})'>Add Product </button>
-  <button class='btn btn-sm btn-warning' onclick='get_one_aff_sub_discount_product(${d['id']})'>List Product </button></td>
-
+  <button class='btn btn-sm btn-success' onclick='add_product(${d['id']})'>Add Product </button>
+  <button class='btn btn-sm btn-warning' onclick='get_one_aff_sub_discount_product(${d['id']})'>List Product </button>
+  <button class='btn btn-sm btn-info' onclick='model_upload_img(${d['id']})'>Image</button>
+</td>
 
   </tr>
   
@@ -564,44 +587,11 @@ document.getElementById("store_room_table").innerHTML = view;
 }
   }
   store_room_data();
-async function submit_data(){
-  const formData = new FormData();
-    formData.append('pkaard_img',document.getElementById("image").files[0]);    
-    try{
-        const response = await fetch(`https://img.pkaard.com/upload_img.php`,{
-            method:'POST',
-            // mode: 'no-cors',
-            body:formData           
-        } );
-       
-        const result = await response.json();
-        console.log(result);
-        if(response.status==200){
-          if(result.status == true){
-         
-          add_store_room_data(result['img_path'])
-
-          }else{
-            // event.innerHTML =`${result['message']}`;
-            // event.classList.remove('btn-info')
-            // event.classList.add('btn-danger')
-            
-          }
-        
-        }
-    }catch(e){
-        console.log(e);
-       
-
-    }
 
 
-}
-
-async function add_store_room_data(img_path){
+async function add_store_room_data(){
   const searchParams = new URLSearchParams(window.location.search);
   var form_data = Object.fromEntries(new FormData(document.forms['affiliation_store_room']));
-  form_data['img_path']=img_path;
   form_data['company_id'] = searchParams.get('id');
    console.log(form_data)
   try{
@@ -977,16 +967,19 @@ async function get_img_path(id){
         console.log(result);
         let view='';
         if(response.status==200){
-          
+         
         console.log(result.length )
-        result.forEach((d)=>{
+        debugger;
+        let img_src =   result[0]['img_path'] !=null? result[0]['img_path'].split(","):[]
+        console.log(img_src)
+         
+        img_src.forEach((d)=>{
           
-        let img_src =   d['img_path'] !=''?d['img_path'].split(","):''
            view += `
           <div class="container_modal_upload_img position-relative">
           <i class="position-absolute img_close_icon"> &#10007;</i>
           <div class="modal_upload_img">
-            <img src="https://img.pkaard.com/images/${img_path}" alt="">
+            <img src="https://img.pkaard.com/images/${d}" alt="">
           </div>
         </div>
       
@@ -1012,10 +1005,80 @@ async function get_img_path(id){
     }
   
 
+ function model_upload_img(d){
+document.getElementById("img_path_id").value = d;
+  $('#upload_room_image').modal('show')
+
+  
+ }
+
+ async function upload_store_room_img_path(path){
+console.log(document.getElementById("img_path_id").value)
+  let formData = {
+    img_path:path,
+    id:document.getElementById("img_path_id").value
+  }
+  try{
+        const response = await fetch(`${location.origin}/upload_store_room_img_path`,{
+            method:'POST',
+            // mode: 'no-cors',
+            body:formData           
+        } );
+       
+        const result = await response.json();
+        console.log(result);
+        if(response.status==200){
+          if(result.status == true){
+         
+        
+
+          }else{
+
+            
+          }
+        
+        }
+    }catch(e){
+        console.log(e);
+       
+
+    }
+ }
 
 
 
-// upload_img_path_sub_product({ product_id:1,img_path:"2023-06-25-649804b2a7c9f.png"})
+ async function upload_store_room_img(d){
+  const formData = new FormData();
+    formData.append('pkaard_img',d.files[0]);    
+    try{
+        const response = await fetch(`https://img.pkaard.com/upload_img.php`,{
+            method:'POST',
+            // mode: 'no-cors',
+            body:formData           
+        } );
+       
+        const result = await response.json();
+        console.log(result);
+        if(response.status==200){
+          if(result.status == true){
+         
+          upload_store_room_img_path(result['img_path'])
+
+          }else{
+
+            
+          }
+        
+        }
+    }catch(e){
+        console.log(e);
+       
+
+    }
+
+
+}
+
 
 </script>
 

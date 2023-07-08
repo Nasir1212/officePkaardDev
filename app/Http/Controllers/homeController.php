@@ -1312,9 +1312,21 @@ if(is_null($all_img_path[0]['img_path'])){
 
 
   public function get_img_path_aff_sub_discount_product($id){
-
   return $all_img_path =  aff_sub_discount_product::where(['id'=>$id])->get(["img_path"]);
+  }
 
+
+  public function upload_store_room_img_path(Request $req){
+
+   $result = Affiliation_product::where(['id'=>$req->input("id")])->update([
+      'img_path'=>$req->input("img_path")
+   ]);
+ if($result){
+         
+         return json_encode(array('condition'=>true,'path'=>$req->input("img_path")));
+      }else{
+         return json_encode(array('condition'=>false,'path'=>$req->input("img_path")));
+      }
 
   }
 

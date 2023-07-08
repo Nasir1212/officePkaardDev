@@ -143,7 +143,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text " for="dateofbirth">Password</span>
                             </div>
-                            <input type="password" placeholder="Contact Number" class="form-control col-md-12"  name="password" >
+                            <input type="password" placeholder="Password" class="form-control col-md-12"  name="password" >
                           </div> 
                     </div>
 
