@@ -1171,8 +1171,14 @@ if($type=='add'):
 
 
   public function  all_affiliation_partner_view(){
-    $all_affiliation = Affiliation_partner::all();
-    return view("all_affiliation_partner_view",['all_affiliation'=>$all_affiliation]);
+   //  $all_affiliation = Affiliation_partner::all();
+
+    $category = Category::all();
+    $district = District::all();
+    $affiliation_partner = Affiliation_partner::all();
+    
+    return view("all_affiliation_partner_view",['category'=>$category,'district'=>$district,'affiliation_partner'=>$affiliation_partner]);
+   //  return view("all_affiliation_partner_view",['all_affiliation'=>$all_affiliation]);
    }
 
    public function add_affiliation_partner_view(){

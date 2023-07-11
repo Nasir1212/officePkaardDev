@@ -35,6 +35,102 @@
     height:1.4rem;
   }
 
+  /* The container */
+  .checkmark_container {
+      display: block;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 1px;
+      cursor: pointer;
+      font-size: 16px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+    /* Hide the browser's default checkbox */
+    .checkmark_container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    
+    /* Create a custom checkbox */
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: white;
+    }
+    
+    /* On mouse-over, add a grey background color */
+    .checkmark_container:hover input ~ .checkmark {
+      background-color: #ccc;
+    }
+    
+    /* When the checkbox is checked, add a blue background */
+    .checkmark_container input:checked ~ .checkmark {
+      background-color: #2196F3;
+    }
+    
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    
+    /* Show the checkmark when checked */
+    .checkmark_container input:checked ~ .checkmark:after {
+      display: block;
+    }
+    
+    /* Style the checkmark/indicator */
+    .checkmark_container .checkmark:after {
+      left: 9px;
+      top: 5px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    .child_drop_down {
+    position: absolute;
+    top: 4rem;
+    width: 97%;
+    height: 13rem;
+    z-index: 1;
+    overflow: hidden;
+}
+.child_drop_down ul {
+    padding: 0;
+    margin-top: 1rem;
+    overflow: scroll;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+    .child_drop_down ul li {
+    list-style-type: none;
+    background-color: white;
+    border-bottom: 0.5px solid #ddd;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.child_drop_down ul li:hover{
+  background-color: #ddd;
+}
+
 </style>
 <div class="card">
 
@@ -263,20 +359,11 @@
                       <input type="text" placeholder="Email Address" class="form-control col-md-12"  name="email_address" >
                     </div> 
               </div>
-
-
-
           </div>
 
         </div>
-
-
         <div class="form-group col-sm-12 col-md-12 col-lg-12">
-
           <div class="row">
-            
-              
-
               <div class="form-group col-sm-12 col-md-6 col-lg-6 has_room_check_box_container">
               <input type="checkbox" disabled="true" class="form-control"  name="has_room" placeholder="Company TIN ">
               <label for="">Has multi category discount ?  </label>
@@ -296,6 +383,156 @@
   </div>
 </div>
  
+
+
+<div class="modal fade" id="modal_affiliation_product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Affiliation Partner Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">    
+        <div>
+          <form class="row" name="affiliation_product_update">
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+              <label for="">Company Name</label>
+              <input type="hidden" name="company_id">
+              <input type="text" onfocus="focusin(this)" onkeypress="search_input(this)" onfocusout="focusout(this)"   class="form-control"placeholder="Enter Company Name">
+                
+              <div class="child_drop_down d-none">
+                <ul>
+                  @foreach($affiliation_partner as $partner)
+                  <li id="{{$partner->id}}">{{$partner->company_name}}</li>
+                  @endforeach
+                </ul>
+              </div>
+           
+            </div>
+           
+          
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="">Title </label>
+                <input type="text" id="" name="title" class="form-control"placeholder="Enter Title">
+              </div>
+             
+          
+              
+              <div class="form-group col-sm-12 col-md-4 col-lg-4  position-relative">
+                <label for="">Category</label>
+                <input type="hidden" name="category_id">
+                <input onfocus="focusin(this)" name="search_category_update" onkeypress="search_input(this)" onfocusout="focusout(this)" type="text" id="" class="form-control"placeholder="Enter Category">
+                <div class="child_drop_down d-none">
+                  <ul id="category_container_update_com">
+                    @foreach($category as $cate)
+                    <li id="{{$cate->id}}">{{$cate->category_name}}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              </div>
+             
+          
+              <div class="form-group col-sm-12 col-md-4 col-lg-4  position-relative">
+                <label for="">District</label>
+                <input type="hidden" name="district_id">
+
+                <input onfocus="focusin(this)" name="district_search_update" onkeypress="search_input(this)" onfocusout="focusout(this)"  type="text" id="" class="form-control"placeholder="Enter District">
+                <div class="child_drop_down d-none">
+                  <ul id="disctrict_container_update_com">
+                    @foreach($district  as $dis)
+                    <li id="{{$dis->id}}">{{$dis->name}}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-12 col-md-4 col-lg-4 position-relative">
+                <label for="">Regular price</label>
+                
+
+                <input name="regular_price"  class="form-control" placeholder="Regular price">
+                
+              </div>
+             
+              <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="">Phone</label>
+                <input type="text" id="" name="phone" class="form-control" placeholder="Enter Phone">
+              </div>
+             
+              <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="">Privilege </label>
+                <div class="row">
+                    <div class="col-4 input-group mb-2 mr-sm-2">
+                        <div id="discount_container" class="input-group-prepend">
+                          <div class="input-group-text ">
+                            <label class="checkmark_container ">Discount
+                                <input id="discount" name="discount_mark"  type="checkbox">
+                                <span class="checkmark"></span>
+                              </label>
+
+                          </div>
+                        </div>
+                        
+                        <input type="text" id="input_discount" name="discount" class="form-control d-none" placeholder="Enter Discount" id="">
+
+                      </div>
+
+                      <div class="col-4 input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <label class="checkmark_container">BOGO
+                                <input id="bogo" name="bogo" type="checkbox" >
+                                <span class="checkmark"></span>
+                              </label>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="col-2 input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <label class="checkmark_container">FREE
+                                <input id="free" name="free" type="checkbox">
+                                <span class="checkmark"></span>
+                              </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      
+                </div>
+            </div>
+            
+              <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                <label for="">Address </label>
+               <textarea class="form-control" name="address"  placeholder="Enter Address" cols="5" rows="5"></textarea>
+              </div>
+             
+            
+              <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                <label for="">Product Details </label>
+                <textarea id="compose-textarea"  class="form-control">
+               <h4>Describe Your Product</h4>
+                </textarea>
+            </div>
+           <div>
+           </div>
+          </form>
+     
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="update_affiliation_product()">Update </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script src="{{asset('assets/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('assets/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
 <!-- date-range-picker -->
@@ -518,16 +755,13 @@ try {
           let i =1;
 
           for (const affiliation of result) {
-            console.log(affiliation)
 
             if(affiliation.has_room ==1){
               RoomBtn = `<a href="/add_multiple_affiliation_product?id=${affiliation.id}" class="btn btn-info btn-sm" >Store Room</a>`
             }else {
               RoomBtn=  ` <a onclick="modal_show_product('${affiliation.id}')" class="btn btn-success btn-sm" >Show Product </a>`
-            }   
-            
+            } 
             view += `
-        
             <tr>
                 <td>${i++}</td>
                 <td>${affiliation.company_name}</td>
@@ -548,13 +782,6 @@ try {
         `;
           }
          document.getElementById("all_affiliation_table").innerHTML = view;
-
-        console.log(view);
-        console.log("HI")
-
-
-
-      //  }
   
 } catch (error) {
   console.log(error)
@@ -562,9 +789,122 @@ try {
 
  }
 
+ async function modal_show_product(id){
+$("#modal_affiliation_product").modal("show")
 
 
 
+
+try {
+  /*
+    url path //get_one_store_room_data is fetcing affiliation_product table 
+  */
+  const response = await fetch(`${location.origin}/get_one_store_room_data/${id}`)      
+        const result = await response.json(); 
+        console.log(result);
+        debugger;
+        let formElem = document.forms['affiliation_product_update'];
+            console.log(formElem)
+        
+
+
+                document.getElementById("category_container_update_com").children.forEach((li)=>{
+                if(li.id== result[0]['category_id'] ){
+                  formElem.category_id.value = li.id; 
+                  formElem.search_category_update.value = li.innerText;
+                  console.log(li.id)
+                    return;
+                }
+
+                })
+                document.getElementById("disctrict_container_update_com").children.forEach((li)=>{
+                if(li.id== result[0]['district_id'] ){
+                  formElem.district_id.value = li.id; 
+                  formElem.district_search_update.value = li.innerText;
+                  console.log(li.id)
+                  return;
+                }
+
+               
+                })
+
+
+      
+      if(response.status ==200){
+        let FormElem = document.forms['affiliation_product_update'].elements;
+        for (const name of document.forms['affiliation_product_update']) {
+          FormElem[`${name["name"]}`].value =  result[0][`${name["name"]}`];
+          result[0]['has_room']==  1  && name["name"] == 'has_room'?FormElem.has_room.checked = true : FormElem.has_room.checked = false;         
+        }
+      }  
+} catch (error) {
+ console.log(error) 
+}
+
+ }
+
+
+ function focusin (evt){
+    evt.nextElementSibling.classList.remove("d-none");
+   }
+
+   function focusout(evt){
+    let li =   evt.nextElementSibling.children[0].children
+  for (let i = 0; i < li.length; i++) {
+  li[i].onclick=function(){
+    if(this.tagName=='LI'){
+        evt.value = this.innerText
+        evt.previousElementSibling.value = this.id
+     evt.nextElementSibling.classList.add("d-none");
+    }
+  }
+ }
+   }
+
+   function search_input(evt){
+    
+    let input_value =   evt.value.toUpperCase();
+    let li =   evt.nextElementSibling.children[0].children
+    for (let i = 0; i < li.length; i++) {
+   
+    if (li[i].innerText.toUpperCase().indexOf(input_value) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+   }
+  }
+
+
+  for (const check_box of document.querySelectorAll("input[type='checkbox']")) {
+    check_box.onclick=function(){
+
+      for (const check of document.querySelectorAll("input[type='checkbox']")) {
+        check.checked=false;
+    discount_container.classList.remove('d-none')
+    input_discount.classList.add('d-none')
+    
+      }
+
+      this.checked = true;
+     if(this.id=='discount' && this.checked ==true){
+    let input_div = this.parentElement.parentElement.parentElement;
+    discount_container.classList.add('d-none')
+    input_discount.classList.remove('d-none')
+     }
+    
+    }
+  }
+
+  $(function () {
+    //Add text editor
+    $('#compose-textarea').summernote({
+        placeholder: 'Describe Your Product<',
+        tabsize: 2,
+        height: 200,
+
+    })
+  })
 
 </script>
 
