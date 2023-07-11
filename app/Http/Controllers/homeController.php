@@ -1168,14 +1168,18 @@ if($type=='add'):
 
    }
 
-   public function add_affiliation_partner_view(){
-      return view("add_affiliation_partner_view");
-   }
+
 
   public function  all_affiliation_partner_view(){
     $all_affiliation = Affiliation_partner::all();
     return view("all_affiliation_partner_view",['all_affiliation'=>$all_affiliation]);
    }
+
+   public function  all_affiliation_partner(){
+      return  $all_affiliation = Affiliation_partner::all();
+     }
+
+
 
    public function add_multiple_affiliation_product(){
       return view("add_multiple_affiliation_product");
@@ -1408,7 +1412,31 @@ if(is_null($all_img_path[0]['img_path'])){
   return Affiliation_partner::where(['id'=>$id])->get();
  }
 
-  
+  function update_affiliation_partner(Request $req){
+   $result = Affiliation_partner::where(['id'=>$req->input("id")])->update([
+
+      "company_address"=>$req->input("company_address"),
+      "company_name"=>$req->input("company_name"),
+
+      "company_owner_name"=>$req->input("company_owner_name"),
+
+      "company_tin"=>$req->input("company_tin"),
+
+      "contact_full_name"=>$req->input("contact_full_name"),
+      "contact_number"=>$req->input("contact_number"),
+      "contact_role"=>$req->input("contact_role"),
+      "email_address"=>$req->input("email_address"),
+
+   ]);
+
+   if($result){
+         
+      return json_encode(array('condition'=>true,'message'=>"Updated Successfully ...."));
+   }else{
+      return json_encode(array('condition'=>false,'message'=>"Updated Failed ...."));
+   }
+
+  }
 
 }
 

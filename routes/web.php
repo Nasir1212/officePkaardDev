@@ -161,7 +161,10 @@ Route::post('affiliation_product_insert','App\Http\Controllers\homeController@af
 Route::post('affiliation_product_img_path_insert','App\Http\Controllers\homeController@affiliation_product_img_path_insert')->middleware('login');
 
 Route::get('add_affiliation_partner_view','App\Http\Controllers\homeController@add_affiliation_partner_view')->middleware('login');
+
 Route::get('all_affiliation_partner_view','App\Http\Controllers\homeController@all_affiliation_partner_view')->middleware('login');
+
+Route::get('all_affiliation_partner','App\Http\Controllers\homeController@all_affiliation_partner')->middleware('login');
 Route::get('add_multiple_affiliation_product','App\Http\Controllers\homeController@add_multiple_affiliation_product')->middleware('login');
 Route::post('add_store_room_data','App\Http\Controllers\homeController@add_store_room_data')->middleware('login');
 Route::get('get_by_company_id_room_data/{id}','App\Http\Controllers\homeController@get_by_company_id_room_data')->middleware('login');
@@ -194,3 +197,4 @@ Route::get('get_one_affiliation_partner/{id}','App\Http\Controllers\homeControll
 
 
 
+Route::post('update_affiliation_partner','App\Http\Controllers\homeController@update_affiliation_partner')->middleware('login');

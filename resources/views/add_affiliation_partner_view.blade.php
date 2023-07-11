@@ -17,6 +17,7 @@
     width:2rem;
     height:1.4rem;
   }
+  
 </style>
 <div class="card">
 

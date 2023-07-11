@@ -25,6 +25,15 @@
     cursor: pointer;
 }
 
+.has_room_check_box_container {
+    display:flex;
+
+  }
+
+  .has_room_check_box_container input{
+    width:2rem;
+    height:1.4rem;
+  }
 
 </style>
 <div class="card">
@@ -75,8 +84,8 @@
                 </tr>
             </thead>
 
-            <tbody>
-                <?php $i=1; ?>
+            <tbody id="all_affiliation_table">
+                {{-- <?php // $i=1; ?>
                 @foreach($all_affiliation as $affiliation)
                
                 <tr>
@@ -86,7 +95,7 @@
                     <td>{{$affiliation->contact_number}}</td>
                     <td>{{$affiliation->email_address}}</td>
                    
-                    <td><a class="btn btn-info btn-sm">Details</a></td>
+                    <td><a class="btn btn-info btn-sm"  onclick="details_handle_modal('{{$affiliation->id}}')">Details</a></td>
                     <td><a class="btn btn-warning btn-sm" onclick="nid_handle_modal('{{$affiliation->id}}')" >NID Card</a></td>
 
                     <td> 
@@ -98,7 +107,7 @@
                       </td>
 
                 </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
 
@@ -167,6 +176,124 @@
 
 
 
+</div>
+
+
+
+<!-- Modal for Affiliation Details button  -->
+<div class="modal fade" id="modal_affiliation_details_btn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Affiliation Partner Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+        
+<div>
+  <form class="row" name="affiliation_partner_form_details">
+      <div class="form-group col-sm-12 col-md-6 col-lg-6">
+        <label for="">Company Name </label>
+        <input type="text" class="form-control"  name="company_name"  placeholder="Company Name">
+      </div>
+
+      <div class="form-group col-sm-12 col-md-6 col-lg-6">
+          <label for="">Company Owner Name </label>
+          <input type="text" class="form-control"  name="company_owner_name" placeholder="Company Owner Name">
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+          <label for="">Company TIN </label>
+          <input type="text" class="form-control"  name="company_tin" placeholder="Company TIN ">
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+          <label for="">Company Address </label>
+          <textarea style="height: 40px" name="company_address" class="form-control" placeholder="Company Address "> </textarea>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-12 col-lg-12">
+          <label for="">Contact Details </label>
+         
+          <div class="row">
+              <div class="col-md-6 col-sm-12 col-lg-6   mb-3">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="nidno">Your Role</span>
+                      </div>
+
+                      <select class="form-control" name="contact_role" >
+                          <option value="0">Select Role</option>
+                          <option>Owner</option>
+                          <option>Manager</option>
+                          <option>Employer</option> 
+                        </select>           
+                      </div>  
+              </div>
+              <div class="col-md-6 col-ms-12 col-lg-6  mb-3 ">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text " for="contact_full_name">Full Name</span>
+                      </div>
+                      <input type="text" placeholder="Full Name" class="form-control col-md-12"   name="contact_full_name" >
+                    </div> 
+              </div>
+
+             
+
+              <div class="col-md-6 col-ms-12 col-lg-6  mb-3 ">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text "  for="dateofbirth">Contact Number</span>
+                      </div>
+                      <input type="text" placeholder="Contact Number" class="form-control col-md-12" name="contact_number">
+                      <input type="hidden" name="id">
+
+                    </div> 
+              </div>
+
+              <div class="col-md-6 col-ms-12 col-lg-6  mb-3 ">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text " for="">Email Address</span>
+                      </div>
+                      <input type="text" placeholder="Email Address" class="form-control col-md-12"  name="email_address" >
+                    </div> 
+              </div>
+
+
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-12 col-lg-12">
+
+          <div class="row">
+            
+              
+
+              <div class="form-group col-sm-12 col-md-6 col-lg-6 has_room_check_box_container">
+              <input type="checkbox" disabled="true" class="form-control"  name="has_room" placeholder="Company TIN ">
+              <label for="">Has multi category discount ?  </label>
+           </div>
+          </div>
+        </div>               
+    </form>
+</div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="update_affiliation_partner()">Update </button>
+      </div>
+    </div>
+  </div>
 </div>
  
 <script src="{{asset('assets/plugins/moment/moment.min.js')}}"></script>
@@ -244,22 +371,15 @@
         if(response.status==200){
           if(result['condition'] == true){
             get_one_affiliation_partner(document.getElementById("t_id").value);
-          }
-           
-
-        
+          } 
         }
     }catch(e){
         console.log(e);
-      
-
     }
 
-  
         }else{
         
-          swal("Opps!", "Something went wrong in Image Server", "error"); 
-
+          swal("Opps!", "Something went wrong in Image Server", "error");
         }
       
         
@@ -322,6 +442,127 @@ try {
 }
 
  }
+
+async function  details_handle_modal(id){
+
+  $("#modal_affiliation_details_btn").modal("show")
+try {
+  const response = await fetch(`${location.origin}/get_one_affiliation_partner/${id}`)      
+        const result = await response.json();       
+      if(response.status ==200){
+        let FormElem = document.forms['affiliation_partner_form_details'].elements;
+        for (const name of document.forms['affiliation_partner_form_details']) {
+          FormElem[`${name["name"]}`].value =  result[0][`${name["name"]}`];
+          result[0]['has_room']==  1  && name["name"] == 'has_room'?FormElem.has_room.checked = true : FormElem.has_room.checked = false;         
+        }
+      }  
+} catch (error) {
+ console.log(error) 
+}
+
+ }
+
+async function update_affiliation_partner(){
+
+  let server_data = Object.fromEntries(new FormData(document.forms['affiliation_partner_form_details']));
+console.log(server_data);
+
+
+try{
+        const response = await fetch(`${location.origin}/update_affiliation_partner`,{
+            method:'POST',
+            // mode: 'no-cors',
+            body:JSON.stringify(server_data),
+            headers: new Headers({
+            'Content-Type': 'application/json',
+          
+        })
+      })
+       
+        const result = await response.json();
+        console.log(result);
+        if(response.status==200){
+          if(result.condition == true){
+
+            all_affiliation_partner();
+            swal("Thanks", `${result.message}`, "success");
+            $("#modal_affiliation_details_btn").modal("hide")
+
+          }else{
+
+            swal("Opps", `${result.message}`, "error");
+          }
+        
+        }
+    }catch(e){
+        console.log(e);
+       
+        swal("Opps", `Something went wrong`, "error");
+
+    }
+
+ }
+
+ all_affiliation_partner();
+
+async function all_affiliation_partner(){
+
+  
+try {
+  const response = await fetch(`${location.origin}/all_affiliation_partner`)      
+        const result = await response.json()
+        console.log(result)
+        // if(response.status==200){
+          let view = "";
+          let RoomBtn ="" ;
+          let i =1;
+
+          for (const affiliation of result) {
+            console.log(affiliation)
+
+            if(affiliation.has_room ==1){
+              RoomBtn = `<a href="/add_multiple_affiliation_product?id=${affiliation.id}" class="btn btn-info btn-sm" >Store Room</a>`
+            }else {
+              RoomBtn=  ` <a onclick="modal_show_product('${affiliation.id}')" class="btn btn-success btn-sm" >Show Product </a>`
+            }   
+            
+            view += `
+        
+            <tr>
+                <td>${i++}</td>
+                <td>${affiliation.company_name}</td>
+                <td>${affiliation.company_tin}</td>
+                <td>${affiliation.contact_number}</td>
+                <td>${affiliation.email_address}</td>
+                
+                <td><a class="btn btn-info btn-sm"  onclick="details_handle_modal('${affiliation.id}')">Details</a></td>
+                <td><a class="btn btn-warning btn-sm" onclick="nid_handle_modal('${affiliation.id}')" >NID Card</a></td>
+
+                <td> 
+                  ${RoomBtn}
+                </td>
+
+            </tr>
+        
+        
+        `;
+          }
+         document.getElementById("all_affiliation_table").innerHTML = view;
+
+        console.log(view);
+        console.log("HI")
+
+
+
+      //  }
+  
+} catch (error) {
+  console.log(error)
+}
+
+ }
+
+
 
 
 
