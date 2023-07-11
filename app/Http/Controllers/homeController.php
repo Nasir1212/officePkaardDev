@@ -1175,6 +1175,10 @@ if($type=='add'):
     return view("all_affiliation_partner_view",['all_affiliation'=>$all_affiliation]);
    }
 
+   public function add_affiliation_partner_view(){
+      return view("add_affiliation_partner_view");
+   }
+   
    public function  all_affiliation_partner(){
       return  $all_affiliation = Affiliation_partner::all();
      }
