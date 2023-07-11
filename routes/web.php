@@ -183,5 +183,14 @@ Route::get('get_img_path_aff_sub_discount_product/{id}','App\Http\Controllers\ho
 
 Route::post('upload_store_room_img_path/','App\Http\Controllers\homeController@upload_store_room_img_path')->middleware('login');
 
+Route::get('store_room_img_path/{id}','App\Http\Controllers\homeController@store_room_img_path')->middleware('login');
+
+Route::get('get_one_store_room_data/{id}','App\Http\Controllers\homeController@get_one_store_room_data')->middleware('login');
+
+Route::post('update_store_room_data','App\Http\Controllers\homeController@update_store_room_data')->middleware('login');
+
+Route::post('default_img_path_uploader','App\Http\Controllers\homeController@default_img_path_uploader')->middleware('login');
+Route::get('get_one_affiliation_partner/{id}','App\Http\Controllers\homeController@get_one_affiliation_partner')->middleware('login');
+
 
 

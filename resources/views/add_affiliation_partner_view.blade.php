@@ -7,6 +7,16 @@
   .margin_top{
     margin-top:2rem !important;
   }
+
+  .has_room_check_box_container {
+    display:flex;
+
+  }
+
+  .has_room_check_box_container input{
+    width:2rem;
+    height:1.4rem;
+  }
 </style>
 <div class="card">
 
@@ -107,7 +117,7 @@
                           </div> 
                     </div>
 
-                    <div class="col-md-6 col-ms-12 col-lg-6  mb-3 ">
+                    <!-- <div class="col-md-6 col-ms-12 col-lg-6  mb-3 ">
                         <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text " for="dateofbirth">NID Copy (Front)</span>
@@ -126,7 +136,7 @@
                             <input type="hidden" name="back_nid" >
                             <input type="file"  class="form-control col-md-12" >
                           </div> 
-                    </div>
+                    </div> -->
 
 
                 </div>
@@ -155,6 +165,15 @@
                             <input type="text" placeholder=" Confirm  password" class="form-control col-md-12"  name="confirm_password" >
                           </div> 
                     </div>
+
+                    
+
+                    <div class="form-group col-sm-12 col-md-6 col-lg-6 has_room_check_box_container">
+                    <input type="checkbox" class="form-control"  name="has_room" placeholder="Company TIN ">
+                    <label for="">Has multi category discount ?  </label>
+
+                  </div>
+  
                 </div>
 
 
@@ -201,6 +220,8 @@
 <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
   
 <script>
+
+
    async function submit_affiliation_partner(evt){
     evt.innerHTML  = `<div class="spinner-border spinner-border-sm" role="status">
                     <span class="sr-only">Loading...</span>
@@ -208,9 +229,10 @@
     var formData = new FormData();
     var response = "";
     var result;
-    var next = 0;
+    // var next = 0;
 
-    let data = Object.fromEntries(new FormData(document.forms['affiliation_partner_form']));
+    let FormElem = document.forms['affiliation_partner_form'];
+    let data = Object.fromEntries(new FormData(FormElem));
 
     if(data['password'] != data['confirm_password']){
         swal("Opps!", `password not matched with confirm password`, "error"); 
@@ -219,42 +241,52 @@
 
     }
 
-    for (const file of document.querySelectorAll('input[type=file]')) {      
-        formData.append('pkaard_img',file.files[0]);
-        try {
+    if(FormElem.has_room.checked  == true){
+      console.log("Checked")
+      data['has_room'] = 1;
+    }else{
+      data['has_room'] = 0;
 
-            response  = await fetch(`https://img.pkaard.com/upload_img.php`,{
-            method:'POST',
-            // mode: 'no-cors',
-            body:formData
-        })
-        result  = await response.json();
-        console.log(result);
-        file.previousElementSibling.value = result['img_path']
-        if(result['status']===false){
-        swal("Opps!", `${result['message']}`, "error"); 
-        return false;
-        } 
-         
-        next ++;           
-        } catch (error) {
-            console.log(error)
-        }
-      
     }
 
+    console.log(data)
+
+    // for (const file of document.querySelectorAll('input[type=file]')) {      
+    //     formData.append('pkaard_img',file.files[0]);
+    //     try {
+
+    //         response  = await fetch(`https://img.pkaard.com/upload_img.php`,{
+    //         method:'POST',
+    //         // mode: 'no-cors',
+    //         body:formData
+    //     })
+    //     result  = await response.json();
+    //     console.log(result);
+    //     file.previousElementSibling.value = result['img_path']
+    //     if(result['status']===false){
+    //     swal("Opps!", `${result['message']}`, "error"); 
+    //     return false;
+    //     } 
+         
+    //     next ++;           
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+      
+    // }
+
 
       
-        if(next >= 2){
-           var form_data = Object.fromEntries(new FormData(document.forms['affiliation_partner_form']));
-            console.log(form_data)
+        // if(next >= 2){
+          //  var form_data = Object.fromEntries(new FormData(document.forms['affiliation_partner_form']));
+          //   console.log(form_data)
 
-
+        // return ;
             try {
                 response  = await fetch(`/add_affiliation_partner`,{
                 method:'POST',
 
-                body:JSON.stringify(form_data),
+                body:JSON.stringify(data),
             headers: new Headers({
             'Content-Type': 'application/json',
           
@@ -272,7 +304,7 @@
                 }
 
 
-        }
+        // }
    
 
        

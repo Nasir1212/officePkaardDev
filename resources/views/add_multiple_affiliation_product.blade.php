@@ -161,6 +161,8 @@ caption {
 
 </div>
 
+
+<!-- Modal for  Add New Store Room /-->
 <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -250,6 +252,106 @@ caption {
     </div>
   </div>
 </div>
+<!-- // Modal for  Add New Store Room /-->
+
+
+
+
+<!-- Modal for  update  Store Room /-->
+<div class="modal fade bd-example-modal-lg" id="update_affiliation_store_room_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Update Store Room</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-body">
+
+        <form class="row" name="update_affiliation_store_room">
+           
+           
+          
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="">Room Title </label>
+                <input type="text"  name="title" class="form-control"placeholder="Enter Title">
+                <input type="hidden" name="id">
+              </div>
+             
+          
+              
+              <div class="form-group col-sm-12 col-md-4 col-lg-4  position-relative">
+                <label for="">Category</label>
+                <input type="hidden" name="category_id">
+                <input onfocus="focusin(this)" name="search_category_update" onkeypress="search_input(this)" onfocusout="focusout(this)" type="text"  class="form-control"placeholder="Enter Category">
+                <div class="child_drop_down d-none">
+                  <?php    $category = App\Http\Controllers\HomeController::all_category();?>
+                  <ul id="category_container_update_com">
+                    @foreach($category as $cate)
+                    <li id="{{$cate->id}}">{{$cate->category_name}}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              </div>
+             
+          
+              <div class="form-group col-sm-12 col-md-4 col-lg-4  position-relative">
+                <label for="">District</label>
+                <input type="hidden" name="district_id">
+
+                <input onfocus="focusin(this)" name="district_search_update" onkeypress="search_input(this)" onfocusout="focusout(this)"  type="text"  class="form-control"placeholder="Enter District">
+                <div class="child_drop_down d-none">
+                  <?php $district =  App\Http\Controllers\HomeController::all_district()?>
+                  <ul id="disctrict_container_update_com">
+                    @foreach($district  as $dis)
+                    <li id="{{$dis->id}}">{{$dis->name}}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              </div>
+
+              
+             
+              <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="">Upto percent</label>
+                <input type="text"  name="discount" class="form-control" placeholder="Enter Upto Percent">
+              </div>
+             
+             
+             
+            
+              <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                <label for="">Address </label>
+               <textarea class="form-control" name="address"  placeholder="Enter Address" cols="5" rows="5"></textarea>
+              </div>
+             
+            
+             
+           <div>
+           
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" onclick="update_store_room_data()">Submit </button>
+              <button type="reset" class="btn btn-warning" >Reset </button>
+
+            </div>
+           </div>
+          </form>
+     
+
+
+          
+      
+      <!-- /.card-body -->
+    </div>
+    </div>
+  </div>
+</div>
+<!-- // Modal for  Update Store Room /-->
+
+
+
 
 <!-- modal for add Product option -->
 
@@ -468,18 +570,29 @@ caption {
       </div>
       <div class="card-body">
 
-        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-sm-12 col-md-6 col-lg-6" id="room_img_uploader">
         <label for="modal_Img_room"><img style="width: 4rem;height: 4rem;cursor: pointer;" src="{{ asset('assets/images/2997933.png')}}" alt=""></label>
         <input type="file" style="display: none"  id="modal_Img_room" onchange="upload_store_room_img(this)" class="form-control" placeholder="Enter Upto Percent">
         </div> 
         <input type="hidden" id="img_path_id">
      
+        <div class="container_modal_upload_img position-relative" style="display:none" id="room_img_container">
+          <i class="position-absolute img_close_icon"> &#10007;</i>
+          <div class="modal_upload_img">
+            <img src="" alt="">
+          </div>
+        </div>
+      
       
       <!-- /.card-body -->
     </div>
     </div>
   </div>
 </div>
+
+
+
+
 
 
 <!-- Image model --->
@@ -553,13 +666,15 @@ $(function () {
   })
 
 
- var view= ''
+
  async function store_room_data(){
     const searchParams = new URLSearchParams(window.location.search);
  //searchParams.get('id');
+ var view= ''
 try {
   const response = await fetch(`${location.origin}/get_by_company_id_room_data/${searchParams.get('id')}`);
   const result = await response.json();
+
 console.log(result)
 result.forEach((d,i)=>{
    view +=`
@@ -587,6 +702,8 @@ document.getElementById("store_room_table").innerHTML = view;
 }
   }
   store_room_data();
+
+  
 
 
 async function add_store_room_data(){
@@ -795,7 +912,7 @@ async function edit_product_details(id){
   const response = await fetch(`${location.origin}/get_one_edit_product_details/${id}`)      
         const result = await response.json();
         console.log(result);
-      
+      var affiliation_product_edit = document.getElementsByName("affiliation_product_edit")
     
       document.getElementById("input_discount_edit").value = '';
       document.getElementsByName('bogo')[1].checked = false;
@@ -807,7 +924,7 @@ async function edit_product_details(id){
 
       if(result.length>0){
       document.getElementsByName('regular_price')[1].value = result[0]['regular_price'];
-      document.getElementsByName('title')[2].value = result[0]['title'];
+      document.getElementsByName('title')[3].value = result[0]['title'];
       document.getElementById("id").value = result[0]['id'];
       
       document.getElementById("edit_affiliation_product_id").value = result[0]['affiliation_product_id'];
@@ -1009,11 +1126,50 @@ async function get_img_path(id){
 document.getElementById("img_path_id").value = d;
   $('#upload_room_image').modal('show')
 
-  
+  get_store_room_img_path()
  }
 
+ async function get_store_room_img_path(){
+
+  let img_path_id = document.getElementById("img_path_id").value;
+  document.getElementById("room_img_container").style.display='none'
+  document.getElementById("room_img_uploader").style.display='block'
+
+  try{
+        const response = await fetch(`${location.origin}/store_room_img_path/${img_path_id}`)
+       
+        const result = await response.json();
+        console.log(result);
+        if(response.status==200){
+          if(result.img_path  == null){
+
+            document.getElementById("room_img_container").style.display='none'
+         
+       
+
+          }else{
+            document.getElementById("room_img_uploader").style.display='none'
+
+            document.getElementById("room_img_container").style.display='block'
+
+  document.getElementById("room_img_container").getElementsByTagName("img")[0].src = `https://img.pkaard.com/images/${result.img_path }`
+            
+          }
+        
+        }
+    }catch(e){
+        console.log(e);
+       
+
+    }
+ }
+
+  
+
+ 
+
  async function upload_store_room_img_path(path){
-console.log(document.getElementById("img_path_id").value)
+
   let formData = {
     img_path:path,
     id:document.getElementById("img_path_id").value
@@ -1022,14 +1178,18 @@ console.log(document.getElementById("img_path_id").value)
         const response = await fetch(`${location.origin}/upload_store_room_img_path`,{
             method:'POST',
             // mode: 'no-cors',
-            body:formData           
-        } );
+            body:JSON.stringify(formData),
+            headers: new Headers({
+            'Content-Type': 'application/json',
+          
+        })
+      })
        
         const result = await response.json();
         console.log(result);
         if(response.status==200){
-          if(result.status == true){
-         
+          if(result.condition == true){
+            get_store_room_img_path()
         
 
           }else{
@@ -1044,7 +1204,7 @@ console.log(document.getElementById("img_path_id").value)
 
     }
  }
-
+ 
 
 
  async function upload_store_room_img(d){
@@ -1064,20 +1224,104 @@ console.log(document.getElementById("img_path_id").value)
          
           upload_store_room_img_path(result['img_path'])
 
-          }else{
-
-            
           }
         
         }
     }catch(e){
         console.log(e);
        
+    }
+}
+
+
+async function edit_store_room(id){
+  
+  $('#update_affiliation_store_room_modal').modal('show')
+
+
+  try{
+        const response = await fetch(`${location.origin}/get_one_store_room_data/${id}`)
+       
+        const result = await response.json();
+        console.log(result);
+
+        if(response.status==200){
+          let formElem =  document.forms['update_affiliation_store_room'].elements;
+
+          formElem.title.value = result[0]['title'];
+          formElem.discount.value = result[0]['discount'];
+          formElem.address.value = result[0]['address'];
+          formElem.id.value =  result[0]['id'];
+
+          document.getElementById("category_container_update_com").children.forEach((li)=>{
+              if(li.id== result[0]['category_id'] ){
+                formElem.category_id.value = li.id; 
+                formElem.search_category_update.value = li.innerText;
+
+              }
+          })
+          document.getElementById("disctrict_container_update_com").children.forEach((li)=>{
+              if(li.id== result[0]['district_id'] ){
+                formElem.district_id.value = li.id; 
+                formElem.district_search_update.value = li.innerText;
+
+              }
+          })
+
+        }
+        }
+    catch(e){
+        console.log(e);
+       
+    }
+
+  }
+
+
+ async function update_store_room_data(){
+
+    form_data = Object.fromEntries(new FormData(document.forms['update_affiliation_store_room']));
+
+console.log(form_data)
+
+debugger;
+
+try{
+        const response = await fetch(`${location.origin}/update_store_room_data`,{
+            method:'POST',
+            // mode: 'no-cors',
+            body:JSON.stringify(form_data),
+            headers: new Headers({
+            'Content-Type': 'application/json',
+          
+        })
+      })
+       
+        const result = await response.json();
+        console.log(result);
+        if(response.status==200){
+          if(result.condition == true){
+            document.getElementById("store_room_table").innerHTML = '';
+
+            store_room_data();
+            swal("Thanks", `${result.message}`, "success");
+          }else{
+
+            swal("Opps", `${result.message}`, "error");
+          }
+        
+        }
+    }catch(e){
+        console.log(e);
+       
+        swal("Opps", `Something went wrong`, "error");
 
     }
 
+  }
 
-}
+
+
 
 
 </script>

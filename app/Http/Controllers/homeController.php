@@ -1184,7 +1184,7 @@ if($type=='add'):
 
    public function add_affiliation_partner (Request $req){
 
-   $back_nid = $req->input("back_nid");
+   // $back_nid = $req->input("back_nid");
    $company_address = $req->input("company_address");
    $company_name = $req->input("company_name");
    $company_owner_name = $req->input("company_owner_name");
@@ -1193,12 +1193,12 @@ if($type=='add'):
    $contact_number = $req->input("contact_number");
    $contact_role = $req->input("contact_role");
    $email_address = $req->input("email_address");
-   $front_nid = $req->input("front_nid");
+   // $front_nid = $req->input("front_nid");
    $password = \Hash::make($req->input("password"));
    $create_at = date("Y:m:d");
 
    $result = Affiliation_partner::insert([
-      'back_nid'=>$back_nid,
+      // 'back_nid'=>$back_nid,
       'company_address'=>$company_address,
       'company_name'=>$company_name,
       'company_owner_name'=>$company_owner_name,
@@ -1207,9 +1207,10 @@ if($type=='add'):
       'contact_number'=>$contact_number,
       'contact_role'=>$contact_role,
       'email_address'=>$email_address,
-      'front_nid'=>$front_nid,
+      // 'front_nid'=>$front_nid,
       'password'=>$password,
       'create_at'=>$create_at,
+      'has_room'=>$req->input("has_room")
 
    ]);
 
@@ -1287,6 +1288,7 @@ if($type=='add'):
  $product_id = $req->input('product_id');
 
 $all_img_path =  aff_sub_discount_product::where(['id'=>$product_id])->get(["img_path"]);
+
 if(is_null($all_img_path[0]['img_path'])){
    
     $result = aff_sub_discount_product::where(['id'=>$product_id])->update([
@@ -1329,6 +1331,84 @@ if(is_null($all_img_path[0]['img_path'])){
       }
 
   }
+
+  public function store_room_img_path($id){
+
+  $result =  Affiliation_product::where(['id'=>$id])->get();
+
+  return ['img_path'=>$result[0]['img_path']];
+
+  }
+
+  public function get_one_store_room_data($id){
+
+  return  $result =  Affiliation_product::where(['id'=>$id])->get();
+ 
+
+ 
+   }
+ public function update_store_room_data(Request $req){
+
+
+   $result=  Affiliation_product::where(['id'=>$req->input("id")])->update([
+      'address'=>$req->input("address"),
+      'category_id'=>$req->input("category_id"),
+      'district_id'=>$req->input("district_id"),
+      'discount'=>$req->input("discount"),
+      'title'=>$req->input("title"),
+      
+   ]);
+
+
+   if($result){
+         
+      return json_encode(array('condition'=>true,'message'=>"Updated Successfully ...."));
+   }else{
+      return json_encode(array('condition'=>false,'message'=>"Updated Failed ...."));
+   }
+
+ }
+
+
+ public function default_img_path_uploader(Request $req){
+
+   $tc_name = $req->input('tc_name');
+
+   $all_img_path =  \DB::table($req->input("t_name"))->where(['id'=>$req->input("t_id")])->get([$tc_name]);
+
+   $myarray = array();  
+   if(is_null($all_img_path[0]->{$tc_name})){
+   
+      
+
+      $myarray[$tc_name] = $req->input("img_path");
+    
+       $result =   \DB::table($req->input("t_name"))->where(['id'=>$req->input("t_id")])->update($myarray);
+
+
+  }else{
+   
+       $myarray[$tc_name] = $all_img_path[0]->{$tc_name}.",".$req->input("img_path");
+      $result =   \DB::table($req->input("t_name"))->where(['id'=>$req->input("t_id")])->update($myarray);
+  }
+
+         if($result){
+                  
+            return json_encode(array('condition'=>true));
+         }else{
+            return json_encode(array('condition'=>false ));
+         }
+
+
+ }
+
+
+ public function  get_one_affiliation_partner($id){
+
+  return Affiliation_partner::where(['id'=>$id])->get();
+ }
+
+  
 
 }
 
