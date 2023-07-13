@@ -1043,7 +1043,7 @@ if($type=='add'):
    public function add_affiliation_product_view(){
       $category = Category::all();
       $district = District::all();
-      $affiliation_partner = Affiliation_partner::all();
+      $affiliation_partner = Affiliation_partner::where(['has_room'=>0])->get();
       return view("add_affiliation_product_view",['category'=>$category,'district'=>$district,'affiliation_partner'=>$affiliation_partner]);
    }
 
@@ -1175,7 +1175,7 @@ if($type=='add'):
 
     $category = Category::all();
     $district = District::all();
-    $affiliation_partner = Affiliation_partner::all();
+    $affiliation_partner = Affiliation_partner::where(['has_room'=>0])->get();
     
     return view("all_affiliation_partner_view",['category'=>$category,'district'=>$district,'affiliation_partner'=>$affiliation_partner]);
    //  return view("all_affiliation_partner_view",['all_affiliation'=>$all_affiliation]);
@@ -1357,9 +1357,7 @@ if(is_null($all_img_path[0]['img_path'])){
   public function get_one_store_room_data($id){
 
   return  $result =  Affiliation_product::where(['id'=>$id])->get();
- 
 
- 
    }
  public function update_store_room_data(Request $req){
 
@@ -1388,7 +1386,7 @@ if(is_null($all_img_path[0]['img_path'])){
 
    $tc_name = $req->input('tc_name');
 
-   $all_img_path =  \DB::table($req->input("t_name"))->where(['id'=>$req->input("t_id")])->get([$tc_name]);
+   $all_img_path =  \DB::table($req->input("t_name"))->where([$req->input("c_t_c_name")=>$req->input("t_id")])->get([$tc_name]);
 
    $myarray = array();  
    if(is_null($all_img_path[0]->{$tc_name})){
@@ -1397,13 +1395,13 @@ if(is_null($all_img_path[0]['img_path'])){
 
       $myarray[$tc_name] = $req->input("img_path");
     
-       $result =   \DB::table($req->input("t_name"))->where(['id'=>$req->input("t_id")])->update($myarray);
+       $result =   \DB::table($req->input("t_name"))->where([$req->input("c_t_c_name")=>$req->input("t_id")])->update($myarray);
 
 
   }else{
    
        $myarray[$tc_name] = $all_img_path[0]->{$tc_name}.",".$req->input("img_path");
-      $result =   \DB::table($req->input("t_name"))->where(['id'=>$req->input("t_id")])->update($myarray);
+      $result =   \DB::table($req->input("t_name"))->where([$req->input("c_t_c_name")=>$req->input("t_id")])->update($myarray);
   }
 
          if($result){
@@ -1447,6 +1445,84 @@ if(is_null($all_img_path[0]['img_path'])){
    }
 
   }
+
+
+  public function get_one_affiliation_product_by_company_id($id){
+
+  return \DB::select("SELECT affiliation_product.*, affiliation_partner.company_name AS search_company_name_update  FROM `affiliation_product` LEFT JOIN affiliation_partner ON affiliation_product.company_id = affiliation_partner.id  WHERE affiliation_product.company_id = $id");
+
+
+   // return  $result =  Affiliation_product::where(['company_id'=>$id])->get();
+
+  }
+
+
+ public function update_affiliation_from_partner_view(Request $req){
+
+   $result=  Affiliation_product::where(['id'=>$req->input("id")])->update([
+      'address'=>$req->input("address"),
+      'category_id'=>$req->input("category_id"),
+      'district_id'=>$req->input("district_id"),
+      'title'=>$req->input("title"),
+      'phone'=>$req->input("phone"),
+      'regular_price'=>$req->input("regular_price"),
+      'details'=>$req->input("details"),
+      'privilege'=>$req->input("privilege"),
+
+         
+      
+      
+   ]);
+
+
+   if($result){
+         
+      return json_encode(array('condition'=>true,'message'=>"Updated Successfully ...."));
+   }else{
+      return json_encode(array('condition'=>false,'message'=>"Updated Failed ...."));
+   }
+
+
+  }
+
+
+
+  function delete_img(Request $req){
+
+   $url_path = "http://localhost:8080/delete_img.php";
+   $data = array("delete_file_path"=> $req->input("img_path"));
+   $options = array(
+      "http"=>array(
+         "method"=>"POST",
+         'header' => 'Content-type:application/x-www-form-urlencoded',
+         "content"=>http_build_query($data)
+      ));
+   $stream = stream_context_create($options);
+   $api_request  = file_get_contents($url_path,false, $stream);
+   $api_request   = json_decode($api_request);
+   if( $api_request->condition ==true){
+      $tc_name = $req->input('tc_name');
+      $all_img_path =  \DB::table($req->input("t_name"))->where([$req->input("c_t_c_name")=>$req->input("t_id")])->get([$tc_name]);
+      $explode_arr = explode(",",$all_img_path[0]->{$tc_name});
+      $diffing_array =  array_diff($explode_arr,array($req->input("img_path")));
+      $myarray = array();
+      $myarray[$tc_name] = implode(",",$diffing_array);
+      $result =   \DB::table($req->input("t_name"))->where([$req->input("c_t_c_name")=>$req->input("t_id")])->update($myarray);
+   // return $diffing_array;
+      if($result){
+         return json_encode(["condition"=>true]);
+
+      }else{
+         return json_encode(["condition"=>false,"message"=>"Image path update Failed"]);
+
+      }
+
+   }else{
+  return json_encode(["condition"=>false,"message"=>$api_request->message]);
+   }
+   
+   
+   }
 
 }
 

@@ -140,7 +140,9 @@
               <div class="child_drop_down d-none">
                 <ul>
                   @foreach($affiliation_partner as $partner)
+                  @if($partner->is_room == 0)
                   <li id="{{$partner->id}}">{{$partner->company_name}}</li>
+                  @endif
                   @endforeach
                 </ul>
               </div>

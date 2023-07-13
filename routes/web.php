@@ -194,7 +194,11 @@ Route::post('update_store_room_data','App\Http\Controllers\homeController@update
 
 Route::post('default_img_path_uploader','App\Http\Controllers\homeController@default_img_path_uploader')->middleware('login');
 Route::get('get_one_affiliation_partner/{id}','App\Http\Controllers\homeController@get_one_affiliation_partner')->middleware('login');
-
-
-
 Route::post('update_affiliation_partner','App\Http\Controllers\homeController@update_affiliation_partner')->middleware('login');
+
+Route::get('get_one_affiliation_product_by_company_id/{id}','App\Http\Controllers\homeController@get_one_affiliation_product_by_company_id')->middleware('login');
+Route::post('update_affiliation_from_partner_view','App\Http\Controllers\homeController@update_affiliation_from_partner_view')->middleware('login');
+
+Route::post('delete_img','App\Http\Controllers\homeController@delete_img')->middleware('login');
+
+
