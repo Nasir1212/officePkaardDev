@@ -584,6 +584,52 @@ if(data['condition']==false){
       }
     })
   }
+
+  
+
+async function delete_img(evt,formName,callBackFunc){
+  console.log(evt)
+
+  $img_url = evt.nextElementSibling.children[0].src.split('/');
+  let server_data = Object.fromEntries(new FormData(document.forms[formName]));
+server_data['img_path'] = $img_url[$img_url.length - 1];
+console.log(server_data)
+
+
+
+
+
+  try{
+        const response = await fetch(`${location.origin}/delete_img`,{
+            method:'POST',
+            body:JSON.stringify(server_data),
+            headers: new Headers({
+            'Content-Type': 'application/json',
+          
+        })       
+        });
+       
+        const result = await response.json();
+        console.log(result);
+        if(response.status==200){
+          if(result['condition'] == true){
+
+            callBackFunc();
+           
+          }else{
+            swal("Opps!", result['message'], "error");
+
+          }
+        }
+    }catch(e){
+        console.log(e);
+        swal("Opps!","Something went Wrong", "error");
+
+    }
+
+}
+
+
 </script>
 </body>
 </html>

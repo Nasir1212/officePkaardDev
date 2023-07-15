@@ -260,6 +260,7 @@
       <div class="card-body d-flex ">
         
         <input type="hidden" id="t_id">
+      
 
         <div>
         <div class="form-group col-sm-12 col-md-6 col-lg-6" id="front_nid_input">
@@ -268,9 +269,16 @@
         </div> 
      
         <div class="front_nid position-relative"  id="front_nid_img">
-          <i class="position-absolute img_close_icon" onclick="delete_img(this)"> &#10007;</i>
+          <i class="position-absolute img_close_icon" onclick="delete_img(this,'front_nid_form',function(){ return nid_handle_modal(document.getElementById('t_id').value)})"> &#10007;</i>
           <div class="modal_upload_img">
             <img src="" alt="">
+            <form name="front_nid_form">
+              <input type="hidden" name="t_name">
+              <input type="hidden" name="tc_name">
+              <input type="hidden" name="t_id">
+              <input type="hidden" name="c_t_c_name">
+            </form>
+      
           </div>
         </div>
       </div>
@@ -282,9 +290,16 @@
         </div> 
      
         <div class="front_nid position-relative"  id="back_nid_img">
-          <i class="position-absolute img_close_icon" onclick="delete_img(this)"> &#10007;</i>
+          <i class="position-absolute img_close_icon" onclick="delete_img(this,'back_nid_form',function(){ return nid_handle_modal(document.getElementById('t_id').value)})"> &#10007;</i>
           <div class="modal_upload_img">
             <img src="" alt="">
+            <form name="back_nid_form">
+              <input type="hidden" name="t_name">
+              <input type="hidden" name="tc_name">
+              <input type="hidden" name="t_id">
+              <input type="hidden" name="c_t_c_name">
+            </form>
+      
           </div>
         </div>
       </div>
@@ -708,13 +723,15 @@ try {
         
           let front_nid_img  =  document.getElementById("front_nid_img");
           let front_nid_input =  document.getElementById("front_nid_input");
-
           let back_nid_img  =  document.getElementById("back_nid_img");
           let back_nid_input =  document.getElementById("back_nid_input");
 
         if(response.status==200){
 
-         if(result[0]['front_nid']==null){
+
+         if(result[0]['front_nid']==null || result[0]['front_nid'].length == 0){
+
+
           front_nid_img.style.display='none';
           front_nid_input.style.display='block'
 
@@ -723,10 +740,19 @@ try {
           front_nid_input.style.display='none'
           front_nid_img.getElementsByTagName("img")[0].src = `https://img.pkaard.com/images/${result[0]['front_nid']}`;
 
+          console.log(result)
+
+         let formElem =  document.forms['front_nid_form'];
+         formElem.t_name.value = "affiliation_partner";
+         formElem.tc_name.value = "front_nid";
+         formElem.t_id.value = result[0].id;
+         formElem.c_t_c_name.value = "id";
+
+
 
          }
 
-         if(result[0]['back_nid']==null){
+         if(result[0]['back_nid']==null  || result[0]['back_nid'].length == 0){
           back_nid_img.style.display='none';
           back_nid_input.style.display='block'
 
@@ -734,7 +760,11 @@ try {
           back_nid_img.style.display='block';
           back_nid_input.style.display='none'
           back_nid_img.getElementsByTagName("img")[0].src = `https://img.pkaard.com/images/${result[0]['back_nid']}`;
-
+          let formElem =  document.forms['back_nid_form'];
+         formElem.t_name.value = "affiliation_partner";
+         formElem.tc_name.value = "back_nid";
+         formElem.t_id.value = result[0].id;
+         formElem.c_t_c_name.value = "id";
 
          }
 
@@ -1042,7 +1072,6 @@ try {
 
 
   async function handle_product_img (id) {
-
     $("#img_upload_modal").modal("show")
     get_img_path(id);
   }
@@ -1074,7 +1103,7 @@ try{
         
          view += `
         <div class="container_modal_upload_img position-relative">
-        <i class="position-absolute img_close_icon" onclick="delete_img(this);"> &#10007;</i>
+        <i class="position-absolute img_close_icon" onclick="delete_img(this,'image_handle',function(){ get_img_path('${result[0]['company_id']}')});"> &#10007;</i>
         <div class="modal_upload_img">
           <img src="https://img.pkaard.com/images/${d}" alt="">
         </div>
@@ -1148,13 +1177,8 @@ try{
 
 
 async function default_img_path_uploader (server_data={},callbackFun){
-
-
-           
-
-              console.log(server_data)
-
-              try{
+       
+            try{
         const response = await fetch(`${location.origin}/default_img_path_uploader`,{
             method:'POST',
             body:JSON.stringify(server_data),
@@ -1180,42 +1204,42 @@ async function default_img_path_uploader (server_data={},callbackFun){
 
 
 
-async function delete_img(evt){
+// async function delete_img(evt){
 
-  $img_url = evt.nextElementSibling.children[0].src.split('/');
-  let server_data = Object.fromEntries(new FormData(document.forms['image_handle']));
-server_data['img_path'] = $img_url[$img_url.length - 1];
+//   $img_url = evt.nextElementSibling.children[0].src.split('/');
+//   let server_data = Object.fromEntries(new FormData(document.forms['image_handle']));
+// server_data['img_path'] = $img_url[$img_url.length - 1];
 
-console.log(server_data)
+// console.log(server_data)
 
-  try{
-        const response = await fetch(`${location.origin}/delete_img`,{
-            method:'POST',
-            body:JSON.stringify(server_data),
-            headers: new Headers({
-            'Content-Type': 'application/json',
+//   try{
+//         const response = await fetch(`${location.origin}/delete_img`,{
+//             method:'POST',
+//             body:JSON.stringify(server_data),
+//             headers: new Headers({
+//             'Content-Type': 'application/json',
           
-        })       
-        });
+//         })       
+//         });
        
-        const result = await response.json();
-        console.log(result);
-        if(response.status==200){
-          if(result['condition'] == true){
-            get_img_path(server_data['t_id']);
-           // get_one_affiliation_partner(document.getElementById("t_id").value);
-          }else{
-            swal("Opps!", result['message'], "error");
+//         const result = await response.json();
+//         console.log(result);
+//         if(response.status==200){
+//           if(result['condition'] == true){
+//             get_img_path(server_data['t_id']);
+//            // get_one_affiliation_partner(document.getElementById("t_id").value);
+//           }else{
+//             swal("Opps!", result['message'], "error");
 
-          }
-        }
-    }catch(e){
-        console.log(e);
-        swal("Opps!","Something went Wrong", "error");
+//           }
+//         }
+//     }catch(e){
+//         console.log(e);
+//         swal("Opps!","Something went Wrong", "error");
 
-    }
+//     }
 
-}
+// }
 
 
      

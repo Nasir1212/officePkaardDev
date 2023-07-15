@@ -569,7 +569,12 @@ caption {
         </button>
       </div>
       <div class="card-body">
-
+        <form  name="room_image_form" >
+         <input type="hidden" name="t_name">
+         <input type="hidden" name="tc_name">
+         <input type="hidden" name="t_id">
+         <input type="hidden" name="c_t_c_name">
+        </form>
         <div class="form-group col-sm-12 col-md-6 col-lg-6" id="room_img_uploader">
         <label for="modal_Img_room"><img style="width: 4rem;height: 4rem;cursor: pointer;" src="{{ asset('assets/images/2997933.png')}}" alt=""></label>
         <input type="file" style="display: none"  id="modal_Img_room" onchange="upload_store_room_img(this)" class="form-control" placeholder="Enter Upto Percent">
@@ -577,7 +582,7 @@ caption {
         <input type="hidden" id="img_path_id">
      
         <div class="container_modal_upload_img position-relative" style="display:none" id="room_img_container">
-          <i class="position-absolute img_close_icon"> &#10007;</i>
+          <i class="position-absolute img_close_icon" onclick="delete_img(this,'room_image_form',function(){ return get_store_room_img_path()})"> &#10007;</i>
           <div class="modal_upload_img">
             <img src="" alt="">
           </div>
@@ -606,6 +611,13 @@ caption {
         </button>
       </div>
       <input type="hidden" id="sub_product_category_db_id" value="">
+
+      <form name="aff_sub_discount_product_form">
+        <input type="hidden" name="t_name">
+        <input type="hidden" name="tc_name">
+        <input type="hidden" name="t_id">
+        <input type="hidden" name="c_t_c_name">
+      </form>
 
       <div class="card-body img_card_body ">
               
@@ -1084,19 +1096,23 @@ async function get_img_path(id){
         console.log(result);
         let view='';
         if(response.status==200){
-         
-        console.log(result.length )
         debugger;
         let img_src =   result[0]['img_path'] !=null? result[0]['img_path'].split(","):[]
         console.log(img_src)
-         
+
+        let FormEle =  document.forms['aff_sub_discount_product_form'];
+        FormEle.t_name.value = "aff_sub_discount_product";
+        FormEle.tc_name.value = "img_path";
+        FormEle.t_id.value = result[0]['id']
+        FormEle.c_t_c_name.value = "id";
         img_src.forEach((d)=>{
           
            view += `
           <div class="container_modal_upload_img position-relative">
-          <i class="position-absolute img_close_icon"> &#10007;</i>
+          <i class="position-absolute img_close_icon"onclick="delete_img(this,'aff_sub_discount_product_form',function(){ return get_img_path('${id}')})"> &#10007;</i>
           <div class="modal_upload_img">
             <img src="https://img.pkaard.com/images/${d}" alt="">
+            
           </div>
         </div>
       
@@ -1110,8 +1126,6 @@ async function get_img_path(id){
             <input style="display: none" type="file" onchange="handle_img(this)" name="" id="upload_img_1">
           </div>
         </div>`;
-        console.log(view)
-
         document.getElementsByClassName("img_card_body")[0].innerHTML = view;
       }
         }
@@ -1142,15 +1156,16 @@ document.getElementById("img_path_id").value = d;
         console.log(result);
         if(response.status==200){
           if(result.img_path  == null){
-
             document.getElementById("room_img_container").style.display='none'
-         
-       
-
           }else{
             document.getElementById("room_img_uploader").style.display='none'
 
             document.getElementById("room_img_container").style.display='block'
+           let FormEle =  document.forms["room_image_form"];
+           FormEle.t_name.value="affiliation_product";
+           FormEle.tc_name.value="img_path"
+           FormEle.t_id.value=img_path_id
+           FormEle.c_t_c_name.value="id"
 
   document.getElementById("room_img_container").getElementsByTagName("img")[0].src = `https://img.pkaard.com/images/${result.img_path }`
             

@@ -1328,7 +1328,7 @@ if(is_null($all_img_path[0]['img_path'])){
 
 
   public function get_img_path_aff_sub_discount_product($id){
-  return $all_img_path =  aff_sub_discount_product::where(['id'=>$id])->get(["img_path"]);
+  return $all_img_path =  aff_sub_discount_product::where(['id'=>$id])->get();
   }
 
 
@@ -1489,7 +1489,7 @@ if(is_null($all_img_path[0]['img_path'])){
 
   function delete_img(Request $req){
 
-   $url_path = "http://localhost:8080/delete_img.php";
+   $url_path = "http://img.pkaard.com/delete_img.php";
    $data = array("delete_file_path"=> $req->input("img_path"));
    $options = array(
       "http"=>array(
@@ -1504,9 +1504,15 @@ if(is_null($all_img_path[0]['img_path'])){
       $tc_name = $req->input('tc_name');
       $all_img_path =  \DB::table($req->input("t_name"))->where([$req->input("c_t_c_name")=>$req->input("t_id")])->get([$tc_name]);
       $explode_arr = explode(",",$all_img_path[0]->{$tc_name});
-      $diffing_array =  array_diff($explode_arr,array($req->input("img_path")));
       $myarray = array();
-      $myarray[$tc_name] = implode(",",$diffing_array);
+      if(count($explode_arr) == 1){
+         $myarray[$tc_name] = null ;
+      }else{
+         $diffing_array =  array_diff($explode_arr,array($req->input("img_path")));
+         $myarray[$tc_name] = implode(",",$diffing_array);
+
+      }
+      
       $result =   \DB::table($req->input("t_name"))->where([$req->input("c_t_c_name")=>$req->input("t_id")])->update($myarray);
    // return $diffing_array;
       if($result){
@@ -1518,7 +1524,7 @@ if(is_null($all_img_path[0]['img_path'])){
       }
 
    }else{
-  return json_encode(["condition"=>false,"message"=>$api_request->message]);
+         return json_encode(["condition"=>false,"message"=>$api_request->message]);
    }
    
    
