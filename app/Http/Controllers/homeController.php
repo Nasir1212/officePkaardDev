@@ -1186,7 +1186,9 @@ if($type=='add'):
    }
    
    public function  all_affiliation_partner(){
-      return  $all_affiliation = Affiliation_partner::all();
+      // return  $all_affiliation = Affiliation_partner::all();
+
+      return \DB::select("SELECT  DISTINCT affiliation_partner.id, affiliation_product.company_id AS  affi_partner_id , affiliation_partner.*   FROM affiliation_partner  LEFT JOIN affiliation_product ON affiliation_partner.id = affiliation_product.company_id");
      }
 
 

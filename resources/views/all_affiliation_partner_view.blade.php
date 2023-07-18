@@ -858,7 +858,13 @@ try {
             if(affiliation.has_room ==1){
               RoomBtn = `<a href="/add_multiple_affiliation_product?id=${affiliation.id}" class="btn btn-info btn-sm" >Store Room</a>`
             }else {
+              if(affiliation.affi_partner_id == null){
+                RoomBtn=   `<a href="add_affiliation_product_view?p_i=${affiliation.id}" class="btn btn-primary btn-sm" > Add Product </a>`
+              }else{
+
+            
               RoomBtn=  ` <a onclick="modal_show_product('${affiliation.id}')" class="btn btn-success btn-sm" >Product </a> | <a onclick="handle_product_img('${affiliation.id}')" class="btn btn-danger btn-sm" >Imaige </a>`
+            }
             } 
             view += `
             <tr>

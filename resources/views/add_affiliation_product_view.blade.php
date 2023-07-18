@@ -135,10 +135,10 @@
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
               <label for="">Company Name</label>
               <input type="hidden" name="company_id">
-              <input type="text" onfocus="focusin(this)" onkeypress="search_input(this)" onfocusout="focusout(this)"   class="form-control"placeholder="Enter Company Name">
+              <input type="text" disabled="true" onfocus="focusin(this)" name="search_company_name" onkeypress="search_input(this)" onfocusout="focusout(this)"   class="form-control"placeholder="Enter Company Name">
                 
               <div class="child_drop_down d-none">
-                <ul>
+                <ul id="affiliation_partner">
                   @foreach($affiliation_partner as $partner)
                   @if($partner->is_room == 0)
                   <li id="{{$partner->id}}">{{$partner->company_name}}</li>
@@ -407,9 +407,9 @@
       timer: 1300
       });
 
-      sessionStorage.product_id = result['id'];
 
-      location.href = `${location.origin}/add_affiliation_product_img_view`;
+
+      location.href = `${location.origin}/all_affiliation_partner_view`;
 
         
         }
@@ -421,7 +421,19 @@
 
   }
 
+  
 
+
+  let FormElem = document.forms['affiliation_product'];
+  let param = new URLSearchParams(window.location.search);
+  document.getElementById("affiliation_partner").children.forEach((li)=>{
+    if(param.has("p_i") && param.get("p_i") == li.id){
+    console.log(li.innerText)
+    FormElem.company_id.value=li.id;
+    FormElem.search_company_name.value=li.innerText;
+      return;
+    }
+  })
   
 
   </script>
