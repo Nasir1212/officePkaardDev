@@ -480,12 +480,12 @@ if(data['condition']==false){
             </p>
           </a>
           <ul class="nav nav-treeview" style="display: none;">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="/add_affiliation_product_view" class="nav-link">
                 <i class="fa fa-plus nav-icon"></i>
                 <p>Add Affiliation Product</p>
               </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
               <a href="/add_affiliation_partner_view" class="nav-link">
@@ -493,10 +493,19 @@ if(data['condition']==false){
                 <p>Add Affiliation Partner </p>
               </a>
             </li>
+
+
             <li class="nav-item">
               <a href="/all_affiliation_partner_view" class="nav-link">
                 <i class="fa fa-eye" aria-hidden="true"></i>
                   <p>All  Affiliation Partner </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/affiliation_partner_request_view" class="nav-link">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                  <p> Affiliation Sign Up </p>
               </a>
             </li>
             

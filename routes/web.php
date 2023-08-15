@@ -200,5 +200,10 @@ Route::get('get_one_affiliation_product_by_company_id/{id}','App\Http\Controller
 Route::post('update_affiliation_from_partner_view','App\Http\Controllers\homeController@update_affiliation_from_partner_view')->middleware('login');
 
 Route::post('delete_img','App\Http\Controllers\homeController@delete_img')->middleware('login');
+Route::get('affiliation_partner_request','App\Http\Controllers\homeController@affiliation_partner_request')->middleware('login');
+Route::get('affiliation_partner_request_view',function(){
+    return view("affiliation_partner_request_view");
+})->middleware('login');
 
+Route::get('affiliation_partner_request_id/{id}','App\Http\Controllers\homeController@affiliation_partner_request_id')->middleware('login');
 

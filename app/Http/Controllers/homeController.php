@@ -20,6 +20,7 @@ use App\Models\District;
 use App\Models\Affiliation_product;
 use App\Models\Affiliation_partner;
 use App\Models\aff_sub_discount_product;
+use App\Models\AffiliationPartnerRequest;
 
 
 
@@ -1530,6 +1531,14 @@ if(is_null($all_img_path[0]['img_path'])){
    }
    
    
+   }
+
+   public function affiliation_partner_request(){
+     return AffiliationPartnerRequest::get();
+   }
+
+  public function  affiliation_partner_request_id($id){
+   return AffiliationPartnerRequest::where(['id'=>$id])->get();
    }
 
 }
