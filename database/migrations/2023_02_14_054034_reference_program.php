@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reference_program', function (Blueprint $table) {
-            $table->id();
-            $table->string('reference_code')->unique();
-            $table->string('phone')->unique();
-            $table->string('name')->nullable();  
-            $table->string('password')->nullable();  
-        });
+        // Schema::create('reference_program', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('reference_code')->unique();
+        //     $table->string('phone')->unique();
+        //     $table->string('name')->nullable();  
+        //     $table->string('password')->nullable();  
+        // });
     }
 
     /**

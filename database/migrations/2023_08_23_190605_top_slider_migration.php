@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::create('category', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string('category_name')->nullable();
-        //     $table->string('status')->default('1');
-    
-              
-        // });   
+        Schema::create('top_slider', function (Blueprint $table) {
+            $table->id(); 
+             
+            $table->text('img_path')->nullable();    
+           
+            
+        }); 
     }
 
     /**

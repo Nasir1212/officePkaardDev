@@ -21,6 +21,9 @@ use App\Models\Affiliation_product;
 use App\Models\Affiliation_partner;
 use App\Models\aff_sub_discount_product;
 use App\Models\AffiliationPartnerRequest;
+use App\Models\TopSliderModel;
+use App\Models\BottomRightSlider;
+use App\Models\BottomLeftSlider;
 
 
 
@@ -1540,6 +1543,113 @@ if(is_null($all_img_path[0]['img_path'])){
   public function  affiliation_partner_request_id($id){
    return AffiliationPartnerRequest::where(['id'=>$id])->get();
    }
+
+   public function affiliation_partner_accept(Request $req){
+
+    $res =   AffiliationPartnerRequest::where(['id'=>$req->input("id")])->get();
+
+   //  $data = array("enq_img"=>$res[0]->sign_img);
+   // return json_encode(['img_path_from_office'=> $this->upload_img_api($data)->img_path]);
+
+   $password = \Hash::make($req->input("user_password"));
+   $create_at = date("Y:m:d");
+  $checking_mail =  Affiliation_partner::where(['email_address'=>$req->input("user_mail")])->count();
+  $checing_phone =  Affiliation_partner::where(['contact_number'=>$req->input("user_phone")])->count();
+
+
+   if($checking_mail > 0){
+      return json_encode(['condition'=>false,'message'=>"This email has been taken"]);
+   }
+
+   if($checing_phone > 0){
+      return json_encode(['condition'=>false,'message'=>"This phone number has been taken"]);
+   }
+
+   $result = Affiliation_partner::insert([
+      'back_nid'=>$res[0]->back_nid != null ? $this->upload_img_api(["enq_img"=>$res[0]->back_nid])->img_path:null,
+      'company_logo'=>$this->upload_img_api(["enq_img"=>$res[0]->company_logo])->img_path,
+      'sign_img'=>$this->upload_img_api(["enq_img"=>$res[0]->sign_img])->img_path,
+      'company_address'=>$res[0]->company_address,
+      'busness_type'=>$res[0]->busness_type,
+      'discount_privilege'=>$res[0]->discount_privilege,
+      'link'=>$res[0]->link,
+      'signing_authority'=>$res[0]->signing_authority,
+      'create_at'=>$res[0]->create_at,// It is for signin date;
+      'company_name'=>$res[0]->company_name,
+      'company_owner_name'=>$res[0]->company_owner_name,
+      'company_tin'=>$res[0]->company_tin,
+      'contact_full_name'=>$res[0]->contact_full_name,
+      'contact_number'=>$req->input("user_phone"),
+      'contact_role'=>$res[0]->contact_role,
+      'email_address'=>$req->input("user_mail"),
+      'front_nid'=>$res[0]->front_nid != null ? $this->upload_img_api(["enq_img"=>$res[0]->front_nid])->img_path:null,
+      'password'=>$password,
+      'confirmation_date'=>$create_at,
+   ]);
+
+   if($result){
+     $delete =   AffiliationPartnerRequest::where(['id'=>$req->input("id")])->delete();
+    if( $delete ){
+      return json_encode(['condition'=>true,'message'=>'Successfully Sign Up Confirm']);
+
+    }else{
+      return json_encode(['condition'=>false,'message'=>' Exiting Data Drop Failed ']);
+
+    }
+   }else{
+      json_encode(['condition'=>false,'message'=>' Sign Up Confirmation Failed']);
+
+   }
+
+
+   }
+
+   public function upload_img_api($img){
+ // return $req;
+ $url_path = "http://localhost:9000/encode_img.php";
+ 
+ $options = array(
+    "http"=>array(
+       "method"=>"POST",
+       'header' => 'Content-type:application/x-www-form-urlencoded',//Content-Type: image/png
+       "content"=>http_build_query($img)
+    ));
+    
+ $stream = stream_context_create($options);
+ $api_request  = file_get_contents($url_path,false, $stream);
+return $api_request   = json_decode($api_request);
+   }
+
+   public function all_slider_img(){
+
+      return json_encode(['TopSlider'=>TopSliderModel::get(),'bottomLeftSlider'=>BottomLeftSlider::get(),'bottomRightSlider'=>BottomRightSlider::get()]);
+
+   }
+
+   public function top_slider_img(Request $req){
+
+      TopSliderModel::insert([
+         'img_path'=>$req->input("img_path"),
+      ]);
+      
+   }
+
+   public function bottom_left_slider_img(Request $req){
+
+      BottomLeftSlider::insert([
+         'img_path'=>$req->input("img_path"),
+      ]);
+      
+   }
+
+   public function bottom_right_slider_img(Request $req){
+
+      BottomRightSlider::insert([
+         'img_path'=>$req->input("img_path"),
+      ]);
+      
+   }
+
 
 }
 

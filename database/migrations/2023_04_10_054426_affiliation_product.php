@@ -13,24 +13,24 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('affiliation_product', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('address')->nullable();
-            $table->string('category_id')->nullable();
-            $table->string('company_id')->nullable();
-            $table->string('details')->nullable();    
-            $table->string('discount')->nullable();
-            $table->string('district_id')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('title')->nullable();
-            $table->string('img_path')->nullable();
-            $table->string('privilege')->nullable();
-            $table->date('create_at')->nullable();
-            $table->string('regular_price')->nullable();
-            $table->string('product_uploader')->default('1');
-            $table->string('status')->default('1');
+        // Schema::create('affiliation_product', function (Blueprint $table) {
+        //     $table->id(); 
+        //     $table->string('address')->nullable();
+        //     $table->string('category_id')->nullable();
+        //     $table->string('company_id')->nullable();
+        //     $table->string('details')->nullable();    
+        //     $table->string('discount')->nullable();
+        //     $table->string('district_id')->nullable();
+        //     $table->string('phone')->nullable();
+        //     $table->string('title')->nullable();
+        //     $table->string('img_path')->nullable();
+        //     $table->string('privilege')->nullable();
+        //     $table->date('create_at')->nullable();
+        //     $table->string('regular_price')->nullable();
+        //     $table->string('product_uploader')->default('1');
+        //     $table->string('status')->default('1');
             
-        });  
+        // });  
     }
    
    

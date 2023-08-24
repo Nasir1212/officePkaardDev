@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
 
-        Schema::create('branch_user', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable();
-            $table->string('district')->nullable();
-            $table->string('mail')->nullable();
-            $table->string('password')->nullable();
-            $table->string('reference_code')->nullable();
+        // Schema::create('branch_user', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('name')->nullable();
+        //     $table->string('district')->nullable();
+        //     $table->string('mail')->nullable();
+        //     $table->string('password')->nullable();
+        //     $table->string('reference_code')->nullable();
            
-        });
+        // });
     }
 
     /**

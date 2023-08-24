@@ -205,5 +205,14 @@ Route::get('affiliation_partner_request_view',function(){
     return view("affiliation_partner_request_view");
 })->middleware('login');
 
+Route::get('manage_slider_view',function(){
+    return view("manage_slider_view");
+})->middleware('login');
+
 Route::get('affiliation_partner_request_id/{id}','App\Http\Controllers\homeController@affiliation_partner_request_id')->middleware('login');
+Route::post('affiliation_partner_accept','App\Http\Controllers\homeController@affiliation_partner_accept')->middleware('login');
+Route::post('top_slider_img','App\Http\Controllers\homeController@top_slider_img')->middleware('login');
+Route::post('bottom_left_slider_img','App\Http\Controllers\homeController@bottom_left_slider_img')->middleware('login');
+Route::post('bottom_right_slider_img','App\Http\Controllers\homeController@bottom_right_slider_img')->middleware('login');
+Route::get('all_slider_img','App\Http\Controllers\homeController@all_slider_img')->middleware('login');
 

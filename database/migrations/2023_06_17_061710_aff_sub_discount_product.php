@@ -13,19 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('aff_sub_discount_product', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('affiliation_product_id')->nullable();    
-            $table->text('details')->nullable();    
-            $table->string('title')->nullable();
-            $table->string('img_path')->nullable();
-            $table->string('privilege')->nullable();
-            $table->date('create_at')->nullable();
-            $table->string('regular_price')->nullable();
-            $table->string('product_uploader')->default('1');
-            $table->string('status')->default('1');
+        // Schema::create('aff_sub_discount_product', function (Blueprint $table) {
+        //     $table->id(); 
+        //     $table->string('affiliation_product_id')->nullable();    
+        //     $table->text('details')->nullable();    
+        //     $table->string('title')->nullable();
+        //     $table->string('img_path')->nullable();
+        //     $table->string('privilege')->nullable();
+        //     $table->date('create_at')->nullable();
+        //     $table->string('regular_price')->nullable();
+        //     $table->string('product_uploader')->default('1');
+        //     $table->string('status')->default('1');
             
-        }); 
+        // }); 
     }
 
     /**

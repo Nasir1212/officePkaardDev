@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('campain_chart', function (Blueprint $table) {
-            $table->id();
-            $table->string('kpi')->nullable();
-            $table->string('percentage')->nullable();
-            $table->string('status')->default('1');           
-        });  
+        // Schema::create('campain_chart', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('kpi')->nullable();
+        //     $table->string('percentage')->nullable();
+        //     $table->string('status')->default('1');           
+        // });  
     }
 
     /**

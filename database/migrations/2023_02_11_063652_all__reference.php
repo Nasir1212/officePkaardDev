@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('all_reference', function (Blueprint $table) {
-            $table->id();
-            $table->string('reference_code')->unique();
-            $table->string('status')->default('1');
-            $table->string('wallet')->nullable();  
-        });
+        // Schema::create('all_reference', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('reference_code')->unique();
+        //     $table->string('status')->default('1');
+        //     $table->string('wallet')->nullable();  
+        // });
     }
 
     /**

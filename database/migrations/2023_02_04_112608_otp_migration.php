@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('otp_expired', function (Blueprint $table) {
-            $table->id();
-            $table->string('otp')->nullable();
-            $table->string('is_expired')->nullable();
-            $table->string('create_at')->nullable();
+        // Schema::create('otp_expired', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('otp')->nullable();
+        //     $table->string('is_expired')->nullable();
+        //     $table->string('create_at')->nullable();
            
-        });
+        // });
     }
 
     /**

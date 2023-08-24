@@ -433,7 +433,16 @@ if(data['condition']==false){
             </a>
           </li>
   
-         
+          <li class="nav-item">
+            <a href="{{url('manage_slider_view')}}" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-sliders"></i>
+              {{-- <i class="fa-solid fa-sliders"></i> --}}
+              <p>
+                Manage Slider 
+                {{-- <span class="right badge badge-danger">New</span> --}}
+              </p>
+            </a>
+          </li>
 
           @endif
 
@@ -466,6 +475,8 @@ if(data['condition']==false){
               </p>
             </a>
           </li>
+
+         
   
       
          @endif

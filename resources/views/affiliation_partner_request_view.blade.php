@@ -160,6 +160,7 @@
               <div class="form-group">
                 <label for="phone" class="form-text text-muted"> <small  class="form-text text-muted">User Phone</small></label>
                 <input type="text" name="user_phone"  class="form-control" id="phone"  placeholder="Enter Phone No">
+                <input type="hidden" name="id"  class="form-control">
                 
               </div>
 
@@ -174,7 +175,7 @@
               </div>
 
               <div class="form-group">
-                <button type="button" class="btn btn-lg btn-primary btn-block">Submit</button>
+                <button type="button" onclick="handle_signup_confirm()" class="btn btn-lg btn-primary btn-block">Submit</button>
               </div>
 
             
@@ -364,6 +365,7 @@ document.getElementById("affiliation_sign_up_info_table").innerHTML= view;
         FormElem.user_phone.value = result[0]['contact_number']
         FormElem.company_name.value = result[0]['company_name']
         FormElem.user_mail.value = result[0]['email_address'];
+        FormElem.id.value = result[0]['id'];
         document.getElementById("affiliation_logo").src=result[0]['company_logo']
  }
 
@@ -381,6 +383,43 @@ document.getElementById("affiliation_sign_up_info_table").innerHTML= view;
    }
 FormElem.user_password.value = pass
  }
+
+
+ async function handle_signup_confirm () {
+  let form_data = Object.fromEntries(new FormData(document.forms['generate_access']));
+console.log(form_data);
+  //affiliation_partner_accept
+
+    try {
+      response  = await fetch(`/affiliation_partner_accept`,{
+      method:'POST',
+      body:JSON.stringify(form_data),
+    headers: new Headers({
+    'Content-Type': 'application/json',
+
+    })
+      })
+      result  = await response.json();
+      console.log(result);
+          if(result['condition'] == true){
+              swal("Thanks! ", `${result['message']}`, "success"); 
+              $(".affiliationSignUPConfirmation").modal('hide')
+
+              load_sign_up();
+          }else{
+            swal("Opps ! ", `${result['message']}`, "error"); 
+
+          }
+      } catch (error) {
+      console.log(error)
+      swal("Opps ! ", `Something Went Wrong`, "error"); 
+
+     
+      }
+
+
+ }
+
 </script>
 
 @endsection
