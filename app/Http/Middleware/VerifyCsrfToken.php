@@ -43,6 +43,10 @@ class VerifyCsrfToken extends Middleware
         'update_affiliation_partner',
         'update_affiliation_from_partner_view',
         'delete_img',
-        'affiliation_partner_accept'
+        'affiliation_partner_accept',
+        'bottom_right_slider_img',
+        'bottom_left_slider_img',
+        'top_slider_img',
+        'slide_img_delete'
     ];
 }

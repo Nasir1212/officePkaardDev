@@ -216,3 +216,4 @@ Route::post('bottom_left_slider_img','App\Http\Controllers\homeController@bottom
 Route::post('bottom_right_slider_img','App\Http\Controllers\homeController@bottom_right_slider_img')->middleware('login');
 Route::get('all_slider_img','App\Http\Controllers\homeController@all_slider_img')->middleware('login');
 
+Route::post('slide_img_delete','App\Http\Controllers\homeController@slide_img_delete')->middleware('login');

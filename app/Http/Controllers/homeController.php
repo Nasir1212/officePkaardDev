@@ -1628,26 +1628,74 @@ return $api_request   = json_decode($api_request);
 
    public function top_slider_img(Request $req){
 
-      TopSliderModel::insert([
+      $result= TopSliderModel::insert([
          'img_path'=>$req->input("img_path"),
       ]);
+      if($result){
+         return json_encode(["condition"=>true,'message'=>"Image Uploaded Successfully"]);
+
+      }else{
+         return json_encode(["condition"=>false,"message"=>"Image path update Failed"]);
+
+      }
       
    }
 
    public function bottom_left_slider_img(Request $req){
 
-      BottomLeftSlider::insert([
+      $result= BottomLeftSlider::insert([
          'img_path'=>$req->input("img_path"),
       ]);
+      if($result){
+         return json_encode(["condition"=>true,'message'=>"Image Uploaded Successfully"]);
+
+      }else{
+         return json_encode(["condition"=>false,"message"=>"Image path update Failed"]);
+
+      }
       
    }
 
    public function bottom_right_slider_img(Request $req){
 
-      BottomRightSlider::insert([
+      $result= BottomRightSlider::insert([
          'img_path'=>$req->input("img_path"),
       ]);
+
+      if($result){
+         return json_encode(["condition"=>true,'message'=>"Image Uploaded Successfully"]);
+
+      }else{
+         return json_encode(["condition"=>false,"message"=>"Image path update Failed"]);
+
+      }
       
+   }
+
+   public function slide_img_delete(Request $req){
+
+      // return $req;
+
+      if($req->input("slide") =='TopSlider'){
+       $delete =  TopSliderModel::where(['id'=>$req->input("id")])->delete();
+      }
+
+      if($req->input("slide") =='bottomRightSlider'){
+         $delete =    BottomRightSlider::where(['id'=>$req->input("id")])->delete();
+      }
+
+      if($req->input("slide") =='bottomLeftSlider'){
+         $delete =  BottomLeftSlider::where(['id'=>$req->input("id")])->delete();
+      }
+
+      if($delete){
+         return json_encode(["condition"=>true,'message'=>"Image Deleted Successfully"]);
+
+      }else{
+         return json_encode(["condition"=>false,"message"=>"Image Deleted Failed"]);
+
+      }
+
    }
 
 

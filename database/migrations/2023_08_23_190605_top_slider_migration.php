@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('top_slider', function (Blueprint $table) {
             $table->id(); 
-             
             $table->text('img_path')->nullable();    
            
             

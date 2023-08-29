@@ -51,42 +51,9 @@ cursor: pointer;
                 <h4>Top Slider Image </h4>
             </div>
             <div class="card-body">
-                <div class='row'>
+                <div class='row' id="TopSlider">
                     
                      
-                       
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
-
-                         
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
-
-                         
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
 
                          
                     <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
@@ -99,7 +66,7 @@ cursor: pointer;
 
                     <div class='col-sm-6 col-md-4 col-lg-4  mb-2'>
                         <div  class='slider_img_col'>
-                        <input id='handleFile' type="file" name="slider_path" style="display:none"/>
+                        <input id='handleFile' type="file" onchange="handle_change(this);" name="top_slider" style="display:none"/>
                         <label for="handleFile" style="cursor:pointer;margin-top:1.5rem">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ_N3HVX19y1ifWseTrfLg9Ok2WihF1Xp6FMutLcisUTEPcgmEyqtO4ZMTNWN4CfRjlnk&usqp=CAU" alt="" />
 
@@ -117,43 +84,10 @@ cursor: pointer;
                 <h4>Bottom Right Slider  Image </h4>
             </div>
             <div class="card-body">
-                <div class='row'>
+                <div class='row'id="bottomRightSlider" >
                     
                      
-                       
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
-
-                         
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
-
-                         
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
-
+                    
                          
                     <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
                         <div class='slider_img_col'>
@@ -165,8 +99,8 @@ cursor: pointer;
 
                     <div class='col-sm-6 col-md-4 col-lg-4  mb-2'>
                         <div  class='slider_img_col'>
-                        <input id='handleFile' type="file" name="slider_path" style="display:none"/>
-                        <label for="handleFile" style="cursor:pointer;margin-top:1.5rem">
+                        <input id='bottom_right_slider' type="file" onchange="handle_change(this);" name="bottom_right_slider"  style="display:none"/>
+                        <label for="bottom_right_slider" style="cursor:pointer;margin-top:1.5rem">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ_N3HVX19y1ifWseTrfLg9Ok2WihF1Xp6FMutLcisUTEPcgmEyqtO4ZMTNWN4CfRjlnk&usqp=CAU" alt="" />
 
                         </label>
@@ -184,43 +118,10 @@ cursor: pointer;
                 <h4>Bottom Left Slider  Image </h4>
             </div>
             <div class="card-body">
-                <div class='row'>
+                <div class='row' id="bottomLeftSlider">
                     
                      
-                       
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
-
-                         
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
-
-                         
-                    <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
-                        <div class='slider_img_col'>
-                        <span  >&#10008;</span>
-                        <img src="https://sgp1.digitaloceanspaces.com/gozayaan/media/uploaded_content/original-H4hWRRUdYSWeb_Special Deal .jpg" alt="" />
-                        </div>
-                    </div>
-                   
-
+                     
                          
                     <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
                         <div class='slider_img_col'>
@@ -232,8 +133,8 @@ cursor: pointer;
 
                     <div class='col-sm-6 col-md-4 col-lg-4  mb-2'>
                         <div  class='slider_img_col'>
-                        <input id='handleFile' type="file" name="slider_path" style="display:none"/>
-                        <label for="handleFile" style="cursor:pointer;margin-top:1.5rem">
+                        <input id='bottom_left_slider' type="file"  onchange="handle_change(this);" name="bottom_left_slider"  style="display:none"/>
+                        <label for="bottom_left_slider" style="cursor:pointer;margin-top:1.5rem">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ_N3HVX19y1ifWseTrfLg9Ok2WihF1Xp6FMutLcisUTEPcgmEyqtO4ZMTNWN4CfRjlnk&usqp=CAU" alt="" />
 
                         </label>
@@ -277,5 +178,189 @@ cursor: pointer;
 <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
   
 
+<script>
+   // top_slider_img
+   async function get_slider_img () {
+    response  = await fetch('/all_slider_img')
+        result  = await response.json();
+        
+        let TopSliderView='';
+        let bottomLeftSliderView='';
+        let bottomRightSliderView='';
+
+        result['TopSlider'].forEach((data)=>{
+            TopSliderView +=`
+            <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
+                <div class='slider_img_col'>
+                <span  onclick="Delete('TopSlider',${data['id']})">&#10008;</span>
+                <img src="${data['img_path']}" alt="" />
+                </div>
+            </div>
+            
+            `;
+        })
+
+        TopSliderView+=`
+            <div class='col-sm-6 col-md-4 col-lg-4  mb-2'>
+                <div  class='slider_img_col'>
+                <input id='handleFile' type="file" onchange="handle_change(this);" name="top_slider" style="display:none"/>
+                <label for="handleFile" style="cursor:pointer;margin-top:1.5rem">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ_N3HVX19y1ifWseTrfLg9Ok2WihF1Xp6FMutLcisUTEPcgmEyqtO4ZMTNWN4CfRjlnk&usqp=CAU" alt="" />
+
+                </label>
+                </div>
+            </div>
+        `;
+
+        document.getElementById("TopSlider").innerHTML= TopSliderView;
+
+
+        
+        result['bottomLeftSlider'].forEach((data)=>{
+            bottomLeftSliderView +=`
+            <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
+                <div class='slider_img_col'>
+                <span  onclick="Delete('bottomLeftSlider',${data['id']})">&#10008;</span>
+                <img src="${data['img_path']}" alt="" />
+                </div>
+            </div>
+            
+            `;
+        })
+
+        bottomLeftSliderView+=`
+            <div class='col-sm-6 col-md-4 col-lg-4  mb-2'>
+            <div  class='slider_img_col'>
+            <input id='bottom_left_slider' type="file"  onchange="handle_change(this);" name="bottom_left_slider"  style="display:none"/>
+            <label for="bottom_left_slider" style="cursor:pointer;margin-top:1.5rem">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ_N3HVX19y1ifWseTrfLg9Ok2WihF1Xp6FMutLcisUTEPcgmEyqtO4ZMTNWN4CfRjlnk&usqp=CAU" alt="" />
+
+            </label>
+            </div>
+            </div>
+        `;
+      
+        document.getElementById("bottomLeftSlider").innerHTML= bottomLeftSliderView;
+
+
+        
+        result['bottomRightSlider'].forEach((data)=>{
+            bottomRightSliderView +=`
+            <div class='col-sm-6 col-md-4 col-lg-4 mb-2'>
+                <div class='slider_img_col'>
+                <span  onclick="Delete('bottomRightSlider',${data['id']})">&#10008;</span>
+                <img src="${data['img_path']}" alt="" />
+                </div>
+            </div>
+            
+            `;
+        })
+
+        bottomRightSliderView+=`
+            <div class='col-sm-6 col-md-4 col-lg-4  mb-2'>
+                <div  class='slider_img_col'>
+                <input id='bottom_right_slider' type="file" onchange="handle_change(this);" name="bottom_right_slider"  style="display:none"/>
+                <label for="bottom_right_slider" style="cursor:pointer;margin-top:1.5rem">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ_N3HVX19y1ifWseTrfLg9Ok2WihF1Xp6FMutLcisUTEPcgmEyqtO4ZMTNWN4CfRjlnk&usqp=CAU" alt="" />
+
+                </label>
+                </div>
+            </div>
+        `;
+        document.getElementById("bottomRightSlider").innerHTML= bottomRightSliderView;
+   }
+
+   get_slider_img();
+  async function handle_change(evt){
+    
+    let data = {}
+    let reader = new FileReader() 
+    reader.readAsDataURL(evt.files[0])
+    reader.onload = () => {    
+      if (evt.files[0].type.match('image.*')) {
+        data['img_path'] = reader.result;
+      
+        if(evt.name=='top_slider') upload_server ('/top_slider_img',data)
+        if(evt.name=='bottom_left_slider') upload_server ('/bottom_left_slider_img',data)
+        if(evt.name=='bottom_right_slider') upload_server ('/bottom_right_slider_img',data)
+        
+       
+    }else{
+        swal("Opps! ", `Please Select Image like png,jpeg,svg `, "error"); 
+    }
+    }
+
+    return ;
+
+       
+    }
+
+
+    async function upload_server (url,data) {
+
+    
+        try {
+        response  = await fetch(url,{
+        method:'POST',
+
+        body:JSON.stringify(data),
+        headers: new Headers({
+        'Content-Type': 'application/json',
+
+        })
+        })
+        result  = await response.json();
+        console.log(result);
+            if(result['condition'] == true){
+               
+                swal("Thanks! ", result['message'], "success"); 
+                get_slider_img () 
+            }else{
+                swal("Opps! ", result['message'], "error"); 
+            }
+        } catch (error) {
+        console.log(error)
+        swal("Opps! ", `Something went Wrong`, "error"); 
+        }
+
+    }
+
+
+   async function Delete(slide,id){
+
+        console.log(slide+" "+id )
+
+        try {
+        response  = await fetch("/slide_img_delete",{
+        method:'POST',
+
+        body:JSON.stringify({
+            slide:slide,
+            id:id
+        }),
+        headers: new Headers({
+        'Content-Type': 'application/json',
+
+        })
+        })
+        result  = await response.json();
+        console.log(result);
+            if(result['condition'] == true){
+               
+                swal("Thanks! ", result['message'], "success"); 
+                get_slider_img () 
+            }else{
+                swal("Opps! ", result['message'], "error"); 
+
+            }
+        } catch (error) {
+        console.log(error)
+        swal("Opps! ", `Something went Wrong`, "error"); 
+        }
+
+
+    }
+
+</script>
 
 @endsection
