@@ -25,6 +25,8 @@
 .pagination ul li:hover{
   background:#8080804f;
 }
+
+
 </style>
 <div class="card">
 
@@ -95,7 +97,7 @@
                 <th>cda house no</th>
                 <th>cda apartment no</th>
                 <th>cda address details</th>
-                <th>Stutus</th>
+                <th>Status</th>
                 <th style="width:3rem">Action</th>
               </tr>
           </thead>
@@ -132,7 +134,7 @@
               <th>cda house no</th>
               <th>cda apartment no</th>
               <th>cda address details</th>
-              <th>Stutus</th>
+              <th>Status</th>
               <th style="width:3rem">Action</th>
             </tr>
           </tfoot>
@@ -168,6 +170,29 @@
     </div>
   </div>
 </div>
+
+<!--Modal -->
+
+<div class="modal fade" id="FeedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" name="feedback_form">
+          <input type="hidden" name="id">
+          <textarea name="feedback" id="" cols="30" rows="7" style="padding: 1rem"></textarea>
+          <button type="button" class="btn btn-sm btn-success btn-block font-weight-bold" onclick="save_feedback()">Save</button>
+       </form>
+    </div>
+      
+    </div>
+  </div>
+</div>
+
 
   <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
@@ -491,7 +516,7 @@ let view=``;
 
 function delevery_stutus(e){
   swal({
-  title: "Are you sure to Change",
+  title: "Are you sure to Delivery",
   icon: "warning",
   buttons: true,
   dangerMode: true,
@@ -549,6 +574,8 @@ let elem = ``;
 
 
 data['data'].forEach(fdata=>{
+ 
+
   elem +=/*html*/`
   <tr style=" ${fdata['mediam']=='BACKHAND'?'outline: 1px solid #0080009e;':''}">
           <td>${i++}</td>
@@ -576,30 +603,34 @@ data['data'].forEach(fdata=>{
             <td>${fdata['cda_address_details']}</td>
             <td>
               
-             ${fdata['status']==1?`<button onclick="delevery_stutus('${fdata['id']}');" class="btn btn-warning"> Delevery </button>`:'<p class="bg-success">Delevery Success</p>'}
+             ${fdata['status']==1?`<button onclick="delevery_stutus('${fdata['id']}');" class="btn btn-sm btn-warning"><i class="fa fa-truck"></i>Delivery </button>`:'<p class="bg-success text-center ">Delivery Success</p>'}
 
-        
+
+             <button class="btn btn-sm  ${fdata['feedback'] == null || fdata['feedback'] == '' ? 'btn-info':'btn-danger'}    mt-1 " onclick="ShowFeedbackModal(${fdata['id']})" style="width: 5.333rem"><i class="fa fa-plus"></i>Feedback</button>
+             
+           
+            ${fdata['is_call'] == null ? `<button class="btn btn-sm btn-info mt-1" onclick="confirm_call(${fdata['id']})"><i class=" fa fa-solid fa-phone"></i>Call</button>`:' <button class="btn btn-sm btn-success mt-1"><i class=" fa fa-solid fa-phone"></i>Called</button>'}  
             
 
        
           </td>
-            <td style="width:20rem">
-              <p>
-              <a class="btn btn-warning btn-outline-danger font-weight-bold" href="invoice/${fdata['card_id']}">
+            <td >
+             
+              <a class="btn btn-sm  btn-warning btn-outline-danger font-weight-bold" href="invoice/${fdata['card_id']}">
                 <span id="icon_on" class="material-symbols-outlined   cursor-pointer" style="display: block; cursor: pointer !important;"> visibility  </span>
               </a>
 
-              <a class="btn btn-warning btn-outline-danger font-weight-bold" onclick="print_invoice('${fdata['card_id']}')">
+              <a class="btn btn-sm  btn-warning btn-outline-danger font-weight-bold" onclick="print_invoice('${fdata['card_id']}')">
                <span class="material-symbols-outlined">print</span>
                 </a>
 
 
-                <a  class="btn btn-warning btn-outline-danger font-weight-bold" onclick="showModel('${fdata['id']}')">
+                <a  class="btn  btn-sm btn-warning btn-outline-danger font-weight-bold" onclick="showModel('${fdata['id']}')">
                   <span class="material-symbols-outlined">
                     drive_file_rename_outline
                     </span>
                   </a>
-              </p>
+              
             </td>
 
 
@@ -706,6 +737,68 @@ $('#exampleModalLong').modal('show')
     }
   })
     }
+
+    function confirm_call(id){
+      console.log(id)
+
+      swal({
+  title: "Did you finish calling?",
+  icon: "warning",
+  // buttons: true,
+  buttons: ["No", "Yes"],
+  dangerMode: true,
+})
+.then(willChange=>{
+
+  fetch(`/confirm_call/${id}`)
+  .then(response => response.json())
+  .then(data => {
+    get_all_card_register()
+    console.log(data)
+    if(data['condition']==true){
+    swal('Good !', `${data['message']}`,'success')
+    }else{
+    swal('Opps !', `${data['message']}`,'error')
+
+    }
+  })
+
+})
+    }
+
+   async function ShowFeedbackModal(id){
+      console.log(id)
+      $('#FeedbackModal').modal('show')
+
+      let feedback_form =  document.forms['feedback_form'];
+      
+      response  = await fetch(`/get_one_data_card_register/${id}`)
+              result  = await response.json();
+              console.log(result)
+              feedback_form.id.value = id
+              feedback_form.feedback.value=  result[0]['feedback']
+              
+    }
+
+    async function save_feedback(){
+    let feedback_form =   Object.fromEntries(new FormData(document.forms['feedback_form']));
+    
+  response  = await fetch(`/update_feedback`,{
+                method:'POST',
+                body:JSON.stringify(feedback_form),
+                headers: new Headers({'Content-Type': 'application/json',})
+                })
+              result  = await response.json();
+              console.log(result)
+              if(result['condition']==true){
+                get_all_card_register()
+                $('#FeedbackModal').modal('hide')
+                swal('Success !', `${result['message']}`,'success')
+              }else{
+                swal('Opps !', `${result['message']}`,'error')
+
+              }
+  }
 
   </script>
 

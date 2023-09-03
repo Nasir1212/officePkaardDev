@@ -148,11 +148,36 @@ class homeController extends Controller
       $data  =  card_registation::where(['id'=>$id])->get();
       return $data;
     }
+
+    public function update_feedback(Request $req){
+      $result = card_registation::where(['id'=>$req->input("id")])->update([
+         'feedback'=>$req->input('feedback'),
+      ]);
+
+         if($result){       
+         return  json_encode(array('message'=>'feedback saved','condition'=>true));
+         }else{
+         return json_encode(array('message'=>' feedback not saved ','condition'=>false));
+         }
+    }
     
     public function all_reference_code(){
     return  $result =  All_Reference::all();
 
     }
+
+    public function confirm_call($id){
+      $result = card_registation::where(['id'=>$id])->update([
+         'is_call'=>true,
+      ]);
+
+         if($result){       
+         return  json_encode(array('message'=>'Thanks for calling ','condition'=>true));
+         }else{
+         return json_encode(array('message'=>' calling confirm failed ','condition'=>false));
+         }
+   
+   }
 
     public function get_one_reference_code($id,$action){
        if($action=='get_one'){

@@ -47,6 +47,7 @@ class VerifyCsrfToken extends Middleware
         'bottom_right_slider_img',
         'bottom_left_slider_img',
         'top_slider_img',
-        'slide_img_delete'
+        'slide_img_delete',
+        'update_feedback',
     ];
 }

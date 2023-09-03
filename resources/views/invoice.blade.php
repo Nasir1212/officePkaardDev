@@ -185,7 +185,7 @@ margin-top:20px;
                                <p><b>Name</b> {{$data[0]['full_name']}}</p>
                                <p><b>Mobile :</b> {{$data[0]['phone_number']}}</p>
                                <p><b>Email :</b> {{$data[0]['email']}} </p>
-                               <p><b>Card No :</b>1509002{{$data[0]['card_id']}} </p>
+                               <p><b>Registration No :</b>1509002{{$data[0]['card_id']}} </p>
                                <p><b>Address :</b>Division  {{$data[0]['division']}},District   {{$data[0]['district']}},Upzilla {{$data[0]['upzilla']}},  </p>
                                <p> <b> Full Address: </b> {{$data[0]['cda_address_details']}}</p>
                             </div>

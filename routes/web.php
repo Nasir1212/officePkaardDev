@@ -64,7 +64,11 @@ Route::get('/reference_program_view',function(){
 Route::post('/excel_file_upload','App\Http\Controllers\homeController@excel_file_upload')->middleware('login');
 
 Route::post('/update_card_data','App\Http\Controllers\homeController@update_card_data')->middleware('login');
+Route::post('/update_feedback','App\Http\Controllers\homeController@update_feedback')->middleware('login');
 Route::post('/add_reference_rogram','App\Http\Controllers\homeController@add_reference_rogram')->middleware('login');
+
+Route::get('/confirm_call/{id}','App\Http\Controllers\homeController@confirm_call');
+
 
 Route::get('/logout_auth','App\Http\Controllers\homeController@logout_auth');
 Route::get('/send_otp_admin/{mail}','App\Http\Controllers\homeController@send_otp_admin');
