@@ -221,3 +221,4 @@ Route::post('bottom_right_slider_img','App\Http\Controllers\homeController@botto
 Route::get('all_slider_img','App\Http\Controllers\homeController@all_slider_img')->middleware('login');
 
 Route::post('slide_img_delete','App\Http\Controllers\homeController@slide_img_delete')->middleware('login');
+Route::get('confirm_card_delivery/{id}','App\Http\Controllers\homeController@confirm_card_delivery')->middleware('login');

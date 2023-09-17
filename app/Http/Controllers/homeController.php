@@ -24,6 +24,7 @@ use App\Models\AffiliationPartnerRequest;
 use App\Models\TopSliderModel;
 use App\Models\BottomRightSlider;
 use App\Models\BottomLeftSlider;
+use App\Models\CardDelivery;
 
 
 
@@ -1721,6 +1722,28 @@ return $api_request   = json_decode($api_request);
 
       }
 
+   }
+
+   public function confirm_card_delivery($id){
+     $registation_no =  card_registation::where(['id'=>$id])->get(['card_id']);
+     $is_insert =  CardDelivery::insert([
+         'registation_no'=>$registation_no[0]->card_id 
+      ]);
+
+      if($is_insert){
+        $check_confirm =  card_registation::where(['id'=>$id])->update(['is_confirm'=>true]);
+
+        if($check_confirm){
+         return json_encode(["condition"=>true,'message'=>"Success Confirm"]);
+
+        }else{
+         return json_encode(["condition"=>false,"message"=>"Check Confirm Failed "]);
+
+        }
+      }else{
+         return json_encode(["condition"=>false,"message"=>"Not Insert "]);
+
+      }
    }
 
 

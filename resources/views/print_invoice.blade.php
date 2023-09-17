@@ -220,41 +220,29 @@ margin-top:20px;
                        <tbody>
                           <tr>
                             <td>Pkaard Privilege Card </td>
-                            <td>1000 BDT</td>
-                            <td>00 BDT</td>
-                            <td>00 BDT</td>
+                            <td>1000.00 BDT</td>
+                            <td>00.00 BDT</td>
+                            <td>00.00 BDT</td>
                           </tr>
 
                           <tr>
                             <td>Delivery Charge </td>
-                            <td>200 BDT </td>
-                            <td>200 BDT </td>
-                            <td>200 BDT </td>
+                            <td>200.00 BDT </td>
+                            <td>200.00 BDT </td>
+                            <td>200.00 BDT </td>
                           </tr>
 
                            <tr>
                               <td></td>
                               <td></td>
                                <td class="text-right"><h2><strong>Total: </strong></h2></td>
-                               <td class="text-left text-danger"><h2><strong><i class="fa fa-bdt"></i> 200 BDT</strong></h2></td>
+                               <td class="text-left text-danger"><h2><strong><i class="fa fa-bdt"></i> 200.00 BDT</strong></h2></td>
                            </tr>
                        </tbody>
                    </table>
                </div>
                
-               <div class="row">
-                   <div class="receipt-header receipt-header-mid receipt-footer">
-                       <div class="col-xs-8 col-sm-8 col-md-8 text-left">
-                           <div class="receipt-right">
-                               <p><b>Date :</b> {{ date('j F, Y', strtotime($data[0]['register_date'])) }}</p>
-                               <h5 style="color: rgb(140, 140, 140);">Thanks !</h5>
-                           </div>
-                       </div>
-                      
-                      
-                   </div>
-                 
-               </div>
+               
                
                
            </div>    

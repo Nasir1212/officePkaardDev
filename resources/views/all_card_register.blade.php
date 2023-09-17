@@ -38,12 +38,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">List Card Registation</h1>
+            <h1 class="m-0">List Card Registration</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">List Card Registation</li>
+              <li class="breadcrumb-item active">List Card Registration</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -58,7 +58,7 @@
 
         
     <div class="card-header d-flex justify-content-between" >
-        <h3 class="card-title">All Card Registation </h3>
+        <h3 class="card-title">All Card Registration </h3>
       
           <input style="width: 30% ;margin-right: -52%;" onkeyup="search_by_input(this)" id="search_value" class="form-control" type="text" placeholder="Search">
     
@@ -76,7 +76,7 @@
           <thead>
             <tr>
                 <th>#</th>
-                <th>Card ID</th>
+                <th>Registration No </th>
                 <th>Invoice</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -113,7 +113,7 @@
             
             <tr>
               <th>#</th>
-              <th>Card ID</th>
+              <th>Registration No</th>
               <th>Invoice</th>
               <th>Name</th>
               <th>Email</th>
@@ -610,6 +610,7 @@ data['data'].forEach(fdata=>{
              
            
             ${fdata['is_call'] == null ? `<button class="btn btn-sm btn-info mt-1" onclick="confirm_call(${fdata['id']})"><i class=" fa fa-solid fa-phone"></i>Call</button>`:' <button class="btn btn-sm btn-success mt-1"><i class=" fa fa-solid fa-phone"></i>Called</button>'}  
+            ${fdata['is_confirm'] == null ? `<button class="btn btn-sm btn-secondary mt-1" onclick="confirm_card_delivery(${fdata['id']})"><i class="fa fa-calendar-check"></i>Confirm</button>`:' <button style="width: 5.9rem;" class="btn btn-sm btn-success mt-1"><i class="fa fa-calendar-check"></i>Confirmed</button>'}  
             
 
        
@@ -798,6 +799,37 @@ $('#exampleModalLong').modal('show')
                 swal('Opps !', `${result['message']}`,'error')
 
               }
+  }
+
+ async function confirm_card_delivery(id){
+
+  swal({
+  title: "Are you Sure that this person will buy the card?",
+  icon: "warning",
+  // buttons: true,
+  buttons: ["No", "Confirm"],
+  dangerMode: true,
+})
+.then(willChange=>{
+
+  fetch(`/confirm_card_delivery/${id}`)
+  .then(response => response.json())
+  .then(data => {
+    get_all_card_register()
+    console.log(data)
+    if(data['condition']==true){
+    swal('Good !', `${data['message']}`,'success')
+    }else{
+    swal('Opps !', `${data['message']}`,'error')
+
+    }
+  })
+  .catch(err=>{
+    console.log(err)
+    swal('Opps !', `Something Went Wrong`,'error')
+  })
+
+})
   }
 
   </script>
