@@ -249,6 +249,25 @@ margin-top:20px;
        </div>
   </div>
 </div>
-  
+  <script>
+    window.onbeforeprint = function(e) {
+    console.log('This will be called before the user prints.');
+    console.log("<?php echo $data[0]['card_id'] ?>") 
+    console.log(e);
+    
+};
+
+
+window.onafterprint = async function(e) {
+    
+   let reg_no = {{$data[0]['card_id']}};
+    const response = await fetch(`${location.origin}/is_print_status/${reg_no}`)
+    const result = await response.json();   
+     setTimeout(function () { window.close(); }, 100);
+        
+};
+
+
+  </script>
 </body>
 </html>

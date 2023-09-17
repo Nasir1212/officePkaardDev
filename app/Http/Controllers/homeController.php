@@ -1746,6 +1746,20 @@ return $api_request   = json_decode($api_request);
       }
    }
 
+   public function is_print_status($reg_no){
+      $result =  card_registation::where(['card_id'=>$reg_no])->update([
+         'is_print'=>true
+      ]);
+
+      if($result){
+         return json_encode(["condition"=>true,'message'=>"Success Confirm"]);
+
+        }else{
+         return json_encode(["condition"=>false,"message"=>"Check Confirm Failed "]);
+
+        }
+
+   }
 
 }
 

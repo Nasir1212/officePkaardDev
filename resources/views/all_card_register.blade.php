@@ -214,9 +214,12 @@ function print_invoice(card_id){
    
    let mywindow = window.open(`${location.origin}/print_invoice/${card_id}`,"_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=5,left=5,width=1200,height=1000");
    mywindow.focus(); // necessary for IE >= 10*/
-   
+
    mywindow.print();
-   
+   setTimeout(function () { 
+    get_all_card_register()
+  
+  }, 1000);
     }
 
 function search_by_input(e){
@@ -621,7 +624,7 @@ data['data'].forEach(fdata=>{
                 <span id="icon_on" class="material-symbols-outlined   cursor-pointer" style="display: block; cursor: pointer !important;"> visibility  </span>
               </a>
 
-              <a class="btn btn-sm  btn-warning btn-outline-danger font-weight-bold" onclick="print_invoice('${fdata['card_id']}')">
+              <a class="${fdata['is_print']==1 ? 'btn-success':'btn-warning'} btn btn-sm   btn-outline-danger font-weight-bold " onclick="print_invoice('${fdata['card_id']}')">
                <span class="material-symbols-outlined">print</span>
                 </a>
 

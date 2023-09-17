@@ -7,6 +7,7 @@ ALTER TABLE  affiliation_partner ADD has_room varchar (255)  DEFAULT  0;
 ALTER TABLE card_registation ADD column `is_call` BOOLEAN, ADD column `feedback` varchar(255);
 
 ALTER TABLE card_registation ADD column `is_confirm` BOOLEAN;
+ALTER TABLE card_registation ADD column `is_print` BOOLEAN;
 
 ALTER TABLE card_delivery ADD column `is_picked` BOOLEAN;
 
