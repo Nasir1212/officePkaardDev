@@ -753,7 +753,7 @@ $('#exampleModalLong').modal('show')
   dangerMode: true,
 })
 .then(willChange=>{
-
+if(willChange==true){
   fetch(`/confirm_call/${id}`)
   .then(response => response.json())
   .then(data => {
@@ -766,6 +766,7 @@ $('#exampleModalLong').modal('show')
 
     }
   })
+}
 
 })
     }
@@ -809,12 +810,12 @@ $('#exampleModalLong').modal('show')
   swal({
   title: "Are you Sure that this person will buy the card?",
   icon: "warning",
-  // buttons: true,
+   buttons: true,
   buttons: ["No", "Confirm"],
   dangerMode: true,
 })
 .then(willChange=>{
-
+if(willChange==true){
   fetch(`/confirm_card_delivery/${id}`)
   .then(response => response.json())
   .then(data => {
@@ -831,7 +832,7 @@ $('#exampleModalLong').modal('show')
     console.log(err)
     swal('Opps !', `Something Went Wrong`,'error')
   })
-
+}
 })
   }
 
