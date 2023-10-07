@@ -194,6 +194,34 @@
 </div>
 
 
+
+<!-- Modal for card number  -->
+<div class="modal fade" id="card_number_add_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> Add Card Number</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <form name="card_number_add_form">
+        <div class="form-group">
+          <label for="card_no_id"> <small id="helpId" class="text-muted">Card number </small></label>
+          <input type="text" name="card_no" id="card_no_id" class="form-control" placeholder="Enter card number " aria-describedby="helpId">
+        <input type="hidden" name="id">
+        </div>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="save_card_number()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
   <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
@@ -614,7 +642,7 @@ data['data'].forEach(fdata=>{
            
             ${fdata['is_call'] == null ? `<button class="btn btn-sm btn-info mt-1" onclick="confirm_call(${fdata['id']})"><i class=" fa fa-solid fa-phone"></i>Call</button>`:' <button class="btn btn-sm btn-success mt-1"><i class=" fa fa-solid fa-phone"></i>Called</button>'}  
             ${fdata['is_confirm'] == null ? `<button class="btn btn-sm btn-secondary mt-1" onclick="confirm_card_delivery(${fdata['id']})"><i class="fa fa-calendar-check"></i>Confirm</button>`:' <button style="width: 5.9rem;" class="btn btn-sm btn-success mt-1"><i class="fa fa-calendar-check"></i>Confirmed</button>'}  
-            
+            <button class='btn-sm btn btn-warning' onclick="show_card_modal(${fdata['id']})"><i class="fa fa-solid fa-address-card"></i> Card </button>
 
        
           </td>
@@ -836,6 +864,30 @@ if(willChange==true){
 })
   }
 
+
+ function show_card_modal(id){
+  $('#card_number_add_id').modal('show');
+  let formElem = document.forms['card_number_add_form'];
+  formElem.id.value= id;
+ }
+
+ async function save_card_number(){
+  let formElem = document.forms['card_number_add_form'];
+  const response =await fetch("/save_card_number",{
+   method: 'POST',
+   body:new FormData(document.forms['card_number_add_form']),
+  
+  });
+
+  let result = response.json();
+
+  console.log(result)
+  
+   
+
+         
+ }
+  
   </script>
 
 @endsection

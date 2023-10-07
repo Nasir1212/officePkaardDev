@@ -1761,6 +1761,20 @@ return $api_request   = json_decode($api_request);
 
    }
 
+   public function save_card_number(Request $req){
+
+
+      // return $req;
+ return $reg_no = card_registation::where(['id'=>$req->id])->get(['card_id']);
+      CardDelivery::insert([
+         'registation_no'=>$reg_no[0]->card_id,
+         'card_no'=>$req->card_no,
+      ]);
+
+      card_registation::where(['id'=>$id])->update(['is_confirm'=>true]);
+
+   }
+
 }
 
 

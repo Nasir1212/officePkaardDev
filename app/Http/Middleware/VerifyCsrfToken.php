@@ -49,5 +49,6 @@ class VerifyCsrfToken extends Middleware
         'top_slider_img',
         'slide_img_delete',
         'update_feedback',
+        'save_card_number'
     ];
 }

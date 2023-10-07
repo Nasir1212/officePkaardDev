@@ -223,3 +223,4 @@ Route::get('all_slider_img','App\Http\Controllers\homeController@all_slider_img'
 Route::post('slide_img_delete','App\Http\Controllers\homeController@slide_img_delete')->middleware('login');
 Route::get('confirm_card_delivery/{id}','App\Http\Controllers\homeController@confirm_card_delivery')->middleware('login');
 Route::get('is_print_status/{reg_no}','App\Http\Controllers\homeController@is_print_status')->middleware('login');
+Route::post('save_card_number','App\Http\Controllers\homeController@save_card_number')->middleware('login');
